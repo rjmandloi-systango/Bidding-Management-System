@@ -1,0 +1,24 @@
+#logo{
+    /* float:left; */
+    margin-left: 10px;
+    margin-top: 10px;
+
+}
+#img{
+    width: 40%;
+}
+#navbar {
+    /* float:right; */
+    position: absolute;
+    top: 20px;
+    /* border: 10px solid #05445E; */
+    left: 250px;
+    background-color: #05445E;    
+}
+.textColor *
+{
+    color:  #D5CE58;
+}
+/* .navbar navbar-expand-lg navbar-light bg-light *{
+    color:  #D5CE58;
+} */
