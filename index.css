@@ -11,14 +11,55 @@
     /* float:right; */
     position: absolute;
     top: 20px;
+    
     /* border: 10px solid #05445E; */
-    left: 250px;
+    left: 120px;
+    right: 200px;
     background-color: #05445E;    
 }
 .textColor *
 {
     color:  #D5CE58;
 }
-/* .navbar navbar-expand-lg navbar-light bg-light *{
-    color:  #D5CE58;
-} */
+
+.carousel-inner{
+    height: 40vh;
+    background-color: antiquewhite;
+    background-image: url("./images/images.jpeg");
+    /* background-repeat: no-repeat; */
+    background-size: 100% 100%;
+}
+
+.carousel-item{
+    height: 100%;
+    width: 100vw;
+}
+
+.carouselImage{
+    /* object-fit: cover; */
+     margin-left:24% ;
+    /* margin-right: auto; */
+     
+    
+    }
+.carousel{
+    margin-top: 5px;
+    margin-left: 120px;
+    margin-right: 100px;
+}
+body{
+    background-image:url(./images/pawel-czerwinski-UBVwe1goozI-unsplash.jpg) ;
+}
+/* #constainer{
+    margin-top: auto;
+    /* border: 5px; */
+   
+/* } */ 
+.card{
+    border:2px solid black;
+    margin-top: 10px;
+    width: 30vw;
+    margin-left: 10px;
+    margin-right:10px ;
+    
+}

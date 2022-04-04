@@ -15,16 +15,17 @@
 
     <title>Bidding Management System</title>
     <link rel="stylesheet" href="index.css"> 
+   
   </head>
   <body>
       <!-- logo -->
     <div id="logo" class="col-4" >
-       <img src="./images/logo.png" alt="" id="img">
+       <img src="./images/logo.png" style="border-radius: 105px; width: 100px; height: 100px"  alt="" id="img">
     </div>
     <!-- logo -->
    <!-- //navbar -->
-   <div class="col-9" id="navbar" class="textColor">
-   <nav class="navbar navbar-expand-lg navbar-light bg-light"  style="margin: 1%  ;"  class="col-8"  >
+   <div class="col-9" id="navbar" class="textColor" style="width: 83%;">
+   <nav class="navbar navbar-expand-lg navbar-light bg-light "    >
     <div class="container-fluid" style="background-color: #05445E;">
       <a class="navbar-brand" href="#" style="color: #D5CE58;">Auctions</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,10 +64,37 @@
 </div>
 <!-- navbar -->
 
+<div id="carouselExampleControls" class="carousel slide carousel" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="./images/harley.webp" class="d-block carouselImage" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="./images/harley.webp" class="d-block carouselImage" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="./images/logo.png" class="d-block carouselImage" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+<button type="button" class="btn btn-primary" onclick="createCard()">add cards</button>
+<div id="container" class="d-flex flex-wrap" >
+ 
+</div>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
       crossorigin="anonymous"
     ></script>
+    <script src="./index.js"></script>
+    
   </body>
 </html>
