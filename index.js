@@ -1,38 +1,39 @@
-function createCard()
-{
-    const result={
-        title:"new card",
-        description:"my new product",
-        output:"$900"
-    }
-    const idx="abc"
-    const card = document.createElement('div');
-    card.classList = 'card-body';
-   
-    // Construct card content
-    const content = `
-      <div class="card">
-      <div class="card-header" id="heading-${idx}">
-        <h5 class="mb-0">
-          <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-${idx}" aria-expanded="true" aria-controls="collapse-${idx}">
+function createCard() {
+  productName = document.getElementById("productName").value;
+  productDiscription = document.getElementById("productDiscription").value;
+  productStartingBid = document.getElementById("productPrice").value;
+  sellerContactNumber = document.getElementById("sellerContactNumber").value;
+  let url = "https://image.shutterstock.com/image-illustration/modern-cars-studio-room-3d-260nw-735402217.jpg";
+  const card = document.createElement('div');
+  card.classList = 'card-body';
+
+  // Construct card content
+  const content = `
+  <div class="card productCard "  style="width: 18rem;">
   
-                  </button>
-        </h5>
-      </div>
-  
-      <div id="collapse-${idx}" class="collapse show" aria-labelledby="heading-${idx}" data-parent="#accordion">
-        <div class="card-body">
-  
-          <h5>${result.title}</h5>
-          <p>${result.description}</p>
-          <p>${result.output}</p>
-          ...
-        </div>
-      </div>
+  <div class="card-body " >
+    <div class="pro-name">
+    <h5 class="card-title cd-title productText">${productName}</h5>    
     </div>
+    <div >
+    <img src="${url}" class="card-img-top" alt="...">
+    </div>
+    <div >
+    <p class="card-text productText">Discription:${productDiscription}</p>
+    </div>
+    <div>
+        <div >
+         <p class="card-text productText">Initial bid:${productStartingBid} &#8377</p>
+         </div>
+         <div>
+         <p class="card-text productText">Initial bid:${productStartingBid} &#8377</p>
+         </div>     
+         </div>
+    <a href="#" class="btn btn-primary " >Your bid</a>
+  </div>
+</div>
     `;
-  
-    // Append newyly created card element to the container
-    container.innerHTML += content;
-  
+
+  // Append newyly created card element to the container
+  container.innerHTML += content;
 }
