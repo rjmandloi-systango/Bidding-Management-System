@@ -2,7 +2,16 @@
      /* float:left; */
      margin-left: 10px;
      margin-top: 10px;
-
+}
+#bid-it{
+    margin-top: 35px;
+    color: grey;
+    margin-left: 40px;
+    font-family: 'Permanent Marker', cursive;
+    
+}
+#slogan{
+    color:grey;
 }
 #img{
     width: 40%;
@@ -14,15 +23,12 @@
      border-radius: 10px;
      top: 35px;
      
-     /* border: 10px solid #05445E; */
+     
      left: 220px;
-     /* background-color: #05445E;   */
-     /* background: #000428;  
-     background: -webkit-linear-gradient(to top, #004e92, #000428);
-     background: linear-gradient(to top, #004e92, #000428);   */
-     background: #757F9A;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #D7DDE8, #757F9A);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #D7DDE8, #757F9A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
+     background: #757F9A;
+background: -webkit-linear-gradient(to right, #D7DDE8, #757F9A);  
+background: linear-gradient(to right, #D7DDE8, #757F9A);
 
 }
 
@@ -30,6 +36,13 @@ background: linear-gradient(to right, #D7DDE8, #757F9A); /* W3C, IE 10+/ Edge, F
     color:  grey;
     
 }
+#navbar a:hover {
+    color:black;
+}
+.navbarElements:hover{
+    color:black;
+}
+
 .textColor *
 {
     color:  #D5CE58;
@@ -75,6 +88,7 @@ body{
     width: 100vw;
     height: 100vh;
     overflow-y: scroll ;
+    overflow-x: hidden;
  } 
 .card{
     /* border:2px solid black; */
@@ -82,47 +96,53 @@ body{
     width: 30vw;
     margin-left: 10px;
     margin-right:10px ;
+    border-radius: 20px;
+    /* border: 1px solid black; */
+    background-color:white;
+    box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.2);
     
 }
-.productCard{
-  
-  border-radius: 20px;
-  /* border: 1px solid black; */
-  background-color: rgb(42, 43, 44);
-  
-}
-.pro-name{
+
+.productName{
     height: 40px;
     text-align:center;
     /* background-color: rgb(14, 62, 77); */
     padding-top: 8px;
-    border-radius: 10px;
+    border-radius: 5px;
     color: floralwhite;
+    background-color: chocolate;
 
 }
-#cd-title{
+/* #cd-title{
     text-align: center;     
-}
+} */
 .buttonls{
     color:white;
     background-color: chocolate;
     margin-bottom: 10px;
     
 }
-#bid-it{
-    margin-top: 35px;
-    color: grey;
-    margin-left: 40px;
-    font-family: 'Permanent Marker', cursive;
-    
-}
-#slogan{
-    color:grey;
-}
+
 .productText{
-    color: white;
+    color: rgb(0, 0, 0);
 }
 .addProductButton{
     color:white;
     background-color: chocolate;
+}
+
+.clock{    
+    /* float: left; */
+    font-size:xx-large;  
+
+}
+
+.productCard:hover{
+  transform: scale(1.01);
+
+}
+.timeText{
+    font-size: 1rem;
+    font-weight:bolder;
+
 }
