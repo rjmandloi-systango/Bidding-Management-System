@@ -106,153 +106,142 @@
         </div>
         <div class="modal-body">
 
-          <form class="row g-3 needs-validation" novalidate>
+          <div class="row g-3 needs-validation" novalidate>
             <div class="col-md-6">
-              <label for="validationCustom01" class="form-label">First Name</label>
-              <input type="text" class="form-control" id="validationCustom01" value="" required>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
+              <label for="firstName" class="form-label">First Name</label>
+              <input type="text" class="form-control" id="firstName" value="" required>
+              <span id="fname"></span>
             </div>
             <div class="col-md-6">
-              <label for="validationCustom02" class="form-label">Last name</label>
-              <input type="text" class="form-control" id="validationCustom02" value="" required>
-              <div class="valid-feedback">
-                Looks good!
-              </div>
+              <label for="lastName" class="form-label">Last name</label>
+              <input type="text" class="form-control" id="lastName" value="" required>
+              <span id="lname"></span>
+
             </div>
             <div class="col-md-6">
-              <label for="validationCustomUsername" class="form-label">Phone No</label>
+              <label for="userPhone" class="form-label">Phone No</label>
               <div class="input-group has-validation">
                 <span class="input-group-text" id="inputGroupPrepend">
                   <select>
-                    <option>+91</option>
-                    <option>+1</option>
-                    <option>+61</option>
+                    <option value="+91">+91</option>
+                    <option value="+1">+1</option>
+                    <option value="+61">+61</option>
                   </select>
                 </span>
-                <input type="text" class="form-control" id="validationCustomUsername"
-                  aria-describedby="inputGroupPrepend" required>
-                <div class="invalid-feedback">
-                  Please Enter a Phone No.
-                </div>
+                <input type="text" class="form-control" id="userPhone" aria-describedby="inputGroupPrepend" required>
+                <span id="phone"></span>
               </div>
 
             </div>
             <div class="col-md-6">
-              <label for="validationCustomUsername" class="form-label">Email</label>
+              <label for="userEmail" class="form-label">Email</label>
               <div class="input-group has-validation">
-                <span class="input-group-text" id="inputGroupPrepend">@</span>
-                <input type="text" class="form-control" id="validationCustomUsername"
-                  aria-describedby="inputGroupPrepend" required>
-                <div class="invalid-feedback">
-                  Please Enter a Email.
-                </div>
+                <span class="input-group-text" id="userEmailIcon">@</span>
+                <input type="text" class="form-control" id="userEmail" aria-describedby="inputGroupPrepend" required>
+                <span id="email"></span>
+
               </div>
 
             </div>
 
             <div class="col-md-6">
-              <label for="validationCustom03" class="form-label">Country</label>
-              <select class="form-select" name="state" id="countySel"  size="1">
+              <label for="userCountry" class="form-label">Country</label>
+              <select class="form-select" name="state" id="userCountry" size="1">
                 <option value="" selected="selected">Select Country</option>
               </select>
-              <div class="invalid-feedback">
-                Please provide a valid Country.
-              </div>
+              <span id="country"></span>
+
             </div>
 
 
             <div class="col-md-6">
-              <label for="validationCustom04" class="form-label">State</label>
-              <select class="form-select" name="countrya" id="stateSel" size="1">
+              <label for="userState" class="form-label">State</label>
+              <select class="form-select" name="countrya" id="userState" size="1">
                 <option value="" selected="selected"> Select State</option>
               </select>
-              <div class="invalid-feedback">
-                Please select a valid state.
-              </div>
+              <span id="state"></span>
+
             </div>
 
             <div class="col-md-6">
-              <label for="validationCustom04" class="form-label">City</label>
-              <select class="form-select" name="district" id="districtSel"  size="1">
+              <label for="userCity" class="form-label">City</label>
+              <select class="form-select" name="district" id="userCity" size="1">
                 <option value="" selected="selected">select City</option>
               </select>
-              <div class="invalid-feedback">
-                Please select a valid city.
-              </div>
+              <span id="city"></span>
+
             </div>
             <div class="col-md-5">
-              <label for="validationCustom03" class="form-label">Pin Code</label>
-              <input type="text" class="form-control" id="validationCustom03" required>
-              <div class="invalid-feedback">
-                Please provide a valid Pin Code.
-              </div>
+              <label for="userPinCode" class="form-label">Pin Code</label>
+              <input type="text" class="form-control" id="userPinCode" required>
+              <span id="pin"></span>
+
             </div>
             <div class="col-md-7">
-              <label for="validationCustom03" class="form-label">Full Address</label>
-              <input type="text" class="form-control" id="validationCustom03" required>
-              <div class="invalid-feedback">
-                Please provide a valid Address.
-              </div>
+              <label for="userFullAddress" class="form-label">Full Address</label>
+              <input type="text" class="form-control" id="userFullAddress" required>
+              <span id="add"></span>
+
             </div>
 
 
             <div class="col-md-5">
-              <label for="validationCustom03" class="form-label">LandMark</label>
-              <input type="text" class="form-control" id="validationCustom03" required>
-              <div class="invalid-feedback">
-                Please provide a LandMark.
-              </div>
+              <label for="userLandMark" class="form-label">LandMark</label>
+              <input type="text" class="form-control" id="userLandMark" required>
+              <span id="lmark"></span>
             </div>
-
-
-
-
             <div class="col-md-6">
-              <label for="validationCustom03" class="form-label">User Name</label>
-              <input type="text" class="form-control" id="validationCustom03" required>
-              <div class="invalid-feedback">
-                Please provide a valid User Name.
-              </div>
+              <label for="userName" class="form-label">User Name</label>
+              <input type="text" class="form-control" id="userName" required>
+              <span id="uname"></span>
             </div>
 
             <div class="col-md-6">
-              <label for="validationCustom03" class="form-label">Password</label>
-              <input type="text" class="form-control" id="validationCustom03" required>
-              <div class="invalid-feedback">
-                Please provide a valid Password.
-              </div>
+              <label for="userPassword" class="form-label">Password</label>
+              <input type="password" class="form-control" id="userPassword" required>
+              <span id="pass"></span>
+
             </div>
 
 
             <div class="col-12">
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                <input class="form-check-input" type="checkbox" id="invalidCheck" onclick="clickFun()" required>
                 <label class="form-check-label" for="invalidCheck">
                   Agree to terms and conditions
                 </label>
-                <div class="invalid-feedback">
-                  You must agree before submitting.
-                </div>
+                <span id="agree"></span>
+
               </div>
             </div>
             <div class="col-12">
-              <button class="btn btn-primary" type="submit">Submit form</button>
+              <button class="btn btn-primary" id="userDataInssert" >Submit form</button>
             </div>
-          </form>
+          </div>
 
         </div>
       </div>
     </div>
   </div>
+  <script type="module" src="./insertUserData.js"></script>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"></script>
- 
- <script>
 
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
+  <script>
+
+    let btn = document.getElementById("userDataInssert");
+    let check = document.getElementById("invalidCheck");
+    btn.disabled=true;   
+   function clickFun(){
+    if (check.checked) {
+      btn.disabled = false;
+    }
+  }
+   
+   
+    let fname = document.getElementById("firstName");
     (function () {
       'use strict'
 
@@ -273,27 +262,27 @@
         },
       }
       window.onload = function () {
-        var countySel = document.getElementById("countySel"),
-          stateSel = document.getElementById("stateSel"),
-          districtSel = document.getElementById("districtSel");
+        var userCountry = document.getElementById("userCountry"),
+          userState = document.getElementById("userState"),
+          userCity = document.getElementById("userCity");
         for (var country in stateObject) {
-          countySel.options[countySel.options.length] = new Option(country, country);
+          userCountry.options[userCountry.options.length] = new Option(country, country);
         }
-        countySel.onchange = function () {
-          stateSel.length = 1; // remove all options bar first
-          districtSel.length = 1; // remove all options bar first
+        userCountry.onchange = function () {
+          userState.length = 1; // remove all options bar first
+          userCity.length = 1; // remove all options bar first
           if (this.selectedIndex < 1) return; // done 
           for (var state in stateObject[this.value]) {
-            stateSel.options[stateSel.options.length] = new Option(state, state);
+            userState.options[userState.options.length] = new Option(state, state);
           }
         }
-        countySel.onchange(); // reset in case page is reloaded
-        stateSel.onchange = function () {
-          districtSel.length = 1; // remove all options bar first
+        userCountry.onchange(); // reset in case page is reloaded
+        userState.onchange = function () {
+          userCity.length = 1; // remove all options bar first
           if (this.selectedIndex < 1) return; // done 
-          var district = stateObject[countySel.value][this.value];
+          var district = stateObject[userCountry.value][this.value];
           for (var i = 0; i < district.length; i++) {
-            districtSel.options[districtSel.options.length] = new Option(district[i], district[i]);
+            userCity.options[userCity.options.length] = new Option(district[i], district[i]);
           }
         }
       }
@@ -321,13 +310,7 @@
 
     var myModal = document.getElementById('myModal')
     var myInput = document.getElementById('myInput')
-
-    myModal.addEventListener('shown.bs.modal', function () {
-      myInput.focus()
-    })
-    
-    </script>
-    <script type="module"  src="./insertUserData.js"></script>
+  </script>
 </body>
 
 </html>
