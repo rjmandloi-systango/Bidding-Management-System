@@ -49,7 +49,7 @@ function userData() {
 function insertUser(userDataObj) {
   set(ref(db, "User/" + (ID+1) + "/"), {
 
-    "Deatils": {
+    "Details": {
       FirstName: userDataObj.userFirstName,
       LastName: userDataObj.userLastName,
       PhoneNo:userDataObj.userPhone,
