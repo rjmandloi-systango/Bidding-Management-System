@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8" />
@@ -35,6 +34,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light p-0">
       <div class="container-fluid" style="background-color: #f8f8f8">
         <a class="navbar-brand navbarElements" href="#">Auctions</a>
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -83,6 +83,7 @@
       Login
     </button>
     <button type="button" class="btn buttonls" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    
       Register
     </button>
     <!-- <button type="button" class="btn btn-outline-secondary">Register</button> -->
@@ -97,13 +98,24 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <input type="text" placeholder="enter name" />
+       
+          <div class="col-md-6">
+            <label for="userName" class="form-label">User Name</label>
+            <input type="text" class="form-control" id="userNameLogin" value="" required>
+            <span id="uname"></span>
+          </div>
+          <div class="col-md-6">
+            <label for="Password" class="form-label">Password</label>
+            <input type="text" class="form-control" id="userPasswordLogin" value="" required>
+            <span id="pass"></span>
+
+          </div>
+          <div>
+            <a for="pass or uname" class="form-label">Forgot UserName or Password</a>
+          </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-            Close
-          </button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" id="loginUserData" class="btn btn-primary">Submit</button>
         </div>
       </div>
     </div>
@@ -113,22 +125,23 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
-            New Users? Register Here!
-          </h5>
+       
+          <h5 class="modal-title" id="exampleModalLabel">New Users? Register Here!</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form class="row g-3 needs-validation" novalidate>
+
+          <div class="row g-3 needs-validation" novalidate>
             <div class="col-md-6">
               <label for="firstName" class="form-label">First Name</label>
-              <input type="text" class="form-control" id="firstName" value="" required />
-              <div class="valid-feedback">Looks good!</div>
+              <input type="text" class="form-control" id="firstName" value="" required>
+              <span id="fname"></span>
             </div>
             <div class="col-md-6">
               <label for="lastName" class="form-label">Last name</label>
-              <input type="text" class="form-control" id="lastName" value="" required />
-              <div class="valid-feedback">Looks good!</div>
+              <input type="text" class="form-control" id="lastName" value="" required>
+              <span id="lname"></span>
+
             </div>
             <div class="col-md-6">
               <label for="userPhone" class="form-label">Phone No</label>
@@ -140,17 +153,22 @@
                     <option value="+61">+61</option>
                   </select>
                 </span>
-                <input type="text" class="form-control" id="userPhone" aria-describedby="inputGroupPrepend" required />
-                <div class="invalid-feedback">Please Enter a Phone No.</div>
+              
+                <input type="text" class="form-control" id="userPhone" aria-describedby="inputGroupPrepend" required>
+                <span id="phone"></span>
               </div>
+
             </div>
             <div class="col-md-6">
               <label for="userEmail" class="form-label">Email</label>
               <div class="input-group has-validation">
                 <span class="input-group-text" id="userEmailIcon">@</span>
-                <input type="text" class="form-control" id="userEmail" aria-describedby="inputGroupPrepend" required />
-                <div class="invalid-feedback">Please Enter a Email.</div>
+              
+                <input type="text" class="form-control" id="userEmail" aria-describedby="inputGroupPrepend" required>
+                <span id="email"></span>
+
               </div>
+
             </div>
 
             <div class="col-md-6">
@@ -158,17 +176,19 @@
               <select class="form-select" name="state" id="userCountry" size="1">
                 <option value="" selected="selected">Select Country</option>
               </select>
-              <div class="invalid-feedback">
-                Please provide a valid Country.
-              </div>
+           
+              <span id="country"></span>
+
             </div>
+
 
             <div class="col-md-6">
               <label for="userState" class="form-label">State</label>
               <select class="form-select" name="countrya" id="userState" size="1">
-                <option value="" selected="selected">Select State</option>
+                <option value="" selected="selected"> Select State</option>
               </select>
-              <div class="invalid-feedback">Please select a valid state.</div>
+              <span id="state"></span>
+
             </div>
 
             <div class="col-md-6">
@@ -176,62 +196,59 @@
               <select class="form-select" name="district" id="userCity" size="1">
                 <option value="" selected="selected">select City</option>
               </select>
-              <div class="invalid-feedback">Please select a valid city.</div>
+           
+              <span id="city"></span>
+
             </div>
             <div class="col-md-5">
               <label for="userPinCode" class="form-label">Pin Code</label>
-              <input type="text" class="form-control" id="userPinCode" required />
-              <div class="invalid-feedback">
-                Please provide a valid Pin Code.
-              </div>
+              <input type="text" class="form-control" id="userPinCode" required>
+              <span id="pin"></span>
+
             </div>
             <div class="col-md-7">
               <label for="userFullAddress" class="form-label">Full Address</label>
-              <input type="text" class="form-control" id="userFullAddress" required />
-              <div class="invalid-feedback">
-                Please provide a valid Address.
-              </div>
+              <input type="text" class="form-control" id="userFullAddress" required>
+              <span id="add"></span>
+
             </div>
+
 
             <div class="col-md-5">
               <label for="userLandMark" class="form-label">LandMark</label>
-              <input type="text" class="form-control" id="userLandMark" required />
-              <div class="invalid-feedback">Please provide a LandMark.</div>
+              <input type="text" class="form-control" id="userLandMark" required>
+              <span id="lmark"></span>
             </div>
-
             <div class="col-md-6">
               <label for="userName" class="form-label">User Name</label>
-              <input type="text" class="form-control" id="userName" required />
-              <div class="invalid-feedback">
-                Please provide a valid User Name.
-              </div>
+              <input type="text" class="form-control" id="userName" required>
+              <span id="uname"></span>
             </div>
 
             <div class="col-md-6">
               <label for="userPassword" class="form-label">Password</label>
-              <input type="text" class="form-control" id="userPassword" required />
-              <div class="invalid-feedback">
-                Please provide a valid Password.
-              </div>
+        
+              <input type="password" class="form-control" id="userPassword" required>
+              <span id="pass"></span>
+
             </div>
+
 
             <div class="col-12">
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required />
+                <input class="form-check-input" type="checkbox" id="invalidCheck" onclick="clickFun()" required>
                 <label class="form-check-label" for="invalidCheck">
                   Agree to terms and conditions
                 </label>
-                <div class="invalid-feedback">
-                  You must agree before submitting.
-                </div>
+                <span id="agree"></span>
+
               </div>
             </div>
             <div class="col-12">
-              <button class="btn btn-primary" type="submit" id="userDataInssert">
-                Submit form
-              </button>
+              <button class="btn btn-primary" id="userDataInssert" >Submit form</button>
             </div>
-          </form>
+          </div>
+
         </div>
       </div>
     </div>
@@ -349,6 +366,96 @@
     crossorigin="anonymous"></script>
   <script src="./index.js"></script>
   <script src="./Timer.js"></script>
+  <script type="module" src="./insertUserData.js"></script>
+  <script type="module" src="./loginUserData.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+
+  <script>
+
+    let btn = document.getElementById("userDataInssert");
+    let check = document.getElementById("invalidCheck");
+    btn.disabled=true;   
+   function clickFun(){
+    if (check.checked) {
+      btn.disabled = false;
+    }
+  }
+   
+   
+    let fname = document.getElementById("firstName");
+    (function () {
+      'use strict'
+
+
+      var stateObject = {
+        "India": {
+          "Delhi": ["new Delhi", "North Delhi"],
+          "Madhya Pradesh": ["Indore", "Bhopal", "jabalpur", "Dewas"],
+          "Kerala": ["Thiruvananthapuram", "Palakkad"],
+          "Goa": ["North Goa", "South Goa"],
+        },
+        "Australia": {
+          "South Australia": ["Dunstan", "Mitchell"],
+          "Victoria": ["Altona", "Euroa"]
+        }, "Canada": {
+          "Alberta": ["Acadia", "Bighorn"],
+          "Columbia": ["Washington", ""]
+        },
+      }
+      window.onload = function () {
+        var userCountry = document.getElementById("userCountry"),
+          userState = document.getElementById("userState"),
+          userCity = document.getElementById("userCity");
+        for (var country in stateObject) {
+          userCountry.options[userCountry.options.length] = new Option(country, country);
+        }
+        userCountry.onchange = function () {
+          userState.length = 1; // remove all options bar first
+          userCity.length = 1; // remove all options bar first
+          if (this.selectedIndex < 1) return; // done 
+          for (var state in stateObject[this.value]) {
+            userState.options[userState.options.length] = new Option(state, state);
+          }
+        }
+        userCountry.onchange(); // reset in case page is reloaded
+        userState.onchange = function () {
+          userCity.length = 1; // remove all options bar first
+          if (this.selectedIndex < 1) return; // done 
+          var district = stateObject[userCountry.value][this.value];
+          for (var i = 0; i < district.length; i++) {
+            userCity.options[userCity.options.length] = new Option(district[i], district[i]);
+          }
+        }
+      }
+
+
+
+
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll('.needs-validation')
+
+      // Loop over them and prevent submission
+
+      Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+          }, false)
+        })
+    })()
+
+    var myModal = document.getElementById('myModal')
+    var myInput = document.getElementById('myInput')
+  </script>
+
 </body>
 
 </html>
