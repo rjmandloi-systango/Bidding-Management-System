@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8" />
@@ -25,7 +26,7 @@
       <i class="fa fa-gavel" id="gavel" style="font-size: 48px; color: chocolate"></i>
     </h1>
     <h6 id="brandSlogan">-value for your valuables-</h6>
-    
+
   </div>
   <!-- brandName -->
 
@@ -47,22 +48,17 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Winners</a>
             </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Dropdown
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li>
-                  <hr class="dropdown-divider" />
-                </li>
-                <li>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </li>
-              </ul>
-            </li>
+             <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
           </ul>
           <form class="d-flex">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
@@ -83,7 +79,7 @@
       Login
     </button>
     <button type="button" class="btn buttonls" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    
+
       Register
     </button>
     <!-- <button type="button" class="btn btn-outline-secondary">Register</button> -->
@@ -98,7 +94,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-       
+
           <div class="col-md-6">
             <label for="userName" class="form-label">User Name</label>
             <input type="text" class="form-control" id="userNameLogin" value="" required>
@@ -125,7 +121,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-       
+
           <h5 class="modal-title" id="exampleModalLabel">New Users? Register Here!</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -153,7 +149,7 @@
                     <option value="+61">+61</option>
                   </select>
                 </span>
-              
+
                 <input type="text" class="form-control" id="userPhone" aria-describedby="inputGroupPrepend" required>
                 <span id="phone"></span>
               </div>
@@ -163,7 +159,7 @@
               <label for="userEmail" class="form-label">Email</label>
               <div class="input-group has-validation">
                 <span class="input-group-text" id="userEmailIcon">@</span>
-              
+
                 <input type="text" class="form-control" id="userEmail" aria-describedby="inputGroupPrepend" required>
                 <span id="email"></span>
 
@@ -176,7 +172,7 @@
               <select class="form-select" name="state" id="userCountry" size="1">
                 <option value="" selected="selected">Select Country</option>
               </select>
-           
+
               <span id="country"></span>
 
             </div>
@@ -196,7 +192,7 @@
               <select class="form-select" name="district" id="userCity" size="1">
                 <option value="" selected="selected">select City</option>
               </select>
-           
+
               <span id="city"></span>
 
             </div>
@@ -227,7 +223,7 @@
 
             <div class="col-md-6">
               <label for="userPassword" class="form-label">Password</label>
-        
+
               <input type="password" class="form-control" id="userPassword" required>
               <span id="pass"></span>
 
@@ -245,7 +241,7 @@
               </div>
             </div>
             <div class="col-12">
-              <button class="btn btn-primary" id="userDataInssert" >Submit form</button>
+              <button class="btn btn-primary" id="userDataInssert">Submit form</button>
             </div>
           </div>
 
@@ -365,7 +361,6 @@
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"></script>
   <script src="./index.js"></script>
-  <script src="./Timer.js"></script>
   <script type="module" src="./insertUserData.js"></script>
   <script type="module" src="./loginUserData.js"></script>
 
@@ -377,14 +372,14 @@
 
     let btn = document.getElementById("userDataInssert");
     let check = document.getElementById("invalidCheck");
-    btn.disabled=true;   
-   function clickFun(){
-    if (check.checked) {
-      btn.disabled = false;
+    btn.disabled = true;
+    function clickFun() {
+      if (check.checked) {
+        btn.disabled = false;
+      }
     }
-  }
-   
-   
+
+
     let fname = document.getElementById("firstName");
     (function () {
       'use strict'
