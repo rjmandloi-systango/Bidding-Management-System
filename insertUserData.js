@@ -2,6 +2,8 @@
 import { db, set, ref,get,child, update, remove } from "./firebase.js";
 import { validetion } from "./validetionCheck.js";
 // import { validetion } from "./validetionCheck";
+import {userDeatils} from "./fetchUserData.js";
+// console.log(userDeatils);
 let ID = 0;
 idFetch();
 let userDataInsert = document.getElementById("userDataInssert");
@@ -40,7 +42,21 @@ function userData() {
   }
 
  if(validetion(userDataObj,userDatavalidetionObj)){
-  insertUser(userDataObj);
+  let flag=0;
+userDeatils.forEach(element => {
+    if(element.Email===userDataObj.userEmail){
+      // alert('alredy exist...')
+      flag=1;
+    }
+    // else{
+    //   insertUser(userDataObj);
+    // }
+  });
+    if(flag==1){
+      alert('alredy exist...')
+    }else{
+      insertUser(userDataObj);
+    }
  
 }
 }

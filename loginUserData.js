@@ -1,4 +1,5 @@
-import { db, set, ref,get,child, update, remove } from "./firebase.js";
+import {userDeatils} from "./fetchUserData.js";
+
 
 let loginClick=document.getElementById("loginUserData");
 
@@ -10,55 +11,33 @@ function loginClickFun(){
 }
 
 
-allDataFetch();
-let userDeatils = [];
-
-function allDataFetch() {
-
-  const databaseRef = ref(db);
-
-  get(child(databaseRef, "User/")).then((snapshot) => {
-    if (typeof (snapshot) !== 'undefined') {
-
-      if (snapshot.exists()) {
-        snapshot.forEach((child) => {
-                userDeatils.push({
-                    "id": child.key,
-                    "FirstName":child.val().Details.FirstName,
-                    "LastName":child.val().Details.LastName,
-                    "Phone":child.val().Details.PhoneNo,
-                    "Email":child.val().Details.Email,
-                    "Country":child.val().Details.Country,
-                    "State":child.val().Details.State,
-                    "PinCode":child.val().Details.PinCode,
-                    "Address":child.val().Details.Address,
-                    "LandMakr":child.val().Details.LandMakr,
-                    "UserName":child.val().Details.UserName,
-                    "UserPass":child.val().Details.UserPass
-            })
-
-            // playerNames.push(child.val().player1);
-            
-        });
-      }
-    }
-
-  });
-}
 function checkUserLogin(userNameLogin,userPassLogin){
   let flag=0;
   for(let index=0;index<userDeatils.length;index++){
     if(userDeatils[index].UserName===userNameLogin && userDeatils[index].UserPass===userPassLogin)
     {
       flag=1;
+      console.log(userDeatils[index]);
+      localStorage.setItem("USERDATA",JSON.stringify(userDeatils[index]));
     }
   }
   if(flag==1){
  alert("welcome !");
- location.href = './index.html';
-  }else{
+
+ let sellBtn=document.getElementById("sellBtn");
+ let myProducts=document.getElementById("myProducts");
+ let btnls=document.querySelector(".buttonls");
+ let btnls1=document.querySelector("#registerBtn");
+ document.querySelector(".btn-close").click();
+ myProducts.classList.remove("hide");
+ sellBtn.classList.remove("hide");
+ btnls.classList.add("hide");
+ btnls1.classList.add("hide");
+ //  location.href = './index.html';
+  
+}else{
     alert("invalid user or pass !");
   }
 }
 
-console.log(userDeatils)
+console.log(userDeatils);

@@ -11,6 +11,7 @@
     font-weight: bolder;
     
 }
+
 #brandSlogan{
     color:grey;
 }
@@ -161,4 +162,10 @@ body{
     font-weight: bolder;
     font-size:xx-large;
 
+}
+.hide {
+    display: none;
+}
+#myProducts{
+    display: none;
 }
