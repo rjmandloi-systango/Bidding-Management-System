@@ -13,10 +13,10 @@ function createCard() {
 
   // Construct card content
   let productContent = `
-<div class="card productCard "  style="width: 18rem;">
+<div class="card productCard mt-5 rounded-3 ms-4 mr-5"  style="width: 18rem;">
   
-      <div class="card-body " >
-               <div class="productName">
+      <div class="card-body  rounded-3" >
+               <div class="productName text-center p-1 rounded-3">
                  <h5 class="card-title">${productName}</h5>    
                </div>
 
@@ -25,18 +25,18 @@ function createCard() {
                </div>
 
                <div>
-                 <p class="card-text   text-dark">Discription:${productDiscription}</p>
+                 <p class="card-text text-start  text-dark"><span class ="fw-bold">Discription:</span>${productDiscription}</p>
                </div>
 
                <div >
-               <p class="card-text   text-dark">Initial bid:${productStartingBid} &#8377</p>
+               <p class="card-text   text-dark"><span class ="fw-bold">Initial bid:</span>${productStartingBid} &#8377</p>
                </div>
                
               
                     <div class="row border text-dark">
                       <div class="col-sm">
-                        <span class="clock"  >&#128336</span><br>
-                        <p class="timeText"  id=${uniqueProductId}></p>
+                        <span class="clock fs-2" fw-bold >&#128336</span><br>
+                        <p class=" fs-5 fw-bold"  id=${uniqueProductId}></p>
                       </div>
 
                       <div class="col-sm">
