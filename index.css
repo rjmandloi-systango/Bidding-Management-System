@@ -163,9 +163,9 @@ body{
     font-size:xx-large;
 
 }
-.hide {
+/* .hide {
     display: none;
-}
+} */
 #myProducts{
     display: none;
 }
