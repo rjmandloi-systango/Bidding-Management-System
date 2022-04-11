@@ -1,11 +1,14 @@
+import {productImageURL} from "./imageUpload.js";
+console.log(productImageURL);
 let productIdIncrementor = 1;
 let bidButtonIdIncrementor = 1;
-function createCard() {
-  productName = document.getElementById("productName").value;
-  productDiscription = document.getElementById("productDiscription").value;
-  productStartingBid = document.getElementById("productPrice").value;
-  sellerContactNumber = document.getElementById("sellerContactNumber").value;
-  let url = "https://image.shutterstock.com/image-illustration/modern-cars-studio-room-3d-260nw-735402217.jpg";
+window.createCard=function() {
+  let productName = document.getElementById("productName").value;
+  let productDiscription = document.getElementById("productDiscription").value;
+  let productStartingBid = document.getElementById("productPrice").value;
+  let sellerContactNumber = document.getElementById("sellerContactNumber").value;
+  // let url = "https://image.shutterstock.com/image-illustration/modern-cars-studio-room-3d-260nw-735402217.jpg";
+   let url=productImageURL;
   const card = document.createElement('div');
   card.classList = 'card-body';
   let uniqueProductId = "productId" + productIdIncrementor;

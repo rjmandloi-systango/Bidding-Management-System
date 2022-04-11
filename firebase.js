@@ -17,7 +17,17 @@
   const app = initializeApp(firebaseConfig);
 
   import { getDatabase,set,ref,get,child, update, remove} from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
-  const db=getDatabase();
   // console.log(db)
-  let a=10;
-  export {db,set,ref,get,child, update, remove};
+  // let a=10;
+  import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL }
+    from "https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js";
+
+  const db=getDatabase();
+  const databaseRef = ref(db);
+  const storage = getStorage();
+
+
+    
+  export {db,set,ref,get,child, update, remove , app,storage ,databaseRef,sRef, uploadBytesResumable, getDownloadURL};
+  //for img upload
+  // export{ app, db, storage ,databaseRef, ref, get, set, child, update, sRef, uploadBytesResumable, getDownloadURL };
