@@ -50,7 +50,7 @@ function GetFileName(file) {
 
 
 async function UploadProcess() {
-    
+    productImageURL="";
     let ImgToUpload = files[0];
     let ImgName = namebox.value + extlab.innerHTML;
     const metaData = {

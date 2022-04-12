@@ -1,14 +1,14 @@
-import {productImageURL} from "./imageUpload.js";
+import { productImageURL } from "./imageUpload.js";
 console.log(productImageURL);
 let productIdIncrementor = 1;
 let bidButtonIdIncrementor = 1;
-window.createCard=function() {
+window.createCard = function () {
   let productName = document.getElementById("productName").value;
   let productDiscription = document.getElementById("productDiscription").value;
   let productStartingBid = document.getElementById("productPrice").value;
   let sellerContactNumber = document.getElementById("sellerContactNumber").value;
   // let url = "https://image.shutterstock.com/image-illustration/modern-cars-studio-room-3d-260nw-735402217.jpg";
-   let url=productImageURL;
+  let url = productImageURL;
   const card = document.createElement('div');
   card.classList = 'card-body';
   let uniqueProductId = "productId" + productIdIncrementor;
@@ -60,7 +60,7 @@ window.createCard=function() {
 
   // Append newly created card element to the container
   container.innerHTML += productContent;
-  timer(uniqueProductId , uniqueBidButtonId);
+  timer(uniqueProductId, uniqueBidButtonId);
   productIdIncrementor++;
   bidButtonIdIncrementor++;
 }
@@ -82,20 +82,32 @@ if (currentDate < 10) {
 else {
   minDateString += `${currentDate}`;
 }
-// console.log(minDateString);
 bidDate.min = minDateString;
-// console.log(bidDate.min);
 
-function timer(uniqueProductId , uniqueBidButtonId ) {
+let hours = currentDateObj.getHours();
+let minutes = currentDateObj.getMinutes();
+
+function timer(uniqueProductId, uniqueBidButtonId) {
 
   let bidDate = document.getElementById("bidDate").value;
   let bidTime = document.getElementById("bidTime").value;
   let dateArray = bidDate.split("-");
   let timeArray = bidTime.split(":");
-  let date = new Date(dateArray[0], dateArray[1] - 1, dateArray[2]);
+  let date = new Date(dateArray[0], dateArray[1] - 1, dateArray[2]);//year-month-day
   let shortMonth = date.toLocaleString('en-us', { month: 'short' });
-  let userInputDate = new Date(`${shortMonth} ${dateArray[2]}, ${dateArray[0]} ${timeArray[0]}:${timeArray[1]}:00`).getTime();
-  // Update the productIdIncrementor down every 1 second
+  let userInputDate;
+  
+
+  if (dateArray[0] == currentDateObj.getFullYear() && (dateArray[1]-1) == currentDateObj.getMonth()  && dateArray[2] == currentDateObj.getDate() && timeArray[0] <= hours && timeArray[1] <= minutes) {
+        console.log("galat time diya user ne ");
+    userInputDate = new Date(`${shortMonth} ${dateArray[2]}, ${dateArray[0]} ${hours + 4}:${minutes}:00`).getTime();
+  }
+  else {
+    userInputDate = new Date(`${shortMonth} ${dateArray[2]}, ${dateArray[0]} ${timeArray[0]}:${timeArray[1]}:00`).getTime();
+  }
+
+
+
   let timeFunction = setInterval(function () {
     // Get today's date and time
     let currentTime = new Date().getTime();
