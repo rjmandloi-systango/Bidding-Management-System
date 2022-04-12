@@ -437,12 +437,18 @@
   
   <script>
     // let preloader=document.getElementById("loading");
+    setTimeout(() => {
+
     document.querySelector("body").addEventListener('onload', loadingFunction());
+
     function loadingFunction() {
-      // console.log("loader chla");
+        
+      console.log("loader chla");
       document.getElementById("loading").style.display = "none";
     }
-  </script>
+  }, 1000);
+
+    </script>
 
   <script>
   
