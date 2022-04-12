@@ -97,8 +97,8 @@ function timer(uniqueProductId, uniqueBidButtonId) {
   let shortMonth = date.toLocaleString('en-us', { month: 'short' });
   let userInputDate;
   
-
-  if (dateArray[0] == currentDateObj.getFullYear() && (dateArray[1]-1) == currentDateObj.getMonth()  && dateArray[2] == currentDateObj.getDate() && timeArray[0] <= hours && timeArray[1] <= minutes) {
+console.log(hours +" "+timeArray[0] +"|||| "+ minutes+" "+timeArray[1]);
+  if (dateArray[0] == currentDateObj.getFullYear() && (dateArray[1]-1) == currentDateObj.getMonth()  && dateArray[2] == currentDateObj.getDate() && hours>=timeArray[0] && minutes>=timeArray[1] ) {
         console.log("galat time diya user ne ");
     userInputDate = new Date(`${shortMonth} ${dateArray[2]}, ${dateArray[0]} ${hours + 4}:${minutes}:00`).getTime();
   }
