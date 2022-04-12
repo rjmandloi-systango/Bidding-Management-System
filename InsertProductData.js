@@ -4,8 +4,10 @@ let UserData=JSON.parse(localStorage.getItem("USERDATA"));
 let UserID=UserData.id
 let sellButton=document.getElementById("sellSubmitButton");
 sellButton.addEventListener("click",productData);
-
-
+let productIdArray=[];
+let date=new Date();
+    let time=date.getMilliseconds();
+    
 function productData(){
     let productInformation={
      productName:document.getElementById("productName").value,
@@ -19,8 +21,6 @@ function productData(){
 }
 
 function insertProcuctDetails(productInformation) {
-    let date=new Date();
-    let time=date.getMilliseconds();
     update(ref(db, "User/"+UserID+"/Details/ProductSold/"+[time]), {
         
       
@@ -30,11 +30,15 @@ function insertProcuctDetails(productInformation) {
         ProductPrice:productInformation.productPrice,
         SellerContactNumber:productInformation.sellerContactNumber,
         BidDate:productInformation.bidDate,
-        BitTime:productInformation.bidTime
-          
+        BitTime:productInformation.bidTime,
+        
+
+       
+
     
 }).then(() => {
-        alert('You are Registered...')
+  productIdArray.push(time)      
+  alert('Congrats your product added successfully...')
         location.href = './index.html'; 
     })
       .catch((error) => {
@@ -48,3 +52,4 @@ function insertProcuctDetails(productInformation) {
         alert("error");
       });
   }
+  // console.log("ProductArray-->",time)

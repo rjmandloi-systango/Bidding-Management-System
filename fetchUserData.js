@@ -24,7 +24,7 @@ function allDataFetch() {
                     "PinCode":child.val().Details.PinCode,
                     "Address":child.val().Details.Address,
                     "LandMakr":child.val().Details.LandMakr,
-                    "UserName":child.val().Details.UserName,
+                    // "UserName":child.val().Details.UserName,
                     "UserPass":child.val().Details.UserPass
             })
 

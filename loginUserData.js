@@ -14,7 +14,7 @@ function loginClickFun(){
 function checkUserLogin(userNameLogin,userPassLogin){
   let flag=0;
   for(let index=0;index<userDeatils.length;index++){
-    if(userDeatils[index].UserName===userNameLogin && userDeatils[index].UserPass===userPassLogin)
+    if(userDeatils[index].Email===userNameLogin && userDeatils[index].UserPass===userPassLogin)
     {
       flag=1;
       console.log(userDeatils[index]);
@@ -61,4 +61,4 @@ console.log('before')
 }
 
 
-console.log(userDeatils);
+console.log('users Data',userDeatils);

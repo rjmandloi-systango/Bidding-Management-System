@@ -21,7 +21,7 @@ function userData() {
     userPinCode: document.getElementById("userPinCode").value,
     userFullAddress: document.getElementById("userFullAddress").value,
     userLandmark: document.getElementById("userLandMark").value,
-    userName: document.getElementById("userName").value,
+    // userName: document.getElementById("userName").value,
     userPassword: document.getElementById("userPassword").value,
     userInvalidCheck: document.getElementById("invalidCheck").value
   }
@@ -36,7 +36,7 @@ function userData() {
     pin: document.getElementById("pin"),
     add: document.getElementById("add"),
     lmark: document.getElementById("lmark"),
-    uname: document.getElementById("uname"),
+    // uname: document.getElementById("uname"),
     pass: document.getElementById("pass"),
     agree: document.getElementById("agree"),
   }
@@ -76,7 +76,7 @@ function insertUser(userDataObj) {
       PinCode:userDataObj.userPinCode,
       FullAddress:userDataObj.userFullAddress,
       LandMark:userDataObj.userLandmark,
-      UserName:userDataObj.userName,
+      // UserName:userDataObj.userName,
       UserPass:userDataObj.userPassword
     }
   }).then(() => {
