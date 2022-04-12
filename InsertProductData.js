@@ -39,17 +39,17 @@ function insertProcuctDetails(productInformation) {
 }).then(() => {
   productIdArray.push(time)      
   alert('Congrats your product added successfully...')
-        location.href = './index.html'; 
+        // location.href = './index.html'; 
     })
       .catch((error) => {
         // alert("error aa gai h");
       });
-      set(ref(db, "ID"), (ID + 1))
-      .then(() => {
-        // alert("serial count update");
-      })
-      .catch((error) => {
-        alert("error");
-      });
+      // set(ref(db, "ID"), (ID + 1))
+      // .then(() => {
+      //   // alert("serial count update");
+      // })
+      // .catch((error) => {
+      //   alert("error");
+      // });
   }
   // console.log("ProductArray-->",time)

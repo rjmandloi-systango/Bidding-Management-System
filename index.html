@@ -62,16 +62,27 @@
               </div>
             </li>
             <li class="nav-item">
-              <button type="button" class="btn buttonls m-1" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+              <button type="button" id="loginCheck" class="btn buttonls m-1"  data-bs-toggle="modal" data-bs-target="#exampleModal1">
                 Login
               </button>
             </li>
             <li>
-              <button type="button" class="btn buttonls m-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <button type="button" class="btn buttonls m-1" id="registerBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+
                 Register
               </button>
             </li>
-
+            <li>
+              <button type="button" id="sellBtn" class="btn addProductButton m-1" data-bs-toggle="modal"
+              data-bs-target="#exampleModal3">
+              SELL
+            </button>
+            </li>
+            <li>
+              <button type="button" id="logoutBtn" class="btn addProductButton m-1">
+                Logout
+              </button>
+            </li>
 
           </ul>
           <form class="d-flex">
@@ -91,21 +102,21 @@
   <div class="loginSignupButton">
     <!-- <button type="button" class="btn btn-outline-primary">Login</button> -->
 
-    <button type="button" id="sellBtn" class="btn addProductButton " data-bs-toggle="modal"
+    <!-- <button type="button" id="sellBtn" class="btn addProductButton " data-bs-toggle="modal"
       data-bs-target="#exampleModal3">
       SELL
-    </button>
-    <button type="button" id="logoutBtn" class="btn addProductButton ">
+    </button> -->
+    <!-- <button type="button" id="logoutBtn" class="btn addProductButton ">
       Logout
-    </button>
+    </button> -->
 
-    <button type="button" id="loginCheck" class="btn buttonls" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+    <!-- <button type="button" id="loginCheck" class="btn buttonls" data-bs-toggle="modal" data-bs-target="#exampleModal1">
       Login
-    </button>
-    <button type="button" class="btn buttonls" id="registerBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    </button> -->
+    <!-- <button type="button" class="btn buttonls" id="registerBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">
 
       Register
-    </button>
+    </button> -->
     <script>
 
 
@@ -346,9 +357,9 @@
 
 
 
-  <button type="button" class="btn addProductButton mt-1" data-bs-toggle="modal" data-bs-target="#exampleModal3">
+  <!-- <button type="button" class="btn addProductButton mt-1" data-bs-toggle="modal" data-bs-target="#exampleModal3">
     Add new product
-  </button>
+  </button> -->
 
 
   <!-- Modal -->
@@ -360,7 +371,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form>
+          <!-- <form> -->
             <div class="mb-3">
               <label for="productName" class="form-label">Product Name</label>
               <input type="text" class="form-control " id="productName" required />
@@ -400,15 +411,15 @@
               </div>
             </div>
 
-            <button class="btn btn-primary" onclick="createCard()">
+            <button class="btn btn-primary"  id="sellSubmitButton" onclick="createCard()">
               Submit
             </button>
-          </form>
+          <!-- </form> -->
         </div>
         <!-- onclick="createCard()" -->
-        <button class="btn btn-primary" id="sellSubmitButton">
-          Submit
-        </button>
+        <!-- <button class="btn btn-primary" id="sellSubmitButton"> -->
+          <!-- Submit -->
+        <!-- </button> -->
         <!-- </form> -->
       </div>
       <div class="modal-footer">
@@ -423,10 +434,7 @@
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
 
-  <script type="module" src="./index.js"></script>
-  <script type="module" src="./insertUserData.js"></script>
-  <script type="module" src="./loginUserData.js"></script>
-  <script type="module" src="./imageUpload.js"></script>
+  
   <script>
     // let preloader=document.getElementById("loading");
     document.querySelector("body").addEventListener('onload', loadingFunction());
@@ -437,10 +445,7 @@
   </script>
 
   <script>
-    // let sellBtn=document.getElementById("sellBtn");
-    // sellBtn.style.display="none";
-    // let pm=document.getElementById("myProducts");
-    // pm.style.display="none";
+  
     let btn = document.getElementById("userDataInssert");
     let check = document.getElementById("invalidCheck");
     btn.disabled = true;
@@ -496,10 +501,6 @@
           }
         }
       }
-
-
-
-
       // Fetch all the forms we want to apply custom Bootstrap validation styles to
       var forms = document.querySelectorAll('.needs-validation')
 
@@ -526,12 +527,12 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"></script>
-  <script src="./index.js"></script>
-  <!-- <script type="module" src="./insertUserData.js"></script> -->
-  <!-- <script type="module" src="./loginUserData.js"></script> -->
   <script type="module" src="./InsertProductData.js"></script>
   <script type="module" src="./FetchProductData.js"></script>
-
+  <script type="module" src="./index.js"></script>
+  <script type="module" src="./insertUserData.js"></script>
+  <script type="module" src="./loginUserData.js"></script>
+  <script type="module" src="./imageUpload.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"></script>

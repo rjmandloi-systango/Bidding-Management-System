@@ -1,5 +1,5 @@
 import { productImageURL } from "./imageUpload.js";
-console.log(productImageURL);
+// console.log(productImageURL);
 let productIdIncrementor = 1;
 let bidButtonIdIncrementor = 1;
 window.createCard = function () {
