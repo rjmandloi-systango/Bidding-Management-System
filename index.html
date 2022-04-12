@@ -23,6 +23,7 @@
   <!-- onload="loaderFunction()" -->
 
 
+
   <div id="loading"></div>
 
   <!-- //navbar -->
@@ -47,6 +48,7 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Winners</a>
             </li>
+
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
@@ -69,6 +71,8 @@
                 Register
               </button>
             </li>
+
+
           </ul>
           <form class="d-flex">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
@@ -83,8 +87,60 @@
   <!-- navbar -->
 
 
+
+  <div class="loginSignupButton">
+    <!-- <button type="button" class="btn btn-outline-primary">Login</button> -->
+
+    <button type="button" id="sellBtn" class="btn addProductButton " data-bs-toggle="modal"
+      data-bs-target="#exampleModal3">
+      SELL
+    </button>
+    <button type="button" id="logoutBtn" class="btn addProductButton ">
+      Logout
+    </button>
+
+    <button type="button" id="loginCheck" class="btn buttonls" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+      Login
+    </button>
+    <button type="button" class="btn buttonls" id="registerBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+
+      Register
+    </button>
+    <script>
+
+
+      let sellbtn = document.getElementById("sellBtn");
+      let logoutbtn = document.getElementById("logoutBtn");
+      let loginCheck = document.getElementById("loginCheck");
+      let registerCheck = document.getElementById("registerBtn");
+      sellbtn.style.display = "none";
+      logoutbtn.style.display = "none";
+      loginCheck.style.display = "none";
+      registerCheck.style.display = "none";
+      let status = localStorage.getItem("STATUS");
+      if (status == "true") {
+        loginCheck.style.display = "block";;
+        registerCheck.style.display = "block";;
+
+      } else {
+        sellbtn.style.display = "block";;
+        logoutbtn.style.display = "block";;
+
+      }
+
+
+
+
+    </script>
+
+    <!-- Button trigger modal -->
+
+    <!-- <button type="button" class="btn btn-outline-secondary">Register</button> -->
+  </div>
+
+
   <!-- Modal -->
-  <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade " id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -94,7 +150,7 @@
         <div class="modal-body">
 
           <div class="col-md-6">
-            <label for="userName" class="form-label">User Name</label>
+            <label for="userName" class="form-label">Email/Username</label>
             <input type="text" class="form-control" id="userNameLogin" value="" required>
             <span id="uname"></span>
           </div>
@@ -154,7 +210,7 @@
 
             </div>
             <div class="col-md-6">
-              <label for="userEmail" class="form-label">Email</label>
+              <label for="userEmail" class="form-label">Email(UserName)</label>
               <div class="input-group has-validation">
                 <span class="input-group-text" id="userEmailIcon">@</span>
 
@@ -213,14 +269,10 @@
               <input type="text" class="form-control" id="userLandMark" required>
               <span id="lmark"></span>
             </div>
-            <div class="col-md-6">
-              <label for="userName" class="form-label">User Name</label>
-              <input type="text" class="form-control" id="userName" required>
-              <span id="uname"></span>
-            </div>
+
 
             <div class="col-md-6">
-              <label for="userPassword" class="form-label">Password</label>
+              <label for="userPassword" class="form-label">Create Your Password</label>
 
               <input type="password" class="form-control" id="userPassword" required>
               <span id="pass"></span>
@@ -292,11 +344,12 @@
   <!-- <button type="button" class="btn btn-primary" onclick="createCard()">add cards</button> -->
   <div id="container" class="d-flex flex-wrap"></div>
 
-  <!-- Button trigger modal -->
+
 
   <button type="button" class="btn addProductButton mt-1" data-bs-toggle="modal" data-bs-target="#exampleModal3">
     Add new product
   </button>
+
 
   <!-- Modal -->
   <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -312,6 +365,8 @@
               <label for="productName" class="form-label">Product Name</label>
               <input type="text" class="form-control " id="productName" required />
             </div>
+
+
 
             <div class="mb-3">
               <label>Image</label><label id="extlab"></label>
@@ -350,16 +405,20 @@
             </button>
           </form>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-            Close
-          </button>
-        </div>
+        <!-- onclick="createCard()" -->
+        <button class="btn btn-primary" id="sellSubmitButton">
+          Submit
+        </button>
+        <!-- </form> -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
       </div>
     </div>
   </div>
-
-
+  </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
@@ -370,14 +429,18 @@
   <script type="module" src="./imageUpload.js"></script>
   <script>
     // let preloader=document.getElementById("loading");
-    document.querySelector("body").addEventListener('onload' , loadingFunction());
+    document.querySelector("body").addEventListener('onload', loadingFunction());
     function loadingFunction() {
       // console.log("loader chla");
       document.getElementById("loading").style.display = "none";
     }
   </script>
-  <script>
 
+  <script>
+    // let sellBtn=document.getElementById("sellBtn");
+    // sellBtn.style.display="none";
+    // let pm=document.getElementById("myProducts");
+    // pm.style.display="none";
     let btn = document.getElementById("userDataInssert");
     let check = document.getElementById("invalidCheck");
     btn.disabled = true;
@@ -460,6 +523,18 @@
   </script>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+  <script src="./index.js"></script>
+  <!-- <script type="module" src="./insertUserData.js"></script> -->
+  <!-- <script type="module" src="./loginUserData.js"></script> -->
+  <script type="module" src="./InsertProductData.js"></script>
+  <script type="module" src="./FetchProductData.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
 
 </body>
 
