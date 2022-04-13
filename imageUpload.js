@@ -71,7 +71,7 @@ async function UploadProcess() {
         () => {
             getDownloadURL(UploadTask.snapshot.ref).then((downlodURL) => {
                 productImageURL=downlodURL;
-                console.log(downlodURL);
+                // console.log(downlodURL);
 
             });
 

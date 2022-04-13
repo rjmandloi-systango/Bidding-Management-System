@@ -17,7 +17,7 @@ function checkUserLogin(userNameLogin,userPassLogin){
     if(userDeatils[index].Email===userNameLogin && userDeatils[index].UserPass===userPassLogin)
     {
       flag=1;
-      console.log(userDeatils[index]);
+      // console.log(userDeatils[index]);
       localStorage.setItem("USERDATA",JSON.stringify(userDeatils[index]));
     }
   }
@@ -49,16 +49,16 @@ let newStatus= localStorage.getItem("STATUS");
 }
 
  let logoutClick2=document.getElementById("logoutBtn");
-console.log('before')
+// console.log('before')
 
  logoutClick2.addEventListener('click',logoutClickFun);
 
  function logoutClickFun(){
-  console.log('after')
+  // console.log('after')
   localStorage.setItem("STATUS",true);
   location.reload();
 
 }
 
 
-console.log('users Data',userDeatils);
+// console.log('users Data',userDeatils);

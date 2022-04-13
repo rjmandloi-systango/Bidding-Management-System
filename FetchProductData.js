@@ -1,6 +1,6 @@
 import { userDeatils } from "./fetchUserData.js";
-import { db, set, ref,get,child, update, remove } from "./firebase.js";
-    // export {}
+import { db, set, ref, get, child, update, remove } from "./firebase.js";
+// export {}
 // import {createCard} from "./index.js";
 import { productImageURL } from "./imageUpload.js";
 // console.log(productImageURL);
@@ -30,11 +30,11 @@ let minutes = currentDateObj.getMinutes();
 
 allProductDataFetch();
 let productDeatils = [];
-let arr= [];
+let arr = [];
 
 function allProductDataFetch() {
-  
 
+  let isLogin =localStorage.getItem("STATUS"); //FALSE=LOGIN   TRUE=LOGOUT 
   const databaseRef = ref(db);
 
   get(child(databaseRef, "User/")).then((snapshot) => {
@@ -42,22 +42,22 @@ function allProductDataFetch() {
 
       if (snapshot.exists()) {
         snapshot.forEach((child) => {
-                productDeatils.push({
-                   id:child.val().Details.ProductSold,
-            })
+          productDeatils.push({
+            id: child.val().Details.ProductSold,
+          })
 
-            
+
         });
       }
-      
+
       productDeatils.forEach((element) => {
-        console.log('line 27',element);
+        // console.log('line 27',element);
         if (element?.id) {
-          Object.keys(element.id).forEach((key)=>{
-            console.log('line 30',element.id[key]["ProductName"]);
+          Object.keys(element.id).forEach((key) => {
+            // console.log('line 30',element.id[key]["ProductName"]);
             // createCard(element.id[key]["ProductName"],element.id[key]["ProductDiscription"],element.id[key]["ProductPrice"]);
             createCard();
-            function  createCard() {
+            function createCard() {
               let productName = element.id[key]["ProductName"];
               let productDiscription = element.id[key]["ProductDiscription"];
               let productStartingBid = element.id[key]["ProductPrice"];
@@ -65,12 +65,12 @@ function allProductDataFetch() {
               // let url = "https://image.shutterstock.com/image-illustration/modern-cars-studio-room-3d-260nw-735402217.jpg";
               // let url = productImageURL;
               let url = element.id[key]["ImageURl"];
-              console.log(url)
+              // console.log(url)
               const card = document.createElement('div');
               card.classList = 'card-body';
               let uniqueProductId = "productId" + productIdIncrementor;
               let uniqueBidButtonId = "bidButton" + bidButtonIdIncrementor;
-            
+
               // Construct card content
               let productContent = `
             <div class="card productCard mt-5 rounded-3 ms-4 mr-5"  style="width: 18rem;">
@@ -107,17 +107,32 @@ function allProductDataFetch() {
                               <div class="d-flex justify-content-between border text-dark >
                               
                                    <span class="col-6">person</span>
-                                   <a href="#" class="btn btn-primary col-6" id=${uniqueBidButtonId} >Your bid</a>
+                                   <button class="btn btn-primary col-6 biddingStatus" id=${uniqueBidButtonId} >Your bid</button>
                                                
                               </div>
                             
                   </div>
             </div>
                 `;
-            
+
+
               // Append newly created card element to the container
               container.innerHTML += productContent;
-              timer(uniqueProductId, uniqueBidButtonId,element.id[key]["BidDate"],element.id[key]["BitTime"]);
+              console.log(uniqueBidButtonId +"    "+"login status="+isLogin);
+              let stat;
+
+              if(isLogin=== "true")
+              {
+                stat=0
+              }
+              else{
+                 stat=1
+              }
+              if(!stat)
+              { 
+                document.getElementById(uniqueBidButtonId).disabled="true";
+              }
+              timer(uniqueProductId, uniqueBidButtonId, element.id[key]["BidDate"], element.id[key]["BitTime"]);
               productIdIncrementor++;
               bidButtonIdIncrementor++;
             }
@@ -130,10 +145,10 @@ function allProductDataFetch() {
 
   });
 }
- 
 
 
-function timer(uniqueProductId, uniqueBidButtonId,bidData1,bidTime1) {
+
+function timer(uniqueProductId, uniqueBidButtonId, bidData1, bidTime1) {
 
   let bidDate = bidData1;
   let bidTime = bidTime1;
@@ -142,10 +157,10 @@ function timer(uniqueProductId, uniqueBidButtonId,bidData1,bidTime1) {
   let date = new Date(dateArray[0], dateArray[1] - 1, dateArray[2]);//year-month-day
   let shortMonth = date.toLocaleString('en-us', { month: 'short' });
   let userInputDate;
-  
 
-  if (dateArray[0] == currentDateObj.getFullYear() && (dateArray[1]-1) == currentDateObj.getMonth()  && dateArray[2] == currentDateObj.getDate() && timeArray[0] <= hours && timeArray[1] <= minutes) {
-        console.log("galat time diya user ne ");
+
+  if (dateArray[0] == currentDateObj.getFullYear() && (dateArray[1] - 1) == currentDateObj.getMonth() && dateArray[2] == currentDateObj.getDate() && timeArray[0] <= hours && timeArray[1] <= minutes) {
+    // console.log("galat time diya user ne ");
     userInputDate = new Date(`${shortMonth} ${dateArray[2]}, ${dateArray[0]} ${hours + 4}:${minutes}:00`).getTime();
   }
   else {
@@ -174,13 +189,16 @@ function timer(uniqueProductId, uniqueBidButtonId,bidData1,bidTime1) {
     // If the productIdIncrementor down is over, write some text 
     if (distance < 0) {
       document.getElementById(uniqueProductId).innerHTML = "EXPIRED";
-      console.log(uniqueBidButtonId);
+      // console.log(uniqueBidButtonId);
       document.getElementById(uniqueBidButtonId).style.display = "none";
       clearInterval(timeFunction);
     }
   }, 1000);
+
+
+
 }
-    console.log('Products',productDeatils)
+    // console.log('Products',productDeatils)
 
 
 
@@ -203,3 +221,57 @@ function timer(uniqueProductId, uniqueBidButtonId,bidData1,bidTime1) {
   //     Max Bid &#8377
   //   </div>
   //  </div> 
+
+
+
+
+
+
+
+
+
+
+
+  // if (isLogin) {
+              //   console.log(isLogin + "    logut status");
+              //  let bidButtons=document.getElementsByClassName("biddingStatus");
+              //    for(let element=0; element<bidButtons.length; element++){
+              //     bidButtons[element].disabled="true";
+              //     console.log(bidButtons[element]);
+              //   }
+               
+              // }
+              // else {
+              //   console.log(isLogin + "   logut status");
+              // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+              // let stat;
+
+              // if(isLogin=== "true")
+              // {
+              //   stat=0
+              // }
+              // else{
+              //    stat=1
+              // }
+              // if(stat)
+              // { 
+              //   document.getElementById(uniqueBidButtonId).style.display = "block";
+              // }
+              // else{
+              //   document.getElementById(uniqueBidButtonId).disabled="true";
+              //   // document.getElementById(uniqueBidButtonId).style.display = "none";
+              //   console.log("else chala");
+              // }
