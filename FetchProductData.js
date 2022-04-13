@@ -81,7 +81,7 @@ function allProductDataFetch() {
                            </div>
             
                            <div >
-                             <img src=${url} class="card-img-top" alt="...">
+                             <img src=${url} class="card-img-top img-thumbnail imgShowInCard" alt="...">
                            </div>
             
                            <div>
@@ -93,16 +93,16 @@ function allProductDataFetch() {
                            </div>
                            
                           
-                                <div class="row border text-dark">
+                                 
                                   <div class="col-sm">
-                                    <span class="clock fs-2" fw-bold >&#128336</span><br>
-                                    <p class=" fs-5 fw-bold"  id=${uniqueProductId}></p>
+                                    <span class="clock fs-2" fw-bold >&#128336</span>
+                                    <span class=" fs-5 fw-bold"  id=${uniqueProductId}></span>
                                   </div>
             
                                   <div class="col-sm">
                                     Max Bid &#8377
                                   </div>
-                                </div>    
+                                     
                             
                               <div class="d-flex justify-content-between border text-dark >
                               
@@ -182,3 +182,24 @@ function timer(uniqueProductId, uniqueBidButtonId,bidData1,bidTime1) {
 }
     console.log('Products',productDeatils)
 
+
+
+
+
+
+
+
+
+
+
+
+  //   <div class="row border text-dark">
+  //   <div class="col-sm">
+  //     <span class="clock fs-2" fw-bold >&#128336</span><br>
+  //     <p class=" fs-5 fw-bold"  id=${uniqueProductId}></p>
+  //   </div>
+
+  //   <div class="col-sm">
+  //     Max Bid &#8377
+  //   </div>
+  //  </div> 

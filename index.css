@@ -83,4 +83,11 @@ body{
     /* background-color: cornsilk; */
     
  } 
-
+.imgShowInCard{
+    height: 200px;
+    display: block;
+  margin-left: auto;
+  margin-right: auto;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
