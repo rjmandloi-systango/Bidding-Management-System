@@ -34,7 +34,7 @@ let arr = [];
 
 function allProductDataFetch() {
 
-  let isLogin =localStorage.getItem("STATUS"); //FALSE=LOGIN   TRUE=LOGOUT 
+  let isLogout =localStorage.getItem("STATUS"); //FALSE=LOGIN   TRUE=LOGOUT 
   const databaseRef = ref(db);
 
   get(child(databaseRef, "User/")).then((snapshot) => {
@@ -72,6 +72,14 @@ function allProductDataFetch() {
               let uniqueBidButtonId = "bidButton" + bidButtonIdIncrementor;
 
               // Construct card content
+              let isLogin;
+              if(isLogout=== "true")
+              {
+                isLogin=0
+              }
+              else{
+                isLogin=1
+              }
               let productContent = `
             <div class="card productCard mt-5 rounded-3 ms-4 mr-5"  style="width: 18rem;">
               
@@ -107,31 +115,46 @@ function allProductDataFetch() {
                               <div class="d-flex justify-content-between border text-dark >
                               
                                    <span class="col-6">person</span>
-                                   <button class="btn btn-primary col-6 biddingStatus" id=${uniqueBidButtonId} >Your bid</button>
+
+                             `;
+
+
+                             let productContentWhenNotLogin=`
+                                   <button class="btn btn-primary col-6 biddingStatus" id=${uniqueBidButtonId}  data-bs-toggle="modal" data-bs-target="#exampleModal1">Your bid</button>
                                                
                               </div>
                             
                   </div>
             </div>
                 `;
-
-
-              // Append newly created card element to the container
-              container.innerHTML += productContent;
-              console.log(uniqueBidButtonId +"    "+"login status="+isLogin);
-              let stat;
-
-              if(isLogin=== "true")
+                 
+                
+                let productContentWhenLogin=`
+                <button class="btn btn-primary col-6 biddingStatus" id=${uniqueBidButtonId}  >Your bid</button>
+                            
+           </div>
+         
+</div>
+</div>
+`;    
+              let productLayout;
+              if(isLogin)
               {
-                stat=0
+                productLayout=productContent+productContentWhenLogin;
               }
               else{
-                 stat=1
+                productLayout=productContent+productContentWhenNotLogin;
               }
-              if(!stat)
-              { 
-                document.getElementById(uniqueBidButtonId).disabled="true";
-              }
+              // Append newly created card element to the container
+              container.innerHTML += productLayout;
+              console.log(uniqueBidButtonId +"    "+"login status="+isLogout);
+              
+
+              
+              // if(!isLogin)
+              // { 
+              //   // document.getElementById(uniqueBidButtonId).disabled="true";
+              // }
               timer(uniqueProductId, uniqueBidButtonId, element.id[key]["BidDate"], element.id[key]["BitTime"]);
               productIdIncrementor++;
               bidButtonIdIncrementor++;
@@ -232,8 +255,8 @@ function timer(uniqueProductId, uniqueBidButtonId, bidData1, bidTime1) {
 
 
 
-  // if (isLogin) {
-              //   console.log(isLogin + "    logut status");
+  // if (isLogout) {
+              //   console.log(isLogout + "    logut status");
               //  let bidButtons=document.getElementsByClassName("biddingStatus");
               //    for(let element=0; element<bidButtons.length; element++){
               //     bidButtons[element].disabled="true";
@@ -242,7 +265,7 @@ function timer(uniqueProductId, uniqueBidButtonId, bidData1, bidTime1) {
                
               // }
               // else {
-              //   console.log(isLogin + "   logut status");
+              //   console.log(isLogout + "   logut status");
               // }
 
 
@@ -259,7 +282,7 @@ function timer(uniqueProductId, uniqueBidButtonId, bidData1, bidTime1) {
 
               // let stat;
 
-              // if(isLogin=== "true")
+              // if(isLogout=== "true")
               // {
               //   stat=0
               // }
@@ -275,3 +298,68 @@ function timer(uniqueProductId, uniqueBidButtonId, bidData1, bidTime1) {
               //   // document.getElementById(uniqueBidButtonId).style.display = "none";
               //   console.log("else chala");
               // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              // let productContent = `
+              // <div class="card productCard mt-5 rounded-3 ms-4 mr-5"  style="width: 18rem;">
+                
+              //       <div class="card-body  rounded-3" >
+              //                <div class="productName text-center p-1 rounded-3">
+              //                  <h5 class="card-title">${productName}</h5>    
+              //                </div>
+              
+              //                <div >
+              //                  <img src=${url} class="card-img-top img-thumbnail imgShowInCard" alt="...">
+              //                </div>
+              
+              //                <div>
+              //                  <p class="card-text text-start  text-dark"><span class ="fw-bold">Discription:</span>${productDiscription}</p>
+              //                </div>
+              
+              //                <div >
+              //                <p class="card-text   text-dark"><span class ="fw-bold">Initial bid:</span>${productStartingBid} &#8377</p>
+              //                </div>
+                             
+                            
+                                   
+              //                       <div class="col-sm">
+              //                         <span class="clock fs-2" fw-bold >&#128336</span>
+              //                         <span class=" fs-5 fw-bold"  id=${uniqueProductId}></span>
+              //                       </div>
+              
+              //                       <div class="col-sm">
+              //                         Max Bid &#8377
+              //                       </div>
+                                       
+                              
+              //                   <div class="d-flex justify-content-between border text-dark >
+                                
+              //                        <span class="col-6">person</span>
+                                     
+              //                        <button class="btn btn-primary col-6 biddingStatus" id=${uniqueBidButtonId}  data-bs-toggle="modal" data-bs-target="#exampleModal1">Your bid</button>
+                                                 
+              //                   </div>
+                              
+              //       </div>
+              // </div>
+              //     `;
+  
+  
+              //   // Append newly created card element to the container
+              //   container.innerHTML += productContent;

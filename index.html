@@ -62,21 +62,23 @@
               </div>
             </li>
             <li class="nav-item">
-              <button type="button" id="loginCheck" class="btn buttonls m-1"  data-bs-toggle="modal" data-bs-target="#exampleModal1">
+              <button type="button" id="loginCheck" class="btn buttonls m-1" data-bs-toggle="modal"
+                data-bs-target="#exampleModal1">
                 Login
               </button>
             </li>
             <li>
-              <button type="button" class="btn buttonls m-1" id="registerBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <button type="button" class="btn buttonls m-1" id="registerBtn" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">
 
                 Register
               </button>
             </li>
             <li>
               <button type="button" id="sellBtn" class="btn addProductButton m-1" data-bs-toggle="modal"
-              data-bs-target="#exampleModal3">
-              SELL
-            </button>
+                data-bs-target="#exampleModal3">
+                SELL
+              </button>
             </li>
             <li>
               <button type="button" id="logoutBtn" class="btn addProductButton m-1">
@@ -100,53 +102,7 @@
 
 
   <div class="loginSignupButton">
-    <!-- <button type="button" class="btn btn-outline-primary">Login</button> -->
-
-    <!-- <button type="button" id="sellBtn" class="btn addProductButton " data-bs-toggle="modal"
-      data-bs-target="#exampleModal3">
-      SELL
-    </button> -->
-    <!-- <button type="button" id="logoutBtn" class="btn addProductButton ">
-      Logout
-    </button> -->
-
-    <!-- <button type="button" id="loginCheck" class="btn buttonls" data-bs-toggle="modal" data-bs-target="#exampleModal1">
-      Login
-    </button> -->
-    <!-- <button type="button" class="btn buttonls" id="registerBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-
-      Register
-    </button> -->
-    <script>
-
-
-      let sellbtn = document.getElementById("sellBtn");
-      let logoutbtn = document.getElementById("logoutBtn");
-      let loginCheck = document.getElementById("loginCheck");
-      let registerCheck = document.getElementById("registerBtn");
-      sellbtn.style.display = "none";
-      logoutbtn.style.display = "none";
-      loginCheck.style.display = "none";
-      registerCheck.style.display = "none";
-      let status = localStorage.getItem("STATUS");
-      if (status == "true") {
-        loginCheck.style.display = "block";;
-        registerCheck.style.display = "block";;
-
-      } else {
-        sellbtn.style.display = "block";;
-        logoutbtn.style.display = "block";;
-
-      }
-
-
-
-
-    </script>
-
-    <!-- Button trigger modal -->
-
-    <!-- <button type="button" class="btn btn-outline-secondary">Register</button> -->
+   
   </div>
 
 
@@ -171,9 +127,9 @@
             <span id="pass"></span>
 
           </div>
-          <div>
+          <!-- <div>
             <a for="pass or uname" class="form-label">Forgot UserName or Password</a>
-          </div>
+          </div> -->
         </div>
         <div class="modal-footer">
           <button type="button" id="loginUserData" class="btn btn-primary">Submit</button>
@@ -312,7 +268,7 @@
   </div>
 
   <div id="carouselExampleControls" class="carousel slide carousel w-100 mx-0" data-bs-ride="carousel">
-    <div class="carousel-inner h-25 mt-4 mb-2">
+    <div class="carousel-inner h-25 mt-1 mb-2">
       <div class="carousel-item active w-100 h-100">
         <img src="./images/lead-banner-4.jpg" class="d-block carouselImage w-100 mx-0" alt="..." />
       </div>
@@ -372,53 +328,53 @@
         </div>
         <div class="modal-body">
           <!-- <form> -->
-            <div class="mb-3">
-              <label for="productName" class="form-label">Product Name</label>
-              <input type="text" class="form-control " id="productName" required />
-            </div>
+          <div class="mb-3">
+            <label for="productName" class="form-label">Product Name</label>
+            <input type="text" class="form-control " id="productName" required />
+          </div>
 
 
 
-            <div class="mb-3">
-              <label>Image</label><label id="extlab"></label>
-              <input type="text" id="namebox" />
-              <img id="myimg" class="img-fluid img-thumbnail rounded"><label id="upprogress"></label>
-              <button id="selbtn">Select img</button>
-              <button id="upbtn">upload img </button>
-            </div>
+          <div class="mb-3">
+            <label>Image</label><label id="extlab"></label>
+            <input type="text" id="namebox" />
+            <img id="myimg" class="img-fluid img-thumbnail rounded"><label id="upprogress"></label>
+            <button id="selbtn">Select img</button>
+            <button id="upbtn">upload img </button>
+          </div>
 
-            <div class="mb-3">
-              <label for="productDiscription" class="form-label">Product Discription</label>
-              <input type="text" class="form-control" id="productDiscription" required />
-            </div>
-            <div class="mb-3">
-              <label for="productPrice" class="form-label">Product Price</label>
-              <input type="number" class="form-control" id="productPrice" min="0" required />
-            </div>
-            <div class="mb-3">
-              <label for="sellerContactNumber" class="form-label">Seller's contact:</label>
-              <input type="text" class="form-control" id="sellerContactNumber" size="10" maxlength="10" required />
-            </div>
+          <div class="mb-3">
+            <label for="productDiscription" class="form-label">Product Discription</label>
+            <input type="text" class="form-control" id="productDiscription" required />
+          </div>
+          <div class="mb-3">
+            <label for="productPrice" class="form-label">Product Price</label>
+            <input type="number" class="form-control" id="productPrice" min="0" required />
+          </div>
+          <div class="mb-3">
+            <label for="sellerContactNumber" class="form-label">Seller's contact:</label>
+            <input type="text" class="form-control" id="sellerContactNumber" size="10" maxlength="10" required />
+          </div>
 
-            <div class="mb-3 row">
-              <div class="col-sm">
-                <label for="bidDate" class="form-label">Bid end BY</label>
-                <input type="date" class="form-control" id="bidDate" required />
-              </div>
-              <div class="col-sm">
-                <label for="bidTime" class="form-label">Bid end BY</label>
-                <input type="time" class="form-control" id="bidTime" required />
-              </div>
+          <div class="mb-3 row">
+            <div class="col-sm">
+              <label for="bidDate" class="form-label">Bid end BY</label>
+              <input type="date" class="form-control" id="bidDate" required />
             </div>
-            <!-- onclick="createCard()" -->
-            <button class="btn btn-primary"  id="sellSubmitButton" >
-              Submit
-            </button>
+            <div class="col-sm">
+              <label for="bidTime" class="form-label">Bid end BY</label>
+              <input type="time" class="form-control" id="bidTime" required />
+            </div>
+          </div>
+          <!-- onclick="createCard()" -->
+          <button class="btn btn-primary" id="sellSubmitButton">
+            Submit
+          </button>
           <!-- </form> -->
         </div>
         <!-- onclick="createCard()" -->
         <!-- <button class="btn btn-primary" id="sellSubmitButton"> -->
-          <!-- Submit -->
+        <!-- Submit -->
         <!-- </button> -->
         <!-- </form> -->
       </div>
@@ -434,24 +390,41 @@
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
 
-  
+  <script>
+    let sellbtn = document.getElementById("sellBtn");
+    let logoutbtn = document.getElementById("logoutBtn");
+    let loginCheck = document.getElementById("loginCheck");
+    let registerCheck = document.getElementById("registerBtn");
+    sellbtn.style.display = "none";
+    logoutbtn.style.display = "none";
+    loginCheck.style.display = "none";
+    registerCheck.style.display = "none";
+    let status = localStorage.getItem("STATUS");
+    if (status == "true") {
+      loginCheck.style.display = "block";;
+      registerCheck.style.display = "block";;
+    } else {
+      sellbtn.style.display = "block";;
+      logoutbtn.style.display = "block";;
+    }
+  </script>
   <script>
     // let preloader=document.getElementById("loading");
     setTimeout(() => {
 
-    document.querySelector("body").addEventListener('onload', loadingFunction());
+      document.querySelector("body").addEventListener('onload', loadingFunction());
 
-    function loadingFunction() {
-        
-      console.log("loader chla");
-      document.getElementById("loading").style.display = "none";
-    }
-  }, 1000);
+      function loadingFunction() {
 
-    </script>
+        console.log("loader chla");
+        document.getElementById("loading").style.display = "none";
+      }
+    }, 1000);
+
+  </script>
 
   <script>
-  
+
     let btn = document.getElementById("userDataInssert");
     let check = document.getElementById("invalidCheck");
     btn.disabled = true;
