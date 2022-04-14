@@ -38,3 +38,4 @@ function allDataFetch() {
 }
 
 export {userDeatils};
+// console.log('UserDetails....',userDeatils)

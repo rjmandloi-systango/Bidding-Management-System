@@ -61,4 +61,4 @@ let newStatus= localStorage.getItem("STATUS");
 }
 
 
-// console.log('users Data',userDeatils);
+console.log('User Details....',userDeatils);
