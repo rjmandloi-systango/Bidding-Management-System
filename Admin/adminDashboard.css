@@ -1,0 +1,27 @@
+#brand{
+    color: rgb(70, 68, 68);
+    font-family: 'Permanent Marker', cursive;
+    font-weight: bolder;
+}
+body{
+    background-color:rgb(238, 222, 222);
+    justify-content: center;
+}
+.imgShowInCard{
+    border: 2px solid black;
+    width: 100px; 
+   height: 100px; 
+   display: block; 
+    /* margin-left: auto;  */
+    /* margin-right: auto;   */
+    background-repeat: no-repeat;
+   background-size: contain;
+   object-fit: contain; 
+
+ }
+ .tbl{
+     position:static;
+     justify-content: center;
+     margin-left: auto;
+     margin-right: auto;
+ }

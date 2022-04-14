@@ -134,9 +134,9 @@ function allProductDataFetch() {
                             
            </div>
          
-</div>
-</div>
-`;    
+         </div>
+      </div>
+    `;    
               let productLayout;
               if(isLogin)
               {
@@ -221,7 +221,11 @@ function timer(uniqueProductId, uniqueBidButtonId, bidData1, bidTime1) {
 
 
 }
-    // console.log('Products',productDeatils)
+
+
+
+    console.log('Products',productDeatils);
+    export {productDeatils};
 
 
 
