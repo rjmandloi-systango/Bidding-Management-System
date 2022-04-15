@@ -25,7 +25,9 @@ function allDataFetch() {
                     "Address":child.val().Details.Address,
                     "LandMakr":child.val().Details.LandMakr,
                     // "UserName":child.val().Details.UserName,
-                    "UserPass":child.val().Details.UserPass
+                    "UserPass":child.val().Details.UserPass,
+                    "UserId":child.val().Details.UserID
+                    
             })
 
             // playerNames.push(child.val().player1);
@@ -37,4 +39,5 @@ function allDataFetch() {
   });
 }
 
+console.log(userDeatils);
 export {userDeatils};

@@ -77,7 +77,8 @@ function insertUser(userDataObj) {
       FullAddress:userDataObj.userFullAddress,
       LandMark:userDataObj.userLandmark,
       // UserName:userDataObj.userName,
-      UserPass:userDataObj.userPassword
+      UserPass:userDataObj.userPassword,
+      UserID:ID+1                        //newly added on 15-04-22
     }
   }).then(() => {
       alert('You are Registered...')

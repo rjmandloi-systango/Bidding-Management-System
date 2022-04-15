@@ -147,7 +147,7 @@ function allProductDataFetch() {
               }
               // Append newly created card element to the container
               container.innerHTML += productLayout;
-              console.log(uniqueBidButtonId +"    "+"login status="+isLogout);
+              // console.log(uniqueBidButtonId +"    "+"login status="+isLogout);
               
 
               
@@ -224,7 +224,7 @@ function timer(uniqueProductId, uniqueBidButtonId, bidData1, bidTime1) {
 
 
 
-    console.log('Products',productDeatils);
+    // console.log('Products',productDeatils);
     export {productDeatils};
 
 
