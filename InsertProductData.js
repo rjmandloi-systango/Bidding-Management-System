@@ -2,7 +2,9 @@ import { db, set, ref, get, child, update, remove } from "./firebase.js";
 import { productImageURL } from "./imageUpload.js";
 
 let UserData = JSON.parse(localStorage.getItem("USERDATA"));
-let UserID = UserData.id
+let UserID = UserData.id;
+let UserName=UserData.FirstName+" "+UserData.LastName ;
+
 let sellButton = document.getElementById("sellSubmitButton");
 sellButton.addEventListener("click", productData);
 let productIdArray = [];
@@ -35,7 +37,9 @@ function insertProcuctDetails(productInformation) {
     BitTime: productInformation.bidTime,
     ImageURl:url,
     ProductId:productInformation.productId,
-    UserId:UserID
+    UserId:UserID,
+    SellerName:UserName
+
 
   }).then(() => {
     productIdArray.push(time)

@@ -29,9 +29,6 @@ function allDataFetch() {
                     "UserId":child.val().Details.UserID
                     
             })
-
-            // playerNames.push(child.val().player1);
-            
         });
       }
     }
