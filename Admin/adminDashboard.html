@@ -14,6 +14,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="./adminDashboard.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>Admin dashboard </title>
 </head>
 
@@ -36,10 +37,11 @@
                         <a class="nav-link active" aria-current="page" href="./adminDashboard.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <button class="nav-link" id="productButton"> Products</button>
+                        <button class="nav-link m-2" id="productButton"> Products</button>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Users</a>
+                        <button class="nav-link m-2" id="s=userButton">Users</button>
+                        <!-- <a class="nav-link" href="#"></a> -->
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Items sold</a>
@@ -49,9 +51,10 @@
         </div>
     </nav>
     <div class="container  tbl">
-        <table class="table table-striped table-hover table-bordered  mt-5" style="table-layout: fixed ; display: none;" id="productTable" >
+        <table class="table table-striped table-hover table-bordered  mt-5" style="table-layout: fixed ; display: none;"
+            id="productTable">
             <tr>
-              
+                <!-- onclick="myFunction(this)" -->
                 <th>Product image</th>
                 <th>User Id</th>
                 <th>Product ID</th>
