@@ -1,10 +1,8 @@
-import { userDeatils } from "./fetchUserData.js";
-import { db, set, ref,get,child, update, remove } from "./firebase.js";
-    // export {}
-// import {createCard} from "./index.js";
-import { productImageURL } from "./imageUpload.js";
-// console.log(productImageURL);
-let productIdIncrementor = 1;
+import { db,ref,get,child} from "./firebase.js";
+
+
+
+ let productIdIncrementor = 1;
 let bidButtonIdIncrementor = 1;
 let bidDate = document.getElementById("bidDate");
 let currentDateObj = new Date();
@@ -51,21 +49,17 @@ function allProductDataFetch() {
       }
       
       productDeatils.forEach((element) => {
-        console.log('line 27',element);
+        // console.log('line 27',element);
         if (element?.id) {
           Object.keys(element.id).forEach((key)=>{
-            console.log('line 30',element.id[key]["ProductName"]);
-            // createCard(element.id[key]["ProductName"],element.id[key]["ProductDiscription"],element.id[key]["ProductPrice"]);
+            // console.log('line 30',element.id[key]["ProductName"]);
             createCard();
             function  createCard() {
               let productName = element.id[key]["ProductName"];
               let productDiscription = element.id[key]["ProductDiscription"];
               let productStartingBid = element.id[key]["ProductPrice"];
-              // let sellerContactNumber = document.getElementById("sellerContactNumber").value;
-              // let url = "https://image.shutterstock.com/image-illustration/modern-cars-studio-room-3d-260nw-735402217.jpg";
-              // let url = productImageURL;
               let url = element.id[key]["ImageURl"];
-              console.log(url)
+              // console.log(url)
               const card = document.createElement('div');
               card.classList = 'card-body';
               let uniqueProductId = "productId" + productIdIncrementor;
@@ -174,11 +168,11 @@ function timer(uniqueProductId, uniqueBidButtonId,bidData1,bidTime1) {
     // If the productIdIncrementor down is over, write some text 
     if (distance < 0) {
       document.getElementById(uniqueProductId).innerHTML = "EXPIRED";
-      console.log(uniqueBidButtonId);
+      // console.log(uniqueBidButtonId);
       document.getElementById(uniqueBidButtonId).style.display = "none";
       clearInterval(timeFunction);
     }
   }, 1000);
 }
-    console.log('Products',productDeatils)
+console.log('Products',productDeatils)
 

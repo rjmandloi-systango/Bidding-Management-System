@@ -22,7 +22,13 @@ function checkUserLogin(userNameLogin,userPassLogin){
     }
   }
   if(flag==1){
- alert("welcome !");
+
+
+    alert("welcome !");
+
+
+
+
  localStorage.setItem("STATUS",false);
 let newStatus= localStorage.getItem("STATUS");  
 
@@ -49,7 +55,7 @@ let newStatus= localStorage.getItem("STATUS");
 }
 
  let logoutClick2=document.getElementById("logoutBtn");
-console.log('before')
+// console.log('before')
 
  logoutClick2.addEventListener('click',logoutClickFun);
 

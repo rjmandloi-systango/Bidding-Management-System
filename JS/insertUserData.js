@@ -81,7 +81,7 @@ function insertUser(userDataObj) {
     }
   }).then(() => {
       alert('You are Registered...')
-      location.href = './index.html';
+      location.href = '../index.html';
     })
     .catch((error) => {
       alert("error aa gai h");
