@@ -72,8 +72,8 @@ function allProductDataFetch() {
               // let url = productImageURL;
               let url = element.id[key]["ImageURl"];
               // console.log(url)
-              const card = document.createElement('div');
-              card.classList = 'card-body';
+              // const card = document.createElement('div');
+              // card.classList = 'card-body';
               let uniqueProductId = "productId" + productIdIncrementor;
               let uniqueBidButtonId = "bidButton" + bidButtonIdIncrementor;
 

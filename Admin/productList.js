@@ -10,6 +10,19 @@ async function createProductList() {
         productButtonStatus = true;
         document.getElementById("productTable").style.display = "block";
         let productTable = document.getElementById("productTable");
+        productTable.innerHTML=`<tr>
+        
+        <th>Product image</th>
+        <th>User Id</th>
+        <th>Product ID</th>
+        <th>Product name</th>
+        <th>Product discription</th>
+        <th>Product starting bid</th>
+        <th>Bid ending date</th>
+        <th>Seller's contact</th>
+        <th>Delete Items</th>
+
+    </tr>`;
         const databaseRef = ref(db);
         await get(child(databaseRef, "User/")).then((snapshot) => {
             if (typeof (snapshot) !== 'undefined') {
@@ -61,3 +74,5 @@ window.removeProduct = function (userId, productId) {
             alert("Something went wrong!!!!!!!!!");
         });
 }
+
+
