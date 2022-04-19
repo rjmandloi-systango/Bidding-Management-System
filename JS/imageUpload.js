@@ -1,5 +1,5 @@
 
-import { db, set, ref, get, child, update, remove, app, storage, databaseRef, sRef, uploadBytesResumable, getDownloadURL } from "./firebase.js";
+import {  storage,  sRef, uploadBytesResumable, getDownloadURL } from "./firebase.js";
 
 let files = [];
 let reader = new FileReader();

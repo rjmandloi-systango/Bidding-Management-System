@@ -22,8 +22,8 @@ function allDataFetch() {
                     "Country":child.val().Details.Country,
                     "State":child.val().Details.State,
                     "PinCode":child.val().Details.PinCode,
-                    "Address":child.val().Details.Address,
-                    "LandMakr":child.val().Details.LandMakr,
+                    "Address":child.val().Details.FullAddress,
+                    "LandMakr":child.val().Details.LandMark,
                     // "UserName":child.val().Details.UserName,
                     "UserPass":child.val().Details.UserPass,
                     "UserId":child.val().Details.UserID
@@ -36,5 +36,6 @@ function allDataFetch() {
   });
 }
 
-console.log(userDeatils);
+
 export {userDeatils};
+// console.log('UserDetails....',userDeatils)

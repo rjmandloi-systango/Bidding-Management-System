@@ -58,7 +58,13 @@ function allProductDataFetch() {
             // createCard(element.id[key]["ProductName"],element.id[key]["ProductDiscription"],element.id[key]["ProductPrice"]);
             createCard();
             function createCard() {
-              let productName = element.id[key]["ProductName"];
+              // ;
+              let productName =element.id[key]["ProductName"]; 
+              let sellerName =element.id[key]["SellerName"]; 
+              let bidEndingDate =element.id[key]["BidDate"]; 
+              // let InitialBid =element.id[key]["ProductPrice"]; 
+              // let bidDate=element.id[key]["bidDate"];
+              // console.log(typeof(productName));
               let productDiscription = element.id[key]["ProductDiscription"];
               let productStartingBid = element.id[key]["ProductPrice"];
               // let sellerContactNumber = document.getElementById("sellerContactNumber").value;
@@ -81,7 +87,7 @@ function allProductDataFetch() {
                 isLogin=1
               }
               let productContent = `
-            <div class="card productCard mt-5 rounded-3 ms-4 mr-5"  style="width: 18rem;">
+             <div class="card productCard mt-5 rounded-3 ms-4 mr-5"  style="width: 18rem;">
               
                   <div class="card-body  rounded-3" >
                            <div class="productName text-center p-1 rounded-3">
@@ -125,18 +131,19 @@ function allProductDataFetch() {
                               </div>
                             
                   </div>
-            </div>
+             </div>
                 `;
-                 
                 
                 let productContentWhenLogin=`
-                <button class="btn btn-primary col-6 biddingStatus" id=${uniqueBidButtonId}  >Your bid</button>
+                <button  class="btn btn-primary col-6 biddingStatus" id=${uniqueBidButtonId} onclick="fetchProductData('${productName}','${sellerName}','${bidEndingDate}','${productStartingBid}','${url}')" >Your bid</button>
                             
-           </div>
+                </div>
          
+
          </div>
       </div>
     `;    
+
               let productLayout;
               if(isLogin)
               {
@@ -168,8 +175,19 @@ function allProductDataFetch() {
 
   });
 }
+let productObj;
+window.fetchProductData = function(pname,sname,betime,InitialBid,url){
+     productObj={
+     pname:pname,
+     sname:sname,
+     betime:betime,
+     InitialBid:InitialBid,
+     url:url
+   }
+sessionStorage.setItem("ProductData",JSON.stringify(productObj));
+   location.href="HTML/BidPage.html";
 
-
+}
 
 function timer(uniqueProductId, uniqueBidButtonId, bidData1, bidTime1) {
 
@@ -224,8 +242,12 @@ function timer(uniqueProductId, uniqueBidButtonId, bidData1, bidTime1) {
 
 
 
+
     // console.log('Products',productDeatils);
     export {productDeatils};
+
+    console.log('Products Details',productDeatils)
+
 
 
 
