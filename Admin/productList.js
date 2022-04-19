@@ -1,4 +1,4 @@
-import { db, set, ref, get, child, update, remove } from "../firebase.js";
+import { db, set, ref, get, child, update, remove } from "../JS/firebase.js";
 let productList = [];
 let uniqueDeleteButtonCounter = 1;
 let uniqueDeleteButtonId = "deleteBtn";
