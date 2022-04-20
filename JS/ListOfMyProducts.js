@@ -16,41 +16,34 @@ window.myProductList = function () {
                   <th scope="col">Product name</th>
                   <th scope="col">Product starting bid</th>
                   <th scope="col">Bid ending date</th>
-
+                  <th scope="col">Delete product</th>
               </tr>
-            
             `;
-
             if (snapshot.exists()) {
                 snapshot.forEach((child) => {
 
-                    console.log(child.val().ImageURl);
+                    // console.log(child.val().ImageURl);
                     myProductsTable.innerHTML += `<tr scope="row" class="table-active">
                     <td> <img  class="imgInTable" src=${child.val().ImageURl}></td>
                     <td style="text-align:center">${child.val().ProductId}</td>
                     <td style="text-align:center">${child.val().ProductName} </td>
                     <td style="text-align:center"> ${child.val().ProductPrice}</td>
                     <td style="text-align:center">${child.val().BidDate}</td>
+                    <td><button onclick="removeProduct(${userDATA.id} ,${child.val().ProductId})">delete</button></td>
                     </tr>`;
-
-
-
-
-
-                    // productList.push({
-                    //     id: child.val(),
-                    //     // date:element.id[key]["ProductName"]
-
-                    // })
                 });
             }
-            // console.log(productList);
 
-            productList.forEach((element) => {
-                // console.log(element.id.BidDate);
-
-
-            });
         }
+    });
+}
+
+
+window.removeProduct = function (userId, productId) {
+    remove(ref(db, `User/${userId}/Details/ProductSold/${productId}`), {
+    }).then(() => {
+        alert('Congrats your product is deleted  successfully...')
+    }).catch((error) => {
+        alert("Something went wrong!!!!!!!!!");
     });
 }
