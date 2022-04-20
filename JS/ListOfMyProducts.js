@@ -1,6 +1,4 @@
 import { db, set, ref, get, child, update, remove } from "../JS/firebase.js";
-// let productList = [];
-// document.getElementById("dropdownMenuButton3").addEventListener('click' ,myProductList);
 window.myProductList = function () {
     let myProductsTable = document.getElementById("myProductTable");
     let userDATA = JSON.parse(localStorage.getItem('USERDATA'));
