@@ -87,14 +87,26 @@ body {
 
 }
 
-.imgShowInCard {
+/* .imgShowInCard {
     height: 100px;
     display: block;
     margin-left: auto;
     margin-right: auto;
     background-repeat: no-repeat;
     /* background-size: contain; */
+    /* object-fit: contain; */
+/* } */ 
+
+.imgShowInCard{
+    display: block;
+    width: 100%;
+    height: 180px;
+    margin-left: auto;
+    margin-right: auto;
+    vertical-align: bottom;
     object-fit: contain;
+    background-repeat: no-repeat;
+
 }
 
 h1 {
