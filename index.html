@@ -45,9 +45,15 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="#">Daily Auctions</a>
             </li>
-            <!-- <li class="nav-item">
-              <a class="nav-link" href="#">My products</a>
-            </li> -->
+
+            <li class="nav-item">
+              <a class="nav-link" href="#">Winners</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link" id="pocketmoney" href="HTML/pocketmoney.html">PocketMoney</a>
+            </li>
+           
 
             <li class="nav-item dropdown">
               <div class="dropdown">
@@ -417,14 +423,17 @@
   <script>
     
     let sellbtn = document.getElementById("sellBtn");
+
     let dropdownMenuButton3 = document.getElementById("dropdownMenuButton3");
    
+    let pocketmoney = document.getElementById("pocketmoney");
     let logoutbtn = document.getElementById("logoutBtn");
     let loginCheck = document.getElementById("loginCheck");
     let registerCheck = document.getElementById("registerBtn");
     sellbtn.style.display = "none";
     dropdownMenuButton3.style.display = "none";
     
+    pocketmoney.style.display = "none";
     logoutbtn.style.display = "none";
     loginCheck.style.display = "none";
     registerCheck.style.display = "none";
@@ -437,6 +446,7 @@
       dropdownMenuButton3.style.display = "block";;
     
       logoutbtn.style.display = "block";;
+      pocketmoney.style.display = "block";;
     }
   </script>
   <script>

@@ -4,7 +4,10 @@ import { db, set, ref, get, child, update, remove } from "./firebase.js";
 // import {createCard} from "./index.js";
 import { productImageURL } from "./imageUpload.js";
 // console.log(productImageURL);
+// let UserData = JSON.parse(localStorage.getItem("USERDATA"));
+// let sellerId=UserData.id;
 let productIdIncrementor = 1;
+
 let bidButtonIdIncrementor = 1;
 let bidDate = document.getElementById("bidDate");
 let currentDateObj = new Date();
@@ -62,6 +65,12 @@ function allProductDataFetch() {
               let productName =element.id[key]["ProductName"]; 
               let sellerName =element.id[key]["SellerName"]; 
               let bidEndingDate =element.id[key]["BidDate"]; 
+              let productId=element.id[key]["ProductId"];
+              let sellerId=element.id[key]["UserId"];
+              
+
+
+
               // let InitialBid =element.id[key]["ProductPrice"]; 
               // let bidDate=element.id[key]["bidDate"];
               // console.log(typeof(productName));
@@ -135,7 +144,7 @@ function allProductDataFetch() {
                 `;
                 
                 let productContentWhenLogin=`
-                <button  class="btn btn-primary col-6 biddingStatus" id=${uniqueBidButtonId} onclick="fetchProductData('${productName}','${sellerName}','${bidEndingDate}','${productStartingBid}','${url}')" >Your bid</button>
+                <button  class="btn btn-primary col-6 biddingStatus" id=${uniqueBidButtonId} onclick="fetchProductData('${productName}','${sellerName}','${bidEndingDate}','${productStartingBid}','${productId}','${url}','${sellerId}')" >Your bid</button>
                             
                 </div>
          
@@ -176,13 +185,15 @@ function allProductDataFetch() {
   });
 }
 let productObj;
-window.fetchProductData = function(pname,sname,betime,InitialBid,url){
+window.fetchProductData = function(pname,sname,betime,InitialBid,productId,url,sellerId){
      productObj={
      pname:pname,
      sname:sname,
      betime:betime,
      InitialBid:InitialBid,
-     url:url
+     productId:productId,
+     url:url,
+     sellerId:sellerId
    }
 sessionStorage.setItem("ProductData",JSON.stringify(productObj));
    location.href="HTML/BidPage.html";

@@ -76,7 +76,7 @@ function insertUser(userDataObj) {
       PinCode:userDataObj.userPinCode,
       FullAddress:userDataObj.userFullAddress,
       LandMark:userDataObj.userLandmark,
-      // UserName:userDataObj.userName,
+      WalletMoney:0,
       UserPass:userDataObj.userPassword,
       UserID:ID+1                        //newly added on 15-04-22
     }

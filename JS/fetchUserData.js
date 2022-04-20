@@ -26,8 +26,8 @@ function allDataFetch() {
                     "LandMakr":child.val().Details.LandMark,
                     // "UserName":child.val().Details.UserName,
                     "UserPass":child.val().Details.UserPass,
-                    "UserId":child.val().Details.UserID
-                    
+                    "UserId":child.val().Details.UserID,
+                    "WalletMoney":child.val().Details.PocketMoney
             })
         });
       }
@@ -38,4 +38,4 @@ function allDataFetch() {
 
 
 export {userDeatils};
-// console.log('UserDetails....',userDeatils)
+// console.log('UserDetailsaaaaa....',userDeatils)

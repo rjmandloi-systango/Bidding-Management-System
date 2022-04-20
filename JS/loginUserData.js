@@ -17,31 +17,21 @@ function checkUserLogin(userNameLogin,userPassLogin){
     if(userDeatils[index].Email===userNameLogin && userDeatils[index].UserPass===userPassLogin)
     {
       flag=1;
-      // console.log(userDeatils[index]);
+      // console.log("kkkkkkkkkkkkkkkk"+userDeatils[index]);
       localStorage.setItem("USERDATA",JSON.stringify(userDeatils[index]));
     }
   }
   if(flag==1){
+    
  alert("welcome !");
  localStorage.setItem("STATUS",false);
 let newStatus= localStorage.getItem("STATUS");  
 
   if(newStatus=="false"){
     location.reload();
-//     let sellBtn=document.getElementById("sellBtn");
-//  let myProducts=document.getElementById("myProducts");
-//  let logoutBtn=document.getElementById("logoutBtn");
-//  let btnls=document.querySelector(".buttonls");
-//  let btnls1=document.querySelector("#registerBtn");
  document.querySelector(".btn-close").click();
-//  myProducts.classList.remove("hide");
-//  logoutBtn.classList.remove("hide");
-//  sellBtn.classList.remove("hide");
-//  btnls.classList.add("hide");
-//  btnls1.classList.add("hide");
   }
   
- //  location.href = './index.html';
   
 }else{
     alert("invalid user or pass !");
@@ -62,3 +52,7 @@ let newStatus= localStorage.getItem("STATUS");
 
 
 console.log('User Details....',userDeatils);
+
+
+
+
