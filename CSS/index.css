@@ -1,100 +1,114 @@
-
-
-
-#bidIt{
+#bidIt {
     color: grey;
     font-family: 'Permanent Marker', cursive;
     font-weight: bolder;
-    
+
 }
 
-#brandSlogan{
-    color:grey;
+#brandSlogan {
+    color: grey;
 }
 
 #navbar a {
-    color:  grey;
-    
+    color: grey;
+
 }
+
 #navbar a:hover {
-    color:black;
-}
-.navbarElements:hover{
-    color:black;
+    color: black;
 }
 
+.navbarElements:hover {
+    color: black;
+}
 
-body{
 
-    background-color:white;
+body {
+
+    background-color: white;
     background-repeat: no-repeat;
-     overflow-y: scroll ; 
-     overflow-x: hidden;
-    
- } 
-.card{
-    background-color:white;
-    box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.2);
-    
+    overflow-y: scroll;
+    overflow-x: hidden;
+
 }
 
-.productName{
+.card {
+    background-color: white;
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.2);
+
+}
+
+.productName {
     color: floralwhite;
     background-color: chocolate;
 
 }
-.buttonls{
-    color:white;
-    background-color: chocolate;   
+
+.buttonls {
+    color: white;
+    background-color: chocolate;
 }
 
-.productText{
+.productText {
     color: rgb(0, 0, 0);
 }
-.addProductButton{
-    color:white;
+
+.addProductButton {
+    color: white;
     background-color: chocolate;
 }
 
 
-.productCard:hover{
-  transform: scale(1.01);
+.productCard:hover {
+    transform: scale(1.01);
 
 }
 
-.advertise1{
+.advertise1 {
     color: white;
     background-color: rgb(21, 95, 164);
 }
 
-.advertise2{
-    
+.advertise2 {
+
     color: white;
     background-color: rgb(22, 64, 141);
 }
 
-#loading{
+#loading {
     width: 100%;
     height: 100vh;
-    background: #fff
-    url("../images/giphy.gif");
+    background: #fff url("../images/giphy.gif");
     background-repeat: no-repeat;
     position: fixed;
     z-index: 99999;
     background-position: center;
     /* background-color: cornsilk; */
-    
- } 
-.imgShowInCard{
-    height: 200px;
-    display: block;
-  margin-left: auto;
-  margin-right: auto;
-  background-repeat: no-repeat;
-  /* background-size: contain; */
-  object-fit: contain;
+
 }
-h1{
+
+.imgShowInCard {
+    height: 100px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-repeat: no-repeat;
+    /* background-size: contain; */
+    object-fit: contain;
+}
+
+h1 {
     margin: 30px;
     text-align: center;
+}
+
+.imgInTable {
+    display: block;
+    width: 100%;
+    height: 100%;
+    vertical-align: bottom;
+    object-fit: contain;
+    background-repeat: no-repeat;
+
+
 }

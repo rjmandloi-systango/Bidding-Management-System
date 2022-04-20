@@ -6,6 +6,7 @@ let productButtonStatus = false;
 document.getElementById("productButton").addEventListener("click", createProductList);
 async function createProductList() {
     // console.log(productButtonStatus);
+    document.getElementById("container").innerHTML="";
     if (productButtonStatus == false) {
         productButtonStatus = true;
         document.getElementById("productTable").style.display = "block";
@@ -49,7 +50,7 @@ async function createProductList() {
                             let productStartingBid = element.id[key]["ProductPrice"];
                             let bidEndDate = element.id[key]["BidDate"];
                             let sellerContact = element.id[key]["SellerContactNumber"];
-                            productTable.innerHTML += `<tr  class="table-active "><td> <img class="imgShowInCard" src=${url}></td><td>${userId}</td><td>${productId} </td><td> ${productName}</td><td>${productDiscription}</td><td>${productStartingBid}</td><td>${bidEndDate}</td> <td> ${sellerContact}</td><td><button onclick="removeProduct(${userId} ,${productId})" id=${uniqueDeleteButtonId + uniqueDeleteButtonCounter}>delete</button></td></tr>`;
+                            productTable.innerHTML += `<tr  class="table-active "><td> <img class="imgShowInCard " src=${url}></td><td>${userId}</td><td>${productId} </td><td> ${productName}</td><td>${productDiscription}</td><td>${productStartingBid}</td><td>${bidEndDate}</td> <td> ${sellerContact}</td><td><button onclick="removeProduct(${userId} ,${productId})" id=${uniqueDeleteButtonId + uniqueDeleteButtonCounter}>delete</button></td></tr>`;
                             uniqueDeleteButtonCounter++;
                         });
 

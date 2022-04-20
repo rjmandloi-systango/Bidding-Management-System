@@ -1,27 +1,32 @@
 import { db, set, ref, get, child, update, remove } from "../JS/firebase.js";
 // document.getElementById("userButton").addEventListener('click',userList);
+// location.reload();
 
 // userList();
-window.userList = function() {
+let userButtonStatus = false;
+window.userList = function () {
+  document.getElementById("productTable").innerHTML="";
 
+  if (userButtonStatus == false) {
+    userButtonStatus=true;
     const databaseRef = ref(db);
     // var ul = document.createElement("ul");
     // document.body.appendChild(ul);
 
     get(child(databaseRef, "User/")).then((snapshot) => {
-        if (typeof (snapshot) !== 'undefined') {
+      if (typeof (snapshot) !== 'undefined') {
 
-            if (snapshot.exists()) {
-                snapshot.forEach((child) => {
+        if (snapshot.exists()) {
+          snapshot.forEach((child) => {
 
 
-                    // var li = document.createElement("li");
-                    // li.className = "list-group-item";
-                    // li.innerHTML = child.val().Details.FirstName;
-                    // ul.appendChild(li);
-                    // const card = document.createElement('div');
-                    // card.classList = 'card-body';
-                    let productContent = `
+            // var li = document.createElement("li");
+            // li.className = "list-group-item";
+            // li.innerHTML = child.val().Details.FirstName;
+            // ul.appendChild(li);
+            // const card = document.createElement('div');
+            // card.classList = 'card-body';
+            let productContent = `
                     <div class="card productCard mt-5 rounded-3 ms-4 mr-5"  style="width: 18rem;">
                      
                          <div class="card-body text-center rounded-3" >
@@ -60,31 +65,33 @@ window.userList = function() {
                     </div>
                        `;
 
-                       container.innerHTML +=productContent ;
-                    
+            container.innerHTML += productContent;
 
-                    //     userDeatils.push({
-                    //         "id": child.key,
-                    //         "FirstName":child.val().Details.FirstName, 
-                    //         "LastName":child.val().Details.LastName,
-                    //         "Phone":child.val().Details.PhoneNo,
-                    //         "Email":child.val().Details.Email,
-                    //         "Country":child.val().Details.Country,
-                    //         "State":child.val().Details.State,
-                    //         "PinCode":child.val().Details.PinCode,
-                    //         "Address":child.val().Details.Address,
-                    //         "LandMakr":child.val().Details.LandMakr,
-                    //         // "UserName":child.val().Details.UserName,
-                    //         "UserPass":child.val().Details.UserPass,
-                    //         "UserId":child.val().Details.UserID
 
-                    // })
+            //     userDeatils.push({
+            //         "id": child.key,
+            //         "FirstName":child.val().Details.FirstName, 
+            //         "LastName":child.val().Details.LastName,
+            //         "Phone":child.val().Details.PhoneNo,
+            //         "Email":child.val().Details.Email,
+            //         "Country":child.val().Details.Country,
+            //         "State":child.val().Details.State,
+            //         "PinCode":child.val().Details.PinCode,
+            //         "Address":child.val().Details.Address,
+            //         "LandMakr":child.val().Details.LandMakr,
+            //         // "UserName":child.val().Details.UserName,
+            //         "UserPass":child.val().Details.UserPass,
+            //         "UserId":child.val().Details.UserID
 
-                });
-            }
+            // })
+
+          });
         }
+      }
+
 
     });
+  }
 }
 
 // console.log(userDeatils);
