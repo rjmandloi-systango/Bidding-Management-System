@@ -48,7 +48,11 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Winners</a>
             </li>
-
+            
+            <li class="nav-item">
+              <a class="nav-link" id="pocketmoney" href="HTML/pocketmoney.html">PocketMoney</a>
+            </li>
+           
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
@@ -401,10 +405,12 @@
 
   <script>
     let sellbtn = document.getElementById("sellBtn");
+    let pocketmoney = document.getElementById("pocketmoney");
     let logoutbtn = document.getElementById("logoutBtn");
     let loginCheck = document.getElementById("loginCheck");
     let registerCheck = document.getElementById("registerBtn");
     sellbtn.style.display = "none";
+    pocketmoney.style.display = "none";
     logoutbtn.style.display = "none";
     loginCheck.style.display = "none";
     registerCheck.style.display = "none";
@@ -415,6 +421,7 @@
     } else {
       sellbtn.style.display = "block";;
       logoutbtn.style.display = "block";;
+      pocketmoney.style.display = "block";;
     }
   </script>
   <script>
