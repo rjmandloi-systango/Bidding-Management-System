@@ -153,7 +153,7 @@ function allProductDataFetch() {
               container.innerHTML += productLayout;
               
               if (userDATA.id == userId) {
-                console.log("inside disabled");
+                // console.log("inside disabled");
                 document.getElementById(uniqueBidButtonId).disabled = true;
               }
 

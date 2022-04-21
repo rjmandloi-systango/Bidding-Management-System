@@ -118,6 +118,7 @@ function insertBid() {
                 BuyerID: buyerId,
                 BuyerBidMoney: bidMoney,
                 SellerID: sellerId,
+                ProductID:productId
             })
                 .then(() => {
                     alert('Cogrates your bid added successfully...')

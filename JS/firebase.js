@@ -16,7 +16,7 @@
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
 
-  import { getDatabase,set,ref,get,child, update, remove} from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+  import { getDatabase,set,ref,get,child, update, remove ,orderByChild ,query ,onValue ,limitToFirst} from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
   // console.log(db)
   // let a=10;
   import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL }
@@ -28,6 +28,6 @@
 
 
     
-  export {db,set,ref,get,child, update, remove , app,storage ,databaseRef,sRef, uploadBytesResumable, getDownloadURL};
+  export {limitToFirst, db,set,ref,get,child, update, remove , app,storage ,databaseRef,sRef, uploadBytesResumable, getDownloadURL , orderByChild ,query,onValue};
   //for img upload
   // export{ app, db, storage ,databaseRef, ref, get, set, child, update, sRef, uploadBytesResumable, getDownloadURL };
