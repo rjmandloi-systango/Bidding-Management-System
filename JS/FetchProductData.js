@@ -1,4 +1,7 @@
 import { db, set, ref, get, child, update, remove } from "./firebase.js";
+import { userDeatils } from "./fetchUserData.js";
+console.log(userDeatils);
+
 let productIdIncrementor = 1;
 let userDATA = JSON.parse(localStorage.getItem("USERDATA"));
 
@@ -70,56 +73,46 @@ function allProductDataFetch() {
                 isLogin = 1;
               }
               let productContent = `
-             <div class="card productCard mt-5 rounded-3 ms-4 mr-5"  id=${productId} style="width: 18rem;">
-              
-                  <div class="card-body  rounded-3" >
-                           <div class="productName text-center p-1 rounded-3">
-                             <h5 class="card-title">${productName}</h5>    
-                           </div>
-            
-                           <div >
-                             <img src=${url} class="card-img-top img-thumbnail imgShowInCard" alt="...">
-                           </div>
-            
-                           <div>
-                             <p class="card-text text-start  text-dark"><span class ="fw-bold">Discription:</span>${productDiscription}</p>
-                           </div>
-            
-                           <div >
-                           <p class="card-text   text-dark"><span class ="fw-bold">Initial bid:</span>${productStartingBid} &#8377</p>
-                           </div>
-                           
-                          
-                                 
-                                  <div class="col-sm">
-                                    <span class="clock fs-2" fw-bold >&#128336</span>
-                                    <span class=" fs-5 fw-bold"  id=${uniqueProductId}></span>
-                                  </div>
-            
-                                  <div class="col-sm fw-bold">
-                                 Max bid  &#8377 <span id=mb_${productId}> ${productStartingBid} </span>
-                                  </div>
-                                     
-                            
-                              <div class="d-flex justify-content-between border text-dark >
-                                   <span class="col-6">person</span>
-                             `;
-
-              let productContentWhenNotLogin = `
-                                   <button class="btn btn-primary col-6 biddingStatus" id=${uniqueBidButtonId}  data-bs-toggle="modal" data-bs-target="#exampleModal1">Your bid</button>
-                                               
-                              </div>      
+            <div class="card productCard mt-5 rounded-3 ms-4 mr-5"  id=${productId} style="width: 18rem;">
+              <div class="card-body  rounded-3" >
+                  <div class="productName text-center p-1 rounded-3">
+                    <h5 class="card-title">${productName}</h5>
                   </div>
-             </div>
-                `;
-
-              let productContentWhenLogin = `
-                <button  class="btn btn-primary col-6 biddingStatus" id=${uniqueBidButtonId} onclick="fetchProductData('${productName}','${sellerName}','${bidEndingDate}','${productStartingBid}','${productId}','${url}','${sellerId}')" >Your bid</button>
-                            
+                  <div >
+                    <img src=${url} class="card-img-top img-thumbnail imgShowInCard" alt="...">
+                  </div>
+                  <div>
+                    <p class="card-text text-start  text-dark"><span class ="fw-bold">Discription:</span>${productDiscription}</p>
+                  </div>
+                  <div >
+                    <p class="card-text   text-dark"><span class ="fw-bold">Initial bid:</span>${productStartingBid} &#8377</p>
+                  </div>
+                  <div class="col-sm">
+                    <span class="clock fs-2" fw-bold >&#128336</span>
+                    <span class=" fs-5 fw-bold"  id=${uniqueProductId}></span>
+                  </div>
+                  <div class="col-sm fw-bold">
+                    Max bid  &#8377 <span id=mb_${productId}> ${productStartingBid} </span>
+                  </div>
+                  <div class="d-flex justify-content-between border text-dark" >
+                    <div>
+                      <span class="col-6" id="maxBidderName_${productId}">Not yet bidded!!</span>
+                    </div>
+                  `;
+                  let productContentWhenNotLogin = `
+                    <button class="btn btn-primary col-6 biddingStatus" id=${uniqueBidButtonId}  data-bs-toggle="modal" data-bs-target="#exampleModal1">Your bid</button>
+                  </div>
+                 
                 </div>
-         </div>
-      </div>
-    `;
+            </div>
+            `;
+            let productContentWhenLogin = `
+            <button  class="btn btn-primary col-6 biddingStatus" id=${uniqueBidButtonId} onclick="fetchProductData('${productName}','${sellerName}','${bidEndingDate}','${productStartingBid}','${productId}','${url}','${sellerId}')" >Your bid</button>
+            </div>
+      
+            </div>
+            </div>
+            `;
 
               let productLayout;
               if (isLogin) {
@@ -272,20 +265,24 @@ async function highestBiddersOfProducts() {
   fetchHighestBidder(highestBidder);
 }
 
-  function fetchHighestBidder(highestBidder) {
-    let productIds = Object.keys(highestBidder);
-    console.log(productIds);
-    productIds.forEach((key) => {
-      // console.log(highestBidder[key][0].BuyerBidMoney);
-      console.log(highestBidder[key][0]);
-   let pcard=   document.getElementById(`mb_${highestBidder[key][0].ProductID}`);
+function fetchHighestBidder(highestBidder) {
+  let productIds = Object.keys(highestBidder);
+  console.log(productIds);
+  productIds.forEach((key) => {
+    // console.log(highestBidder[key][0].BuyerBidMoney);
+    console.log(highestBidder[key][0]);
+    let pcard = document.getElementById(`mb_${highestBidder[key][0].ProductID}`);
+    document.getElementById(`mb_${highestBidder[key][0].ProductID}`).innerHTML = `${highestBidder[key][0].BuyerBidMoney}`;
+  
     
-      document.getElementById(`mb_${highestBidder[key][0].ProductID}`).innerHTML=`${highestBidder[key][0].BuyerBidMoney}`;
-      //  pcard.innerHTML=highestBidder[key][0].BuyerBidMoney;
-      // console.log(pcard);
-    });
-  }
-    
+
+let person = userDeatils.find(user => user.id ===`${highestBidder[key][0].BuyerID}`);
+// console.log(person.FirstName);
+  document.getElementById(`maxBidderName_${highestBidder[key][0].ProductID}`).innerText=`${person.FirstName} ${person.LastName}`;
+
+  });
+}
+
 export { productDeatils };
 
 console.log("Products Details", productDeatils);

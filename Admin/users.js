@@ -19,13 +19,6 @@ window.userList = function () {
         if (snapshot.exists()) {
           snapshot.forEach((child) => {
 
-
-            // var li = document.createElement("li");
-            // li.className = "list-group-item";
-            // li.innerHTML = child.val().Details.FirstName;
-            // ul.appendChild(li);
-            // const card = document.createElement('div');
-            // card.classList = 'card-body';
             let productContent = `
                     <div class="card productCard mt-5 rounded-3 ms-4 mr-5"  style="width: 18rem;">
                      
