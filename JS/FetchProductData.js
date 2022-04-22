@@ -1,11 +1,4 @@
-import { userDeatils } from "./fetchUserData.js";
 import { db, set, ref, get, child, update, remove } from "./firebase.js";
-// export {}
-// import {createCard} from "./index.js";
-import { productImageURL } from "./imageUpload.js";
-// console.log(productImageURL);
-// let UserData = JSON.parse(localStorage.getItem("USERDATA"));
-// let sellerId=UserData.id;
 let productIdIncrementor = 1;
 let userDATA = JSON.parse(localStorage.getItem("USERDATA"));
 
@@ -32,7 +25,7 @@ let minutes = currentDateObj.getMinutes();
 
 allProductDataFetch();
 let productDeatils = [];
-let arr = [];
+
 
 function allProductDataFetch() {
   let isLogout = localStorage.getItem("STATUS"); //FALSE=LOGIN   TRUE=LOGOUT
@@ -62,19 +55,10 @@ function allProductDataFetch() {
               let bidEndingDate = element.id[key]["BidDate"];
               let productId = element.id[key]["ProductId"];
               let sellerId = element.id[key]["UserId"];
-              // let InitialBid =element.id[key]["ProductPrice"];
-              // let bidDate=element.id[key]["bidDate"];
-              // console.log(typeof(productName));
               let productDiscription = element.id[key]["ProductDiscription"];
               let productStartingBid = element.id[key]["ProductPrice"];
               let userId = element.id[key]["UserId"];
-              // let sellerContactNumber = document.getElementById("sellerContactNumber").value;
-              // let url = "https://image.shutterstock.com/image-illustration/modern-cars-studio-room-3d-260nw-735402217.jpg";
-              // let url = productImageURL;
               let url = element.id[key]["ImageURl"];
-              // console.log(url)
-              // const card = document.createElement('div');
-              // card.classList = 'card-body';
               let uniqueProductId = "productId" + productIdIncrementor;
               let uniqueBidButtonId = "bidButton" + bidButtonIdIncrementor;
 
@@ -86,7 +70,7 @@ function allProductDataFetch() {
                 isLogin = 1;
               }
               let productContent = `
-             <div class="card productCard mt-5 rounded-3 ms-4 mr-5"  style="width: 18rem;">
+             <div class="card productCard mt-5 rounded-3 ms-4 mr-5"  id=${productId} style="width: 18rem;">
               
                   <div class="card-body  rounded-3" >
                            <div class="productName text-center p-1 rounded-3">
@@ -112,22 +96,19 @@ function allProductDataFetch() {
                                     <span class=" fs-5 fw-bold"  id=${uniqueProductId}></span>
                                   </div>
             
-                                  <div class="col-sm">
-                                    Max Bid &#8377
+                                  <div class="col-sm fw-bold">
+                                 Max bid  &#8377 <span id=mb_${productId}> ${productStartingBid} </span>
                                   </div>
                                      
                             
                               <div class="d-flex justify-content-between border text-dark >
-                              
                                    <span class="col-6">person</span>
-
                              `;
 
               let productContentWhenNotLogin = `
                                    <button class="btn btn-primary col-6 biddingStatus" id=${uniqueBidButtonId}  data-bs-toggle="modal" data-bs-target="#exampleModal1">Your bid</button>
                                                
-                              </div>
-                            
+                              </div>      
                   </div>
              </div>
                 `;
@@ -136,8 +117,6 @@ function allProductDataFetch() {
                 <button  class="btn btn-primary col-6 biddingStatus" id=${uniqueBidButtonId} onclick="fetchProductData('${productName}','${sellerName}','${bidEndingDate}','${productStartingBid}','${productId}','${url}','${sellerId}')" >Your bid</button>
                             
                 </div>
-         
-
          </div>
       </div>
     `;
@@ -146,18 +125,16 @@ function allProductDataFetch() {
               if (isLogin) {
                 productLayout = productContent + productContentWhenLogin;
               } else {
-                userDATA.id="youLoggedOut";
+                userDATA.id = "youLoggedOut";
                 productLayout = productContent + productContentWhenNotLogin;
               }
               // Append newly created card element to the container
               container.innerHTML += productLayout;
-              
+
               if (userDATA.id == userId) {
                 // console.log("inside disabled");
                 document.getElementById(uniqueBidButtonId).disabled = true;
               }
-
-
               timer(
                 uniqueProductId,
                 uniqueBidButtonId,
@@ -214,8 +191,7 @@ function timer(uniqueProductId, uniqueBidButtonId, bidData1, bidTime1) {
   ) {
     // console.log("galat time diya user ne ");
     userInputDate = new Date(
-      `${shortMonth} ${dateArray[2]}, ${dateArray[0]} ${
-        hours + 4
+      `${shortMonth} ${dateArray[2]}, ${dateArray[0]} ${hours + 4
       }:${minutes}:00`
     ).getTime();
   } else {
@@ -253,94 +229,64 @@ function timer(uniqueProductId, uniqueBidButtonId, bidData1, bidTime1) {
   }, 1000);
 }
 
-// console.log('Products',productDeatils);
+highestBiddersOfProducts();
+//maximum bidding function
+async function highestBiddersOfProducts() {
+  let highestBidder = {};
+  let products = {};
+  let productsKey = [];
+
+  // let arr1=[];
+  const que = ref(db, "Bidding-Products");
+
+  await get(que).then((snapshot) => {
+    products = { ...snapshot.val() }; //all objects are stored inside products
+    productsKey = Object.keys(products); //all object keys are stored inside productsKeys
+  });
+  productsKey.forEach((key) => {
+    // console.log(products[key]);
+    if (products[key]?.length > 0 && products[key]?.length < 2) {
+      highestBidder[key] = products[key];
+    } else if (products[key]?.length) {
+      const highestProduct = products[key]
+        .filter((key) => key)
+        .sort((a, b) => {
+          // console.log(
+          //   a.BuyerBidMoney,
+          //   b.BuyerBidMoney,
+          //   a.BuyerBidMoney - b.BuyerBidMoney
+          // );
+          if (a.BuyerBidMoney < b.BuyerBidMoney) {
+            return 1;
+          }
+          if (a.BuyerBidMoney > b.BuyerBidMoney) {
+            return -1;
+          }
+          return 0;
+        });
+      // console.log(highestProduct);
+      highestBidder[key] = highestProduct;
+    } //    console.log(products[key].length);
+  });
+  // console.log(highestBidder);
+  fetchHighestBidder(highestBidder);
+}
+
+  function fetchHighestBidder(highestBidder) {
+    let productIds = Object.keys(highestBidder);
+    console.log(productIds);
+    productIds.forEach((key) => {
+      // console.log(highestBidder[key][0].BuyerBidMoney);
+      console.log(highestBidder[key][0]);
+   let pcard=   document.getElementById(`mb_${highestBidder[key][0].ProductID}`);
+    
+      document.getElementById(`mb_${highestBidder[key][0].ProductID}`).innerHTML=`${highestBidder[key][0].BuyerBidMoney}`;
+      //  pcard.innerHTML=highestBidder[key][0].BuyerBidMoney;
+      // console.log(pcard);
+    });
+  }
+    
 export { productDeatils };
 
 console.log("Products Details", productDeatils);
 
-//   <div class="row border text-dark">
-//   <div class="col-sm">
-//     <span class="clock fs-2" fw-bold >&#128336</span><br>
-//     <p class=" fs-5 fw-bold"  id=${uniqueProductId}></p>
-//   </div>
-
-//   <div class="col-sm">
-//     Max Bid &#8377
-//   </div>
-//  </div>
-
-// if (isLogout) {
-//   console.log(isLogout + "    logut status");
-//  let bidButtons=document.getElementsByClassName("biddingStatus");
-//    for(let element=0; element<bidButtons.length; element++){
-//     bidButtons[element].disabled="true";
-//     console.log(bidButtons[element]);
-//   }
-
-// }
-// else {
-//   console.log(isLogout + "   logut status");
-// }
-
-// let stat;
-
-// if(isLogout=== "true")
-// {
-//   stat=0
-// }
-// else{
-//    stat=1
-// }
-// if(stat)
-// {
-//   document.getElementById(uniqueBidButtonId).style.display = "block";
-// }
-// else{
-//   document.getElementById(uniqueBidButtonId).disabled="true";
-//   // document.getElementById(uniqueBidButtonId).style.display = "none";
-//   console.log("else chala");
-// }
-
-// let productContent = `
-// <div class="card productCard mt-5 rounded-3 ms-4 mr-5"  style="width: 18rem;">
-
-//       <div class="card-body  rounded-3" >
-//                <div class="productName text-center p-1 rounded-3">
-//                  <h5 class="card-title">${productName}</h5>
-//                </div>
-
-//                <div >
-//                  <img src=${url} class="card-img-top img-thumbnail imgShowInCard" alt="...">
-//                </div>
-
-//                <div>
-//                  <p class="card-text text-start  text-dark"><span class ="fw-bold">Discription:</span>${productDiscription}</p>
-//                </div>
-
-//                <div >
-//                <p class="card-text   text-dark"><span class ="fw-bold">Initial bid:</span>${productStartingBid} &#8377</p>
-//                </div>
-
-//                       <div class="col-sm">
-//                         <span class="clock fs-2" fw-bold >&#128336</span>
-//                         <span class=" fs-5 fw-bold"  id=${uniqueProductId}></span>
-//                       </div>
-
-//                       <div class="col-sm">
-//                         Max Bid &#8377
-//                       </div>
-
-//                   <div class="d-flex justify-content-between border text-dark >
-
-//                        <span class="col-6">person</span>
-
-//                        <button class="btn btn-primary col-6 biddingStatus" id=${uniqueBidButtonId}  data-bs-toggle="modal" data-bs-target="#exampleModal1">Your bid</button>
-
-//                   </div>
-
-//       </div>
-// </div>
-//     `;
-
-//   // Append newly created card element to the container
-//   container.innerHTML += productContent;
