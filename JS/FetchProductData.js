@@ -99,14 +99,14 @@ function allProductDataFetch() {
                       <span class="col-6" id="maxBidderName_${productId}">Not yet bidded!!</span>
                     </div>
                   `;
-                  let productContentWhenNotLogin = `
+              let productContentWhenNotLogin = `
                     <button class="btn btn-primary col-6 biddingStatus" id=${uniqueBidButtonId}  data-bs-toggle="modal" data-bs-target="#exampleModal1">Your bid</button>
                   </div>
                  
                 </div>
             </div>
             `;
-            let productContentWhenLogin = `
+              let productContentWhenLogin = `
             <button  class="btn btn-primary col-6 biddingStatus" id=${uniqueBidButtonId} onclick="fetchProductData('${productName}','${sellerName}','${bidEndingDate}','${productStartingBid}','${productId}','${url}','${sellerId}')" >Your bid</button>
             </div>
       
@@ -228,58 +228,56 @@ async function highestBiddersOfProducts() {
   let highestBidder = {};
   let products = {};
   let productsKey = [];
-
+  let productArray = [];
   // let arr1=[];
   const que = ref(db, "Bidding-Products");
-
   await get(que).then((snapshot) => {
+    // "Email":child.val().Details.Email,
     products = { ...snapshot.val() }; //all objects are stored inside products
-    productsKey = Object.keys(products); //all object keys are stored inside productsKeys
+    productsKey = Object.keys(products);//all object keys are stored inside productsKeys
+    // console.log(products);
   });
   productsKey.forEach((key) => {
-    // console.log(products[key]);
-    if (products[key]?.length > 0 && products[key]?.length < 2) {
+    // console.log(products[key], productsKey);
+    let pro = Object.keys(products[key])
+    // console.log(productArray);
+    if (Object.keys(products[key]).length > 0 && Object.keys(products[key]).length < 2) {
       highestBidder[key] = products[key];
-    } else if (products[key]?.length) {
-      const highestProduct = products[key]
-        .filter((key) => key)
-        .sort((a, b) => {
-          // console.log(
-          //   a.BuyerBidMoney,
-          //   b.BuyerBidMoney,
-          //   a.BuyerBidMoney - b.BuyerBidMoney
-          // );
-          if (a.BuyerBidMoney < b.BuyerBidMoney) {
-            return 1;
-          }
-          if (a.BuyerBidMoney > b.BuyerBidMoney) {
-            return -1;
-          }
-          return 0;
-        });
-      // console.log(highestProduct);
-      highestBidder[key] = highestProduct;
-    } //    console.log(products[key].length);
+      console.log(products[key]);
+
+    }
+    else if (Object.keys(products[key]).length) {
+      console.log("else ");
+      pro.forEach((key2) => {
+        // console.log(products[key][key2]);
+        productArray.push(
+          products[key][key2],
+        );
+
+      })
+
+      productArray.sort((a, b) => {
+        if (a.BuyerBidMoney < b.BuyerBidMoney) {
+          return 1;
+        }
+        if (a.BuyerBidMoney > b.BuyerBidMoney) {
+          return -1;
+        }
+        return 0;
+      });
+      highestBidder[key] = productArray[0];
+      productArray = [];
+    }
   });
-  // console.log(highestBidder);
   fetchHighestBidder(highestBidder);
 }
 
 function fetchHighestBidder(highestBidder) {
   let productIds = Object.keys(highestBidder);
-  console.log(productIds);
   productIds.forEach((key) => {
-    // console.log(highestBidder[key][0].BuyerBidMoney);
-    console.log(highestBidder[key][0]);
-    let pcard = document.getElementById(`mb_${highestBidder[key][0].ProductID}`);
-    document.getElementById(`mb_${highestBidder[key][0].ProductID}`).innerHTML = `${highestBidder[key][0].BuyerBidMoney}`;
-  
-    
-
-let person = userDeatils.find(user => user.id ===`${highestBidder[key][0].BuyerID}`);
-// console.log(person.FirstName);
-  document.getElementById(`maxBidderName_${highestBidder[key][0].ProductID}`).innerText=`${person.FirstName} ${person.LastName}`;
-
+  document.getElementById(`mb_${highestBidder[key].ProductID}`).innerHTML = `${highestBidder[key].BuyerBidMoney}`;
+  let person = userDeatils.find(user => user.id === `${highestBidder[key].BuyerID}`);
+  document.getElementById(`maxBidderName_${highestBidder[key].ProductID}`).innerText = `${person.FirstName} ${person.LastName}`;
   });
 }
 
