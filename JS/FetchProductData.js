@@ -96,7 +96,7 @@ function allProductDataFetch() {
                   </div>
                   <div class="d-flex justify-content-between border text-dark" >
                     <div>
-                      <span class="col-6" id="maxBidderName_${productId}">Not yet bidded!!</span>
+                     <span class=>	&#128081</span> <span class="col-6" id="maxBidderName_${productId}">Not yet bidded!!</span>
                     </div>
                   `;
               let productContentWhenNotLogin = `
@@ -241,12 +241,14 @@ async function highestBiddersOfProducts() {
     // console.log(products[key], productsKey);
     let pro = Object.keys(products[key])
     // console.log(productArray);
-    if (Object.keys(products[key]).length > 0 && Object.keys(products[key]).length < 2) {
-      highestBidder[key] = products[key];
-      console.log(products[key]);
+    // if (Object.keys(products[key]).length > 0 && Object.keys(products[key]).length < 2) {
+    //   highestBidder[key] = products[key];
+    //   console.log(products[key]);
 
-    }
-    else if (Object.keys(products[key]).length) {
+    // }
+    //
+    //  else
+      if (Object.keys(products[key]).length) {
       console.log("else ");
       pro.forEach((key2) => {
         // console.log(products[key][key2]);
@@ -273,11 +275,12 @@ async function highestBiddersOfProducts() {
 }
 
 function fetchHighestBidder(highestBidder) {
+  console.log(highestBidder);
   let productIds = Object.keys(highestBidder);
   productIds.forEach((key) => {
   document.getElementById(`mb_${highestBidder[key].ProductID}`).innerHTML = `${highestBidder[key].BuyerBidMoney}`;
   let person = userDeatils.find(user => user.id === `${highestBidder[key].BuyerID}`);
-  document.getElementById(`maxBidderName_${highestBidder[key].ProductID}`).innerText = `${person.FirstName} ${person.LastName}`;
+  document.getElementById(`maxBidderName_${highestBidder[key].ProductID}`).innerText = `  ${person.FirstName} ${person.LastName}`;
   });
 }
 

@@ -40,6 +40,11 @@ window.myProductList = function () {
 window.removeProduct = function (userId, productId) {
     remove(ref(db, `User/${userId}/Details/ProductSold/${productId}`), {
     }).then(() => {
+
+        remove(ref(db, `Bidding-Products/${productId}`), {
+        }).then(() => {
+        });
+
         alert('Congrats your product is deleted  successfully...')
     }).catch((error) => {
         alert("Something went wrong!!!!!!!!!");
