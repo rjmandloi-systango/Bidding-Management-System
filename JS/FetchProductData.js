@@ -30,7 +30,7 @@ allProductDataFetch();
 let productDeatils = [];
 
 
-function allProductDataFetch() {
+async function allProductDataFetch() {
   let isLogout = localStorage.getItem("STATUS"); //FALSE=LOGIN   TRUE=LOGOUT
   const databaseRef = ref(db);
 
@@ -165,7 +165,7 @@ window.fetchProductData = function (
   location.href = "HTML/BidPage.html";
 };
 
-function timer(uniqueProductId, uniqueBidButtonId, bidData1, bidTime1) {
+async function timer(uniqueProductId, uniqueBidButtonId, bidData1, bidTime1) {
   let bidDate = bidData1;
   let bidTime = bidTime1;
   let dateArray = bidDate.split("-");
@@ -193,7 +193,7 @@ function timer(uniqueProductId, uniqueBidButtonId, bidData1, bidTime1) {
     ).getTime();
   }
 
-  let timeFunction = setInterval(function () {
+  let timeFunction = setInterval(async function () {
     // Get today's date and time
     let currentTime = new Date().getTime();
 
@@ -207,20 +207,35 @@ function timer(uniqueProductId, uniqueBidButtonId, bidData1, bidTime1) {
     );
     let minutes = Math.floor((distanceBetweenBidEndTimeAndCurrentTime % (1000 * 60 * 60)) / (1000 * 60));
     let seconds = Math.floor((distanceBetweenBidEndTimeAndCurrentTime % (1000 * 60)) / 1000);
-
+    let isAlreadyInDatabaseWinners = false;
     // Output the result in an element with id="demo"
     document.getElementById(uniqueProductId).innerHTML =
       days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+    let currentProductId = document.getElementById(uniqueProductId).dataset.productId;
+    // console.log("currentProductId"+currentProductId);
+    const databaseRef = ref(db);
+   await get(child(databaseRef, `Winners/${currentProductId}`)).then((snapshot) => {
+      if (typeof snapshot !== "undefined") {
+        if (snapshot.exists()) {
+          console.log("dbms check kiya"+currentProductId);
+          isAlreadyInDatabaseWinners = true;
+        }
+      }
+    })
+
 
     // If the productIdIncrementor down is over, write some text
     if (distanceBetweenBidEndTimeAndCurrentTime < 0) {
       document.getElementById(uniqueProductId).innerHTML = "EXPIRED";
       document.getElementById(uniqueBidButtonId).style.display = "none";
-      let expiredProductId = document.getElementById(uniqueProductId).dataset.productId;
-      console.log("expired product id " + expiredProductId);
-
-      insertWinnerData(expiredProductId);
-
+      if (!isAlreadyInDatabaseWinners) {
+        let expiredProductId = document.getElementById(uniqueProductId).dataset.productId;
+        console.log("expired product id " + expiredProductId);
+        insertWinnerData(expiredProductId);
+      }else{
+        console.log("existing winner,,,,,,,,,,,,,,");
+      }
       clearInterval(timeFunction);
     }
   }, 1000);
@@ -279,27 +294,27 @@ function fetchHighestBidder(highestBidder) {
 }
 
 
-function insertWinnerData(expiredProductId) {
+async function insertWinnerData(expiredProductId) {
   console.log(highestBidder[expiredProductId]);
-  set(ref(db, "Winners" + "/"), {
+  set(ref(db, "Winners" + "/" + [expiredProductId] +"/"), {
 
-    [expiredProductId]: {
+    
       BuyerBidMoney: highestBidder[expiredProductId].BuyerBidMoney,
       BuyerID: highestBidder[expiredProductId].BuyerID,
       ProductID: highestBidder[expiredProductId].ProductID,
       SellerID: highestBidder[expiredProductId].SellerID
-    }
+    
   }).then(() => {
-    // alert('winner detected success');
+    alert('winner detected success');
     fetchEmails(highestBidder[expiredProductId].BuyerBidMoney, highestBidder[expiredProductId].BuyerID, highestBidder[expiredProductId].ProductID, highestBidder[expiredProductId].SellerID);
   })
     .catch((error) => {
       // alert("error aa gai h");
     });
 }
-function fetchEmails(BuyerBidMoney, BuyerID, ProductID, SellerID) {
+async function fetchEmails(BuyerBidMoney, BuyerID, ProductID, SellerID) {
   let buyerEmail, sellerEmail;
-   let productData={};
+  let productData = {};
   // console.log("emailsender run---->"+BuyerBidMoney,BuyerID,ProductID,SellerID)
 
   // console.log("00000000000",userDeatils)
@@ -347,7 +362,7 @@ function fetchEmails(BuyerBidMoney, BuyerID, ProductID, SellerID) {
 
     })
     // maybe productData are undefined
-  console.log('product data--->', productData);
+    console.log('product data--->', productData);
 
     sendEmail(buyerEmail, sellerEmail, productData);
 
@@ -357,36 +372,39 @@ function fetchEmails(BuyerBidMoney, BuyerID, ProductID, SellerID) {
 
 }
 
-function sendEmail(buyerEmail, sellerEmail, productData) {
+async function sendEmail(buyerEmail, sellerEmail, productData) {
 
   console.log('send email wala chlaa', buyerEmail, sellerEmail);
   console.log('product data--->', productData);
   // let userEmail = document.getElementById("userEmail").value;
 
   // alert(userEmail)
-if(productData!=undefined){
-  Email.send({
-    Host: "smtp.gmail.com",
-    Username: "BidItValueForYourValuables@gmail.com",
-    Password: "systango@@",
-    To: buyerEmail,
-    From: "BidItValueForYourValuables@gmail.com",
-    Subject: "One Time Password",
-    Body:`<h1>Congratulations for winning the bid on this upcoming 
+  if (productData != undefined) {
+    Email.send({
+      Host: "smtp.gmail.com",
+      Username: "BidItValueForYourValuables@gmail.com",
+      Password: "systango@@",
+      To: buyerEmail,
+      From: "BidItValueForYourValuables@gmail.com",
+      Subject: "One Time Password",
+      Body: `<h1>Congratulations for winning the bid on this upcoming 
     trade expo exhibit contract. I wish you all the best and may everything turn out smoothly as you work on greater profits.</h1><br><br><br><br><br>`,
-  })
-    .then(function (message) {
-      alert("mail sent successfully")
     })
-    .catch(function (message) {
-      alert("error")
-    });
-  }else{
+      .then(function (message) {
+        alert("mail sent successfully")
+      })
+      .catch(function (message) {
+        alert("error")
+      });
+  } else {
     console.log("else")
   }
-  }
+}
 
+// function checkForAlreadyExistingEntryInWinner(currentProductId)
+// {
 
+// }
 
 
 
