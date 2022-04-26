@@ -76,13 +76,13 @@ function allProductDataFetch() {
             <div class="card productCard mt-5 rounded-3 ms-4 mr-5"  id=${productId} style="width: 18rem;">
               <div class="card-body  rounded-3" >
                   <div class="productName text-center p-1 rounded-3">
-                    <h5 class="card-title">${productName}</h5>
+                    <h5 class="card-title">${capitalize(productName)}</h5>
                   </div>
                   <div >
                     <img src=${url} class="card-img-top img-thumbnail imgShowInCard" alt="...">
                   </div>
                   <div>
-                    <p class="card-text text-start  text-dark"><span class ="fw-bold">Discription:</span>${productDiscription}</p>
+                    <p class="card-text text-start  text-dark"><span class ="fw-bold">Discription:</span>${capitalize(productDiscription)}</p>
                   </div>
                   <div >
                     <p class="card-text   text-dark"><span class ="fw-bold">Initial bid:</span>${productStartingBid} &#8377</p>
@@ -96,7 +96,7 @@ function allProductDataFetch() {
                   </div>
                   <div class="d-flex justify-content-between border text-dark" >
                     <div>
-                     <span class=>	&#128081</span> <span class="col-6" id="maxBidderName_${productId}">Not yet bidded!!</span>
+                    <i class="fa fa-user fs-2" style="color:chocolate;"></i> <span class="col-6" id="maxBidderName_${productId}">Not yet bidded!!</span>
                     </div>
                   `;
               let productContentWhenNotLogin = `
@@ -229,27 +229,17 @@ async function highestBiddersOfProducts() {
   let products = {};
   let productsKey = [];
   let productArray = [];
-  // let arr1=[];
+  
   const que = ref(db, "Bidding-Products");
   await get(que).then((snapshot) => {
-    // "Email":child.val().Details.Email,
     products = { ...snapshot.val() }; //all objects are stored inside products
     productsKey = Object.keys(products);//all object keys are stored inside productsKeys
-    // console.log(products);
   });
   productsKey.forEach((key) => {
-    // console.log(products[key], productsKey);
     let pro = Object.keys(products[key])
-    // console.log(productArray);
-    // if (Object.keys(products[key]).length > 0 && Object.keys(products[key]).length < 2) {
-    //   highestBidder[key] = products[key];
-    //   console.log(products[key]);
-
-    // }
-    //
-    //  else
+   
       if (Object.keys(products[key]).length) {
-      console.log("else ");
+      // console.log("else ");
       pro.forEach((key2) => {
         // console.log(products[key][key2]);
         productArray.push(
@@ -280,11 +270,19 @@ function fetchHighestBidder(highestBidder) {
   productIds.forEach((key) => {
   document.getElementById(`mb_${highestBidder[key].ProductID}`).innerHTML = `${highestBidder[key].BuyerBidMoney}`;
   let person = userDeatils.find(user => user.id === `${highestBidder[key].BuyerID}`);
-  document.getElementById(`maxBidderName_${highestBidder[key].ProductID}`).innerText = `  ${person.FirstName} ${person.LastName}`;
+  document.getElementById(`maxBidderName_${highestBidder[key].ProductID}`).innerText = capitalize(`${person.FirstName}`);
   });
 }
 
-export { productDeatils };
 
+
+const capitalize = (s) => {
+  if (typeof s !== 'string') return ''
+  return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
+
+
+export { productDeatils , capitalize};
 console.log("Products Details", productDeatils);
 
