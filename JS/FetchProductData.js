@@ -48,8 +48,7 @@ function allProductDataFetch() {
         // console.log('line 27',element);
         if (element?.id) {
           Object.keys(element.id).forEach((key) => {
-            // console.log('line 30',element.id[key]["ProductName"]);
-            // createCard(element.id[key]["ProductName"],element.id[key]["ProductDiscription"],element.id[key]["ProductPrice"]);
+
             createCard();
             function createCard() {
               // ;
@@ -89,14 +88,14 @@ function allProductDataFetch() {
                   </div>
                   <div class="col-sm">
                     <span class="clock fs-2" fw-bold >&#128336</span>
-                    <span class=" fs-5 fw-bold"  id=${uniqueProductId}></span>
+                    <span class=" fs-5 fw-bold" data-product-id=${productId}  id=${uniqueProductId}></span>
                   </div>
                   <div class="col-sm fw-bold">
                     Max bid  &#8377 <span id=mb_${productId}> ${productStartingBid} </span>
                   </div>
                   <div class="d-flex justify-content-between border text-dark" >
                     <div>
-                    <i class="fa fa-user fs-2" style="color:chocolate;"></i> <span class="col-6" id="maxBidderName_${productId}">Not yet bidded!!</span>
+                    <i class="fa fa-user fs-2" style="color:chocolate;"></i> <span class="col-6" id="maxBidderName_${productId}">--::--</span>
                     </div>
                   `;
               let productContentWhenNotLogin = `
@@ -183,8 +182,9 @@ function timer(uniqueProductId, uniqueBidButtonId, bidData1, bidTime1) {
     timeArray[1] <= minutes
   ) {
     // console.log("galat time diya user ne ");
+    // needto fix this 
     userInputDate = new Date(
-      `${shortMonth} ${dateArray[2]}, ${dateArray[0]} ${hours + 4
+      `${shortMonth} ${dateArray[2]}, ${dateArray[0]} ${hours + 0
       }:${minutes}:00`
     ).getTime();
   } else {
@@ -197,39 +197,42 @@ function timer(uniqueProductId, uniqueBidButtonId, bidData1, bidTime1) {
     // Get today's date and time
     let currentTime = new Date().getTime();
 
-    // Find the distance between currentTime and the productIdIncrementor down date
-    let distance = userInputDate - currentTime;
+    // Find the distanceBetweenBidEndTimeAndCurrentTime between currentTime and the productIdIncrementor down date
+    let distanceBetweenBidEndTimeAndCurrentTime = userInputDate - currentTime;
 
     // Time calculations for days, hours, minutes and seconds
-    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    let days = Math.floor(distanceBetweenBidEndTimeAndCurrentTime / (1000 * 60 * 60 * 24));
     let hours = Math.floor(
-      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      (distanceBetweenBidEndTimeAndCurrentTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
     );
-    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    let minutes = Math.floor((distanceBetweenBidEndTimeAndCurrentTime % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((distanceBetweenBidEndTimeAndCurrentTime % (1000 * 60)) / 1000);
 
     // Output the result in an element with id="demo"
     document.getElementById(uniqueProductId).innerHTML =
       days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
 
     // If the productIdIncrementor down is over, write some text
-    if (distance < 0) {
+    if (distanceBetweenBidEndTimeAndCurrentTime < 0) {
       document.getElementById(uniqueProductId).innerHTML = "EXPIRED";
-      // console.log(uniqueBidButtonId);
       document.getElementById(uniqueBidButtonId).style.display = "none";
+      let expiredProductId = document.getElementById(uniqueProductId).dataset.productId;
+      console.log("expired product id " + expiredProductId);
+      insertWinnerData(expiredProductId);
+
       clearInterval(timeFunction);
     }
   }, 1000);
 }
-
+let highestBidder = {};
 highestBiddersOfProducts();
 //maximum bidding function
 async function highestBiddersOfProducts() {
-  let highestBidder = {};
+  // let highestBidder = {};
   let products = {};
   let productsKey = [];
   let productArray = [];
-  
+
   const que = ref(db, "Bidding-Products");
   await get(que).then((snapshot) => {
     products = { ...snapshot.val() }; //all objects are stored inside products
@@ -237,8 +240,8 @@ async function highestBiddersOfProducts() {
   });
   productsKey.forEach((key) => {
     let pro = Object.keys(products[key])
-   
-      if (Object.keys(products[key]).length) {
+
+    if (Object.keys(products[key]).length) {
       // console.log("else ");
       pro.forEach((key2) => {
         // console.log(products[key][key2]);
@@ -265,14 +268,36 @@ async function highestBiddersOfProducts() {
 }
 
 function fetchHighestBidder(highestBidder) {
-  console.log(highestBidder);
+  console.log("highestBidders", highestBidder);
   let productIds = Object.keys(highestBidder);
   productIds.forEach((key) => {
-  document.getElementById(`mb_${highestBidder[key].ProductID}`).innerHTML = `${highestBidder[key].BuyerBidMoney}`;
-  let person = userDeatils.find(user => user.id === `${highestBidder[key].BuyerID}`);
-  document.getElementById(`maxBidderName_${highestBidder[key].ProductID}`).innerText = capitalize(`${person.FirstName}`);
+    document.getElementById(`mb_${highestBidder[key].ProductID}`).innerHTML = `${highestBidder[key].BuyerBidMoney}`;
+    let person = userDeatils.find(user => user.id === `${highestBidder[key].BuyerID}`);
+    document.getElementById(`maxBidderName_${highestBidder[key].ProductID}`).innerText = capitalize(`${person.FirstName}`);
   });
 }
+
+
+function insertWinnerData(expiredProductId) {
+  console.log(highestBidder[expiredProductId]);
+  set(ref(db, "Winners" + "/"), {
+
+    [expiredProductId]: {
+      BuyerBidMoney: highestBidder[expiredProductId].BuyerBidMoney,
+      BuyerID: highestBidder[expiredProductId].BuyerID,
+      ProductID: highestBidder[expiredProductId].ProductID,
+      SellerID: highestBidder[expiredProductId].SellerID
+    }
+  }).then(() => {
+    // alert('winner detected success');
+  })
+    .catch((error) => {
+      // alert("error aa gai h");
+    });
+}
+
+
+
 
 
 
@@ -283,6 +308,6 @@ const capitalize = (s) => {
 
 
 
-export { productDeatils , capitalize};
-console.log("Products Details", productDeatils);
+export { productDeatils, capitalize };
+// console.log("Products Details", productDeatils);
 
