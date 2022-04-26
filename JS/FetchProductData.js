@@ -184,7 +184,7 @@ function timer(uniqueProductId, uniqueBidButtonId, bidData1, bidTime1) {
   ) {
     // console.log("galat time diya user ne ");
     userInputDate = new Date(
-      `${shortMonth} ${dateArray[2]}, ${dateArray[0]} ${hours + 4
+      `${shortMonth} ${dateArray[2]}, ${dateArray[0]} ${hours + 0
       }:${minutes}:00`
     ).getTime();
   } else {
