@@ -218,6 +218,7 @@ function timer(uniqueProductId, uniqueBidButtonId, bidData1, bidTime1) {
       document.getElementById(uniqueBidButtonId).style.display = "none";
       let expiredProductId = document.getElementById(uniqueProductId).dataset.productId;
       console.log("expired product id " + expiredProductId);
+
       insertWinnerData(expiredProductId);
 
       clearInterval(timeFunction);
@@ -290,12 +291,100 @@ function insertWinnerData(expiredProductId) {
     }
   }).then(() => {
     // alert('winner detected success');
+    fetchEmails(highestBidder[expiredProductId].BuyerBidMoney, highestBidder[expiredProductId].BuyerID, highestBidder[expiredProductId].ProductID, highestBidder[expiredProductId].SellerID);
   })
     .catch((error) => {
       // alert("error aa gai h");
     });
 }
+function fetchEmails(BuyerBidMoney, BuyerID, ProductID, SellerID) {
+  let buyerEmail, sellerEmail;
+   let productData={};
+  // console.log("emailsender run---->"+BuyerBidMoney,BuyerID,ProductID,SellerID)
 
+  // console.log("00000000000",userDeatils)
+  console.log('afafa');
+
+  userDeatils.forEach(element => {
+    // console.log(element.id)
+    if (element.id == BuyerID) {
+      // console.log("Buyer email--->",element.Email)
+      buyerEmail = element.Email;
+    }
+    if (element.id == SellerID) {
+      // console.log("seller email--->",element.Email)
+      sellerEmail = element.Email;
+    }
+
+  });
+
+  productDeatils.forEach(element => {
+    // console.log('elem-->',element);
+    let a = Object.keys(element);
+    // console.log('a-->',a);
+    a.forEach(el => {
+      // console.log(element[el]);
+      let b = Object.keys(element[el]);
+      // console.log("bbbbbbbbbbbbbbb--->"+b);
+      b.forEach(elb => {
+        // console.log(element[el][elb].ProductId);
+        if (element[el][elb].ProductId == ProductID) {
+          // console.log(element[el][elb]);
+          productData = {
+            BidDate: element[el][elb].BidDate,
+            BitTime: element[el][elb].BitTime,
+            ImageURl: element[el][elb].ImageURl,
+            ProductDiscription: element[el][elb].ProductDiscription,
+            ProductID: element[el][elb].ProductID,
+            ProductName: element[el][elb].ProductName,
+            ProductPrice: element[el][elb].ProductPrice,
+            SellerName: element[el][elb].SellerName,
+            SellerContactNumber: element[el][elb].SellerContactNumber,
+            UserId: element[el][elb].UserId,
+          };
+        }
+      })
+
+    })
+    // maybe productData are undefined
+  console.log('product data--->', productData);
+
+    sendEmail(buyerEmail, sellerEmail, productData);
+
+  });
+
+  // console.log('afafa');
+
+}
+
+function sendEmail(buyerEmail, sellerEmail, productData) {
+
+  console.log('send email wala chlaa', buyerEmail, sellerEmail);
+  console.log('product data--->', productData);
+  // let userEmail = document.getElementById("userEmail").value;
+
+  // alert(userEmail)
+if(productData!=undefined){
+  Email.send({
+    Host: "smtp.gmail.com",
+    Username: "BidItValueForYourValuables@gmail.com",
+    Password: "systango@@",
+    To: buyerEmail,
+    From: "BidItValueForYourValuables@gmail.com",
+    Subject: "One Time Password",
+    Body:`<h1>Congratulations for winning the bid on this upcoming 
+    trade expo exhibit contract. I wish you all the best and may everything turn out smoothly as you work on greater profits.</h1><br><br><br><br><br>`,
+  })
+    .then(function (message) {
+      alert("mail sent successfully")
+    })
+    .catch(function (message) {
+      alert("error")
+    });
+  }else{
+    console.log("else")
+  }
+  }
 
 
 
@@ -309,5 +398,5 @@ const capitalize = (s) => {
 
 
 export { productDeatils, capitalize };
-// console.log("Products Details", productDeatils);
+console.log("Products Details", productDeatils);
 
