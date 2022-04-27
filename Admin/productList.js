@@ -2,26 +2,27 @@ import { db, set, ref, get, child, update, remove } from "../JS/firebase.js";
 let productList = [];
 let uniqueDeleteButtonCounter = 1;
 let uniqueDeleteButtonId = "deleteBtn";
-cument.getElementById("productButton").addEventListener("click", createProductList);
+// document.getElementById("productButton").addEventListener("click", createProductList);
 createProductList();
 async function createProductList() {
     
         console.log("products");
         console.log("productList");
         let productTable = document.getElementById("productTable");
-        productTable.innerHTML=`<tr>
-        
-        <th>Product image</th>
-        <th>User Id</th>
-        <th>Product ID</th>
-        <th>Product name</th>
-        <th>Product discription</th>
-        <th>Product starting bid</th>
-        <th>Bid ending date</th>
-        <th>Seller's contact</th>
-        <th>Delete Items</th>
-
-    </tr>`;
+        productTable.innerHTML=`
+        <thead  class="table-dark">
+        <tr>
+        <th scope="col">Product image</th>
+        <th scope="col">User Id</th>
+        <th scope="col">Product ID</th>
+        <th scope="col">Product name</th>
+        <th scope="col">Product discription</th>
+        <th scope="col">Product starting bid</th>
+        <th scope="col">Bid ending date</th>
+        <th scope="col">Seller's contact</th>
+        <th scope="col">Delete Items</th>
+        </tr>
+        <thead>   `;
         const databaseRef = ref(db);
         await get(child(databaseRef, "User/")).then((snapshot) => {
             if (typeof (snapshot) !== 'undefined') {
@@ -48,7 +49,7 @@ async function createProductList() {
                             let productStartingBid = element.id[key]["ProductPrice"];
                             let bidEndDate = element.id[key]["BidDate"];
                             let sellerContact = element.id[key]["SellerContactNumber"];
-                            productTable.innerHTML += `<tr  class="table-active "><td> <img class="imgShowInCard " src=${url}></td><td>${userId}</td><td>${productId} </td><td> ${productName}</td><td>${productDiscription}</td><td>${productStartingBid}</td><td>${bidEndDate}</td> <td> ${sellerContact}</td><td><button onclick="removeProduct(${userId} ,${productId})" id=${uniqueDeleteButtonId + uniqueDeleteButtonCounter}>delete</button></td></tr>`;
+                            productTable.innerHTML += `<tr class="table-active "><td> <img class="imgShowInCard " src=${url}></td><td>${userId}</td><td>${productId} </td><td> ${productName}</td><td>${productDiscription}</td><td>${productStartingBid}</td><td>${bidEndDate}</td> <td> ${sellerContact}</td><td><button onclick="removeProduct(${userId} ,${productId})" id=${uniqueDeleteButtonId + uniqueDeleteButtonCounter}>delete</button></td></tr>`;
                             uniqueDeleteButtonCounter++;
                         });
 
