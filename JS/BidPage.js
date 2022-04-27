@@ -15,6 +15,7 @@ let buyerId = parseInt(UserData.id);
 let bidData = document.getElementById("bidData");
 
 
+
 //fetching wallet money from data base and set the wallet money in session...
 let walletmoney;
 async function walletUtilities() {
@@ -126,7 +127,11 @@ function insertBid() {
                 .catch((error) => {
                     alert("error aa gai h");
                 });
-        } else {
+        /*************** */
+        update(ref(db, "User/" + UserData.id + "/Details"), { WalletMoney: walletmoney + insertMoney })
+
+        
+            } else {
             alert("you dose not bid smaller than Initial Bid.")
         }
     } else {

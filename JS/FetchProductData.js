@@ -215,10 +215,10 @@ async function timer(uniqueProductId, uniqueBidButtonId, bidData1, bidTime1) {
     let currentProductId = document.getElementById(uniqueProductId).dataset.productId;
     // console.log("currentProductId"+currentProductId);
     const databaseRef = ref(db);
-   await get(child(databaseRef, `Winners/${currentProductId}`)).then((snapshot) => {
+    await get(child(databaseRef, `Winners/${currentProductId}`)).then((snapshot) => {
       if (typeof snapshot !== "undefined") {
         if (snapshot.exists()) {
-          console.log("dbms check kiya"+currentProductId);
+          console.log("dbms check kiya" + currentProductId);
           isAlreadyInDatabaseWinners = true;
         }
       }
@@ -233,7 +233,7 @@ async function timer(uniqueProductId, uniqueBidButtonId, bidData1, bidTime1) {
         let expiredProductId = document.getElementById(uniqueProductId).dataset.productId;
         console.log("expired product id " + expiredProductId);
         insertWinnerData(expiredProductId);
-      }else{
+      } else {
         console.log("existing winner,,,,,,,,,,,,,,");
       }
       clearInterval(timeFunction);
@@ -296,14 +296,14 @@ function fetchHighestBidder(highestBidder) {
 
 async function insertWinnerData(expiredProductId) {
   console.log(highestBidder[expiredProductId]);
-  set(ref(db, "Winners" + "/" + [expiredProductId] +"/"), {
+  set(ref(db, "Winners" + "/" + [expiredProductId] + "/"), {
 
-    
-      BuyerBidMoney: highestBidder[expiredProductId].BuyerBidMoney,
-      BuyerID: highestBidder[expiredProductId].BuyerID,
-      ProductID: highestBidder[expiredProductId].ProductID,
-      SellerID: highestBidder[expiredProductId].SellerID
-    
+
+    BuyerBidMoney: highestBidder[expiredProductId].BuyerBidMoney,
+    BuyerID: highestBidder[expiredProductId].BuyerID,
+    ProductID: highestBidder[expiredProductId].ProductID,
+    SellerID: highestBidder[expiredProductId].SellerID
+
   }).then(() => {
     alert('winner detected success');
     fetchEmails(highestBidder[expiredProductId].BuyerBidMoney, highestBidder[expiredProductId].BuyerID, highestBidder[expiredProductId].ProductID, highestBidder[expiredProductId].SellerID);
@@ -339,32 +339,34 @@ async function fetchEmails(BuyerBidMoney, BuyerID, ProductID, SellerID) {
     // console.log('a-->',a);
     a.forEach(el => {
       // console.log(element[el]);
-      let b = Object.keys(element[el]);
-      // console.log("bbbbbbbbbbbbbbb--->"+b);
-      b.forEach(elb => {
-        // console.log(element[el][elb].ProductId);
-        if (element[el][elb].ProductId == ProductID) {
-          // console.log(element[el][elb]);
-          productData = {
-            BidDate: element[el][elb].BidDate,
-            BitTime: element[el][elb].BitTime,
-            ImageURl: element[el][elb].ImageURl,
-            ProductDiscription: element[el][elb].ProductDiscription,
-            ProductID: element[el][elb].ProductID,
-            ProductName: element[el][elb].ProductName,
-            ProductPrice: element[el][elb].ProductPrice,
-            SellerName: element[el][elb].SellerName,
-            SellerContactNumber: element[el][elb].SellerContactNumber,
-            UserId: element[el][elb].UserId,
-          };
-        }
-      })
+      if (element[el] != undefined) {
+        let b = Object.keys(element[el]);
+        // console.log("bbbbbbbbbbbbbbb--->"+b);
+        b.forEach(elb => {
+          // console.log(element[el][elb].ProductId);
+          if (element[el][elb].ProductId == ProductID) {
+            // console.log(element[el][elb]);
+            productData = {
+              BidDate: element[el][elb].BidDate,
+              BitTime: element[el][elb].BitTime,
+              ImageURl: element[el][elb].ImageURl,
+              ProductDiscription: element[el][elb].ProductDiscription,
+              ProductID: element[el][elb].ProductId,
+              ProductName: element[el][elb].ProductName,
+              ProductPrice: element[el][elb].ProductPrice,
+              SellerName: element[el][elb].SellerName,
+              SellerContactNumber: element[el][elb].SellerContactNumber,
+              UserId: element[el][elb].UserId,
+            };
+            sendEmail(buyerEmail, sellerEmail, productData,BuyerBidMoney);
 
+          }
+        })
+      }
     })
     // maybe productData are undefined
     console.log('product data--->', productData);
 
-    sendEmail(buyerEmail, sellerEmail, productData);
 
   });
 
@@ -372,30 +374,136 @@ async function fetchEmails(BuyerBidMoney, BuyerID, ProductID, SellerID) {
 
 }
 
-async function sendEmail(buyerEmail, sellerEmail, productData) {
+async function sendEmail(buyerEmail, sellerEmail, productData,BuyerBidMoney) {
 
   console.log('send email wala chlaa', buyerEmail, sellerEmail);
-  console.log('product data--->', productData);
+  // console.log('product data--->', productData);
   // let userEmail = document.getElementById("userEmail").value;
 
   // alert(userEmail)
   if (productData != undefined) {
+    
+    
     Email.send({
       Host: "smtp.gmail.com",
       Username: "BidItValueForYourValuables@gmail.com",
       Password: "systango@@",
       To: buyerEmail,
       From: "BidItValueForYourValuables@gmail.com",
-      Subject: "One Time Password",
-      Body: `<h1>Congratulations for winning the bid on this upcoming 
-    trade expo exhibit contract. I wish you all the best and may everything turn out smoothly as you work on greater profits.</h1><br><br><br><br><br>`,
-    })
+      Subject: "Hurray!! ",
+      Body: `<div><h2  style="color:chocolate; line-height: 2;"><span>&#127881 ; &#127881 ; &#127881 ;</span><br>  Congratulations for winning the bid on this upcoming 
+    trade expo exhibit contract. I wish you all the best and may everything turn out smoothly as you work on greater profits.</h2><br>
+    <img src="${productData.ImageURl}" /><br>
+    <table  class="table table-striped" style="width:100%;   border: 1px solid white;
+    border-collapse: collapse; text-align:left; " >
+    <tr>
+      <th>Product Id</th>
+      <td>${productData.ProductID}</td>
+    </tr>
+
+    <tr>
+    <th>Product Name</th>
+    <td>${productData.ProductName}</td>
+    </tr>
+
+    <tr>
+    <th>Product Starting Price</th>
+    <td>${productData.ProductPrice}</td>
+    </tr>
+
+    <tr>
+    <th>Auction Winning Price</th>
+    <td>${BuyerBidMoney}</td>
+    </tr>
+
+    <tr>
+    <th>Product Discription</th>
+    <td>${productData.ProductDiscription}</td>
+    </tr>
+
+    <tr>
+    <th>Auction End Date</th>
+    <td>${productData.BidDate} ${productData.BitTime}</td>
+    </tr>
+    
+    <tr>
+    <th>Seller Name</th>
+    <td>${productData.SellerName}</td>
+    </tr>
+    
+    <tr>
+    <th>Seller Contact Number</th>
+    <td>${productData.SellerContactNumber}</td>
+    </tr>
+
+    <th>Seller Email</th>
+        <td>${sellerEmail}</td>
+        </tr>
+      </table>
+    </div>`,
+  })
+ 
       .then(function (message) {
         alert("mail sent successfully")
       })
       .catch(function (message) {
         alert("error")
       });
+
+      Email.send({
+        Host: "smtp.gmail.com",
+        Username: "BidItValueForYourValuables@gmail.com",
+        Password: "systango@@",
+        To: sellerEmail,
+        From: "BidItValueForYourValuables@gmail.com",
+        Subject: "Hurray!! ",
+        Body:`<div><h2  style="color:chocolate; line-height: 2;"><span>&#127881 ; &#127881 ; &#127881 ;</span><br>  Congratulations!!!!!  your product is Sold with following information:::  </h2><br>
+        <img src="${productData.ImageURl}" /><br>
+        <table  class="table table-striped" style="width:100%;   border: 1px solid white;
+        border-collapse: collapse; text-align:left; " >
+        <tr>
+          <th>Product Id</th>
+          <td>${productData.ProductID}</td>
+        </tr>
+    
+        <tr>
+        <th>Product Name</th>
+        <td>${productData.ProductName}</td>
+        </tr>
+    
+        <tr>
+        <th>Product Starting Price</th>
+        <td>${productData.ProductPrice}</td>
+        </tr>
+    
+        <tr>
+        <th>Auction Winning Price</th>
+        <td>${BuyerBidMoney}</td>
+        </tr>
+    
+        <tr>
+        <th>Product Discription</th>
+        <td>${productData.ProductDiscription}</td>
+        </tr>
+    
+        <tr>
+        <th>Auction End Date</th>
+        <td>${productData.BidDate} ${productData.BitTime}</td>
+        </tr>
+        
+        <th>Buyer Email</th>
+        <td>${buyerEmail}</td>
+        </tr>
+        
+          </table>
+        </div>`,
+      })
+          .then(function (message) {
+            alert("mail sent successfully222222")
+          })
+          .catch(function (message) {
+            alert("error")
+          });
   } else {
     console.log("else")
   }

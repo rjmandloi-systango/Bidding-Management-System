@@ -3,8 +3,9 @@ import { productImageURL } from "./imageUpload.js";
 
 let UserData = JSON.parse(localStorage.getItem("USERDATA"));
 let UserID = UserData.id;
-let UserName=UserData.FirstName+" "+UserData.LastName ;
-
+let UserName=UserData.FirstName+" "+UserData.LastName;
+let UserPhone=UserData.Phone;
+// {"id":"2","FirstName":"Antim","LastName":"fulwere","Phone":"9993438574","Email":"antimfulwere1022@gmail.com","Country":"Australia","State":"South Australia","PinCode":"aa","Address":"aa","LandMakr":"baba mahakal ki jai ho","UserPass":"11","UserId":2}
 let sellButton = document.getElementById("sellSubmitButton");
 sellButton.addEventListener("click", productData);
 let productIdArray = [];
@@ -17,7 +18,8 @@ function productData() {
     productName: document.getElementById("productName").value,
     productDiscription: document.getElementById("productDiscription").value,
     productPrice: document.getElementById("productPrice").value,
-    sellerContactNumber: document.getElementById("sellerContactNumber").value,
+    // sellerContactNumber: document.getElementById("sellerContactNumber").value,
+    sellerContactNumber:UserPhone,
     bidDate: document.getElementById("bidDate").value,
     bidTime: document.getElementById("bidTime").value
 
