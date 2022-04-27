@@ -1,16 +1,30 @@
 import { db, set, ref, get, child, update, remove } from "../JS/firebase.js";
-window.removeUser = function (userId) {
+const databaseRef = ref(db);
+
+window.removeUser =async function (userId) {
+    let productKeys=[];
     alert(userId);
-    remove(ref(db, `User/${userId}`), {
-
+    await get(child(databaseRef, `User/${userId}/Details/ProductSold`)).then((snapshot) => {
+      if (typeof snapshot !== "undefined") {
+        if (snapshot.exists()) {
+          productKeys=Object.keys(snapshot.val());
+        }
+      }
+    })
+    // console.log(productKeys);
+    
+    await remove(ref(db, `User/${userId}`), {
     }).then(() => {
-        remove(ref(db, `Bidding-Products/${productId}`), {
-        }).then(() => {
-            
-        });
-
+        productKeys.forEach((element)=>{
+            remove(ref(db, `Bidding-Products/${element}`), {
+              }).then(() => {
+                console.log(element +"is deleted from bidding Products");
+              });
+            })      
         alert('Congrats your product is deleted  successfully...')
     }).catch((error) => {
             alert("Something went wrong!!!!!!!!!");
         });
-} 
+
+}
+    

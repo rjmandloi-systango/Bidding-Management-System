@@ -78,7 +78,7 @@ window.removeProduct = function (userId, productId) {
         
         alert('Congrats your product is deleted  successfully...');
     }).catch((error) => {
-            alert("Something went wrong!!!!!!!!!");
+            // alert("Something went wrong!!!!!!!!!");
         });
 }
 
