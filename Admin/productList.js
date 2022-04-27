@@ -2,14 +2,12 @@ import { db, set, ref, get, child, update, remove } from "../JS/firebase.js";
 let productList = [];
 let uniqueDeleteButtonCounter = 1;
 let uniqueDeleteButtonId = "deleteBtn";
-let productButtonStatus = false;
-document.getElementById("productButton").addEventListener("click", createProductList);
+cument.getElementById("productButton").addEventListener("click", createProductList);
+createProductList();
 async function createProductList() {
-    // console.log(productButtonStatus);
-    document.getElementById("container").innerHTML="";
-    if (productButtonStatus == false) {
-        productButtonStatus = true;
-        document.getElementById("productTable").style.display = "block";
+    
+        console.log("products");
+        console.log("productList");
         let productTable = document.getElementById("productTable");
         productTable.innerHTML=`<tr>
         
@@ -64,13 +62,20 @@ async function createProductList() {
         });
     }
 
-}
 window.removeProduct = function (userId, productId) {
 
     remove(ref(db, `User/${userId}/Details/ProductSold/${productId}`), {
 
     }).then(() => {
-        alert('Congrats your product is deleted  successfully...')
+        remove(ref(db, `Bidding-Products/${productId}`), {
+
+        }).then(() => {
+        
+            alert("bidding product is also deleted");
+
+        });
+        
+        alert('Congrats your product is deleted  successfully...');
     }).catch((error) => {
             alert("Something went wrong!!!!!!!!!");
         });

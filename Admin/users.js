@@ -2,13 +2,13 @@ import { db, set, ref, get, child, update, remove } from "../JS/firebase.js";
 // document.getElementById("userButton").addEventListener('click',userList);
 // location.reload();
 
-// userList();
-let userButtonStatus = false;
-window.userList = function () {
-  document.getElementById("productTable").innerHTML="";
-
-  if (userButtonStatus == false) {
-    userButtonStatus=true;
+userList();
+// let userButtonStatus = false;
+  function userList() {
+  // document.getElementById("productTable").innerHTML="";
+let users=document.getElementById("users");
+  // if (userButtonStatus == false) {
+  //   userButtonStatus=true;
     const databaseRef = ref(db);
     // var ul = document.createElement("ul");
     // document.body.appendChild(ul);
@@ -50,42 +50,18 @@ window.userList = function () {
                                   <p class="card-text text-start  text-dark"><span class ="fw-bold">Full address:</span>${child.val().Details.FullAddress}</p>
                                  </div>
 
-                             <button onclick="removeUser(${child.val().Details.UserID})" class="btn btn-primary col-6 biddingStatus data-bs-toggle="modal" data-bs-target="#exampleModal1">Delete user</button>
-                                                      
-                                    
-                                   
+                             <button onclick="removeUser(${child.val().Details.UserID})" class="btn btn-primary col-6 biddingStatus data-bs-toggle="modal" data-bs-target="#exampleModal1">Delete user</button>                              
                          </div>
                     </div>
                        `;
 
-            container.innerHTML += productContent;
-
-
-            //     userDeatils.push({
-            //         "id": child.key,
-            //         "FirstName":child.val().Details.FirstName, 
-            //         "LastName":child.val().Details.LastName,
-            //         "Phone":child.val().Details.PhoneNo,
-            //         "Email":child.val().Details.Email,
-            //         "Country":child.val().Details.Country,
-            //         "State":child.val().Details.State,
-            //         "PinCode":child.val().Details.PinCode,
-            //         "Address":child.val().Details.Address,
-            //         "LandMakr":child.val().Details.LandMakr,
-            //         // "UserName":child.val().Details.UserName,
-            //         "UserPass":child.val().Details.UserPass,
-            //         "UserId":child.val().Details.UserID
-
-            // })
-
+                       users.innerHTML += productContent;
           });
         }
       }
-
-
     });
   }
-}
+// }
 
 // console.log(userDeatils);
 // export { userDeatils };
