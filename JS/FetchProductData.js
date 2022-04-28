@@ -73,7 +73,7 @@ async function allProductDataFetch() {
                 isLogin = 1;
               }
               let productContent = `
-            <div class="card productCard mt-5 rounded-3  m-4"  id=${productId} style="width: 18rem;">
+            <div class="card productCard mt-5 rounded-3  m-2 ms-3"  id=${productId} style="width: 18rem;">
               <div class="card-body  rounded-3" >
                   <div class="productName text-center p-1 rounded-3">
                     <h5 class="card-title">${capitalize(productName)}</h5>
