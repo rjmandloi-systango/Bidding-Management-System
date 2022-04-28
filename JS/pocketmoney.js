@@ -1,5 +1,5 @@
 
-import { db, set, ref, get, child, update, remove } from "./firebase.js";
+import { db, set, ref, get, child, update, remove  } from "./firebase.js";
 let UserData = JSON.parse(localStorage.getItem("USERDATA"));
 const databaseRef = ref(db);
 
@@ -24,7 +24,7 @@ async function walletUtilities() {
             update(ref(db, "User/" + UserData.id + "/Details"), { WalletMoney: walletmoney + insertMoney })
             alert("Congretes Your Money Added Successfully.");
             // sessionStorage.setItem("WalletMoney",walletmoney+insertMoney);
-            document. location. reload() ;
+            // document.getElementById("pocketmoney").innerHTML=`Your Current Money :${walletmoney}`
 
         } else {
             alert("you can add atmost 1000000 rs. in your wallet .")

@@ -1,6 +1,7 @@
 import { db, set, ref, get, child, update, remove } from "./firebase.js";
 import { userDeatils } from "./fetchUserData.js";
 console.log(userDeatils);
+let highestBidder = {};
 
 let productIdIncrementor = 1;
 let userDATA = JSON.parse(localStorage.getItem("USERDATA"));
@@ -111,6 +112,7 @@ async function allProductDataFetch() {
       
             </div>
             </div>
+            
             `;
 
               let productLayout;
@@ -152,17 +154,30 @@ window.fetchProductData = function (
   url,
   sellerId
 ) {
-  productObj = {
-    pname: pname,
-    sname: sname,
-    betime: betime,
-    InitialBid: InitialBid,
-    productId: productId,
-    url: url,
-    sellerId: sellerId,
-  };
-  sessionStorage.setItem("ProductData", JSON.stringify(productObj));
-  location.href = "HTML/BidPage.html";
+  // alert(highestBidder)
+
+  let maximumBidPrice = document.getElementById(`mb_${productId}`).innerHTML;
+   console.log(highestBidder[productId]);
+   let highestBidderId=0;
+   if(highestBidder[productId]!=undefined){
+   highestBidderId = highestBidder[productId].BuyerID;
+  }
+
+
+    productObj = {
+      pname: pname,
+      sname: sname,
+      betime: betime,
+      InitialBid: InitialBid,
+      productId: productId,
+      url: url,
+      sellerId: sellerId,
+      maximumBidPrice: maximumBidPrice,
+      highestBidderId: highestBidderId,
+    };
+    sessionStorage.setItem("ProductData", JSON.stringify(productObj));
+    window.open(`HTML/BidPage.html`, '_blank');
+
 };
 
 async function timer(uniqueProductId, uniqueBidButtonId, bidData1, bidTime1) {
@@ -240,7 +255,8 @@ async function timer(uniqueProductId, uniqueBidButtonId, bidData1, bidTime1) {
     }
   }, 1000);
 }
-let highestBidder = {};
+let productBidList = [];
+
 highestBiddersOfProducts();
 //maximum bidding function
 async function highestBiddersOfProducts() {
@@ -254,6 +270,7 @@ async function highestBiddersOfProducts() {
     products = { ...snapshot.val() }; //all objects are stored inside products
     productsKey = Object.keys(products);//all object keys are stored inside productsKeys
   });
+  console.log('products--->', products);
   productsKey.forEach((key) => {
     let pro = Object.keys(products[key])
 
@@ -262,7 +279,11 @@ async function highestBiddersOfProducts() {
       pro.forEach((key2) => {
         // console.log(products[key][key2]);
         productArray.push(
-          products[key][key2],
+          products[key][key2]
+        );
+
+        productBidList.push(
+          products[key][key2]
         );
 
       })
@@ -277,6 +298,7 @@ async function highestBiddersOfProducts() {
         return 0;
       });
       highestBidder[key] = productArray[0];
+      console.log(productArray);
       productArray = [];
     }
   });
@@ -358,7 +380,7 @@ async function fetchEmails(BuyerBidMoney, BuyerID, ProductID, SellerID) {
               SellerContactNumber: element[el][elb].SellerContactNumber,
               UserId: element[el][elb].UserId,
             };
-            sendEmail(buyerEmail, sellerEmail, productData,BuyerBidMoney);
+            sendEmail(buyerEmail, sellerEmail, productData, BuyerBidMoney);
 
           }
         })
@@ -374,7 +396,7 @@ async function fetchEmails(BuyerBidMoney, BuyerID, ProductID, SellerID) {
 
 }
 
-async function sendEmail(buyerEmail, sellerEmail, productData,BuyerBidMoney) {
+async function sendEmail(buyerEmail, sellerEmail, productData, BuyerBidMoney) {
 
   console.log('send email wala chlaa', buyerEmail, sellerEmail);
   // console.log('product data--->', productData);
@@ -382,8 +404,8 @@ async function sendEmail(buyerEmail, sellerEmail, productData,BuyerBidMoney) {
 
   // alert(userEmail)
   if (productData != undefined) {
-    
-    
+
+
     Email.send({
       Host: "smtp.gmail.com",
       Username: "BidItValueForYourValuables@gmail.com",
@@ -441,8 +463,8 @@ async function sendEmail(buyerEmail, sellerEmail, productData,BuyerBidMoney) {
         </tr>
       </table>
     </div>`,
-  })
- 
+    })
+
       .then(function (message) {
         alert("mail sent successfully")
       })
@@ -450,14 +472,14 @@ async function sendEmail(buyerEmail, sellerEmail, productData,BuyerBidMoney) {
         alert("error")
       });
 
-      Email.send({
-        Host: "smtp.gmail.com",
-        Username: "BidItValueForYourValuables@gmail.com",
-        Password: "systango@@",
-        To: sellerEmail,
-        From: "BidItValueForYourValuables@gmail.com",
-        Subject: "Hurray!! ",
-        Body:`<div><h2  style="color:chocolate; line-height: 2;"><span>&#127881 ; &#127881 ; &#127881 ;</span><br>  Congratulations!!!!!  your product is Sold with following information:::  </h2><br>
+    Email.send({
+      Host: "smtp.gmail.com",
+      Username: "BidItValueForYourValuables@gmail.com",
+      Password: "systango@@",
+      To: sellerEmail,
+      From: "BidItValueForYourValuables@gmail.com",
+      Subject: "Hurray!! ",
+      Body: `<div><h2  style="color:chocolate; line-height: 2;"><span>&#127881 ; &#127881 ; &#127881 ;</span><br>  Congratulations!!!!!  your product is Sold with following information:::  </h2><br>
         <img src="${productData.ImageURl}" /><br>
         <table  class="table table-striped" style="width:100%;   border: 1px solid white;
         border-collapse: collapse; text-align:left; " >
@@ -497,13 +519,13 @@ async function sendEmail(buyerEmail, sellerEmail, productData,BuyerBidMoney) {
         
           </table>
         </div>`,
+    })
+      .then(function (message) {
+        alert("mail sent successfully222222")
       })
-          .then(function (message) {
-            alert("mail sent successfully222222")
-          })
-          .catch(function (message) {
-            alert("error")
-          });
+      .catch(function (message) {
+        alert("error")
+      });
   } else {
     console.log("else")
   }
@@ -514,7 +536,7 @@ async function sendEmail(buyerEmail, sellerEmail, productData,BuyerBidMoney) {
 
 // }
 
-
+console.log(productBidList);
 
 const capitalize = (s) => {
   if (typeof s !== 'string') return ''
@@ -526,3 +548,7 @@ const capitalize = (s) => {
 export { productDeatils, capitalize };
 console.log("Products Details", productDeatils);
 
+// {"pname":"moblie","sname":"shubham singh","betime":"2022-04-29","InitialBid":"1200","productId":"676","url":"https://firebasestorage.googleapis.com/v0/b/bidding-management-syste-da0d1.appspot.com/o/Images%2F1650369521398.JPEG?alt=media&token=6d8519ff-ca68-41b3-9e21-6ead392d9a0d","sellerId":"1"}
+
+
+// {"pname":"","sname":"shubham singh","betime":"2022-05-01","InitialBid":"25000","productId":"131","url":"https://firebasestorage.googleapis.com/v0/b/bidding-management-syste-da0d1.appspot.com/o/Images%2Fdownload.jpeg?alt=media&token=702708b6-7a38-4420-8499-726c4d96c20e","sellerId":"1","maximumBidPrice":" 25000 "}
