@@ -1,23 +1,19 @@
 import { db, set, ref, get, child, update, remove } from "./firebase.js";
 const databaseRef = ref(db);
 
+
 let UserData = JSON.parse(localStorage.getItem("USERDATA"));
 let ProductData = JSON.parse(sessionStorage.ProductData);
 // fetch user data and product data frrm localStorage and sessionStorage
 let productInitialBid = parseInt(ProductData.InitialBid);
 let productId = parseInt(ProductData.productId);
 let sellerId = parseInt(ProductData.sellerId);
-
 let buyerId = parseInt(UserData.id);
 
-// console.log(ProductData.pname);
-
 let bidData = document.getElementById("bidData");
-
-
-
 //fetching wallet money from data base and set the wallet money in session...
 let walletmoney;
+let highestBidderWalletMoney;
 async function walletUtilities() {
     await get(child(databaseRef, "User/" + UserData.id + "/Details")).then((snapshot) => {
         if (typeof (snapshot) !== 'undefined') {
@@ -27,6 +23,16 @@ async function walletUtilities() {
             }
         }
     });
+    await get(child(databaseRef, "User/" + ProductData.highestBidderId + "/Details/")).then((snapshot) => {
+        if (typeof (snapshot) !== 'undefined') {
+            if (snapshot.exists()) {
+                console.log("log--" + snapshot.val().WalletMoney)
+                highestBidderWalletMoney = snapshot.val().WalletMoney
+            }
+        }
+    });
+
+
     sessionStorage.setItem("WalletMoney", walletmoney);
 
 }
@@ -62,7 +68,7 @@ function bidDataContainer() {
                            </div>
                            <div class="d-flex justify-content-between border text-dark >
                            <span class="col-6">Max Bidder Price</span>
-                           <p>100000(antu fulwere)</p>   
+                           <p>${ProductData.maximumBidPrice}</p>   
                        </div>
                       
                      
@@ -112,29 +118,45 @@ let bidMoneybtn = document.getElementById("bidMoneybtn");
 bidMoneybtn.addEventListener("click", insertBid);
 function insertBid() {
     let walletMoney = parseInt(sessionStorage.getItem("WalletMoney"));
+
     let bidMoney = parseInt(document.getElementById("bidMoney").value);
     if (walletMoney >= bidMoney) {
-        if (bidMoney > productInitialBid) {
+        if (bidMoney > ProductData.maximumBidPrice) {
             set(ref(db, "Bidding-Products/" + (productId) + "/" + (buyerId) + "/"), {
                 BuyerID: buyerId,
                 BuyerBidMoney: bidMoney,
                 SellerID: sellerId,
-                ProductID:productId
+                ProductID: productId
             })
                 .then(() => {
                     alert('Cogrates your bid added successfully...')
-                })
-                .catch((error) => {
-                    alert("error aa gai h");
-                });
-        /*************** */
-        update(ref(db, "User/" + UserData.id + "/Details"), { WalletMoney: walletmoney + insertMoney })
+                    // window.open(`../index.html`);
+                    alert('-')
+                    update(ref(db, "User/" + UserData.id + "/Details"), { WalletMoney: parseInt(walletmoney) - bidMoney })
+                        .then(() => {
+                            alert('+')
+                            if (highestBidderWalletMoney != undefined) {
+                                update(ref(db, "User/" + ProductData.highestBidderId + "/Details"), { WalletMoney: parseInt(highestBidderWalletMoney) + parseInt(ProductData.maximumBidPrice) }).then(() => {
+                                })
 
-        
-            } else {
-            alert("you dose not bid smaller than Initial Bid.")
-        }
+                                }
+                        location.href = '../index.html';
+                })
+            // 
+
+        })
+                .catch ((error) => {
+            alert("error aa gai h");
+        });
+        /*************** */
+        // update(ref(db, "User/" + UserData.id + "/Details"), { WalletMoney: walletmoney - bidMoney })
+
+
     } else {
-        alert("You do not have enough money in your wallet.");
+        alert("you dose not bid smaller than Maximum Bid.")
+
     }
+} else {
+    alert("You do not have enough money in your wallet.");
+}
 }

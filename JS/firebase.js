@@ -16,7 +16,7 @@
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
 
-  import { getDatabase,set,ref,get,child, update, remove ,orderByChild ,query ,onValue ,limitToFirst} from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+  import { getDatabase,set,ref,get,child, update, remove ,orderByChild ,query ,onValue ,limitToFirst  } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
   // console.log(db)
   // let a=10;
   import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL }
