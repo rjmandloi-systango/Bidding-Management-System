@@ -319,8 +319,6 @@ function fetchHighestBidder(highestBidder) {
 async function insertWinnerData(expiredProductId) {
   console.log(highestBidder[expiredProductId]);
   set(ref(db, "Winners" + "/" + [expiredProductId] + "/"), {
-
-
     BuyerBidMoney: highestBidder[expiredProductId].BuyerBidMoney,
     BuyerID: highestBidder[expiredProductId].BuyerID,
     ProductID: highestBidder[expiredProductId].ProductID,
@@ -331,25 +329,17 @@ async function insertWinnerData(expiredProductId) {
     fetchEmails(highestBidder[expiredProductId].BuyerBidMoney, highestBidder[expiredProductId].BuyerID, highestBidder[expiredProductId].ProductID, highestBidder[expiredProductId].SellerID);
   })
     .catch((error) => {
-      // alert("error aa gai h");
     });
 }
 async function fetchEmails(BuyerBidMoney, BuyerID, ProductID, SellerID) {
   let buyerEmail, sellerEmail;
   let productData = {};
-  // console.log("emailsender run---->"+BuyerBidMoney,BuyerID,ProductID,SellerID)
-
-  // console.log("00000000000",userDeatils)
   console.log('afafa');
-
   userDeatils.forEach(element => {
-    // console.log(element.id)
     if (element.id == BuyerID) {
-      // console.log("Buyer email--->",element.Email)
       buyerEmail = element.Email;
     }
     if (element.id == SellerID) {
-      // console.log("seller email--->",element.Email)
       sellerEmail = element.Email;
     }
 
@@ -386,26 +376,14 @@ async function fetchEmails(BuyerBidMoney, BuyerID, ProductID, SellerID) {
         })
       }
     })
-    // maybe productData are undefined
     console.log('product data--->', productData);
-
-
   });
-
-  // console.log('afafa');
-
 }
-
 async function sendEmail(buyerEmail, sellerEmail, productData, BuyerBidMoney) {
 
   console.log('send email wala chlaa', buyerEmail, sellerEmail);
-  // console.log('product data--->', productData);
-  // let userEmail = document.getElementById("userEmail").value;
 
-  // alert(userEmail)
   if (productData != undefined) {
-
-
     Email.send({
       Host: "smtp.gmail.com",
       Username: "BidItValueForYourValuables@gmail.com",
@@ -530,25 +508,10 @@ async function sendEmail(buyerEmail, sellerEmail, productData, BuyerBidMoney) {
     console.log("else")
   }
 }
-
-// function checkForAlreadyExistingEntryInWinner(currentProductId)
-// {
-
-// }
-
 console.log(productBidList);
-
 const capitalize = (s) => {
   if (typeof s !== 'string') return ''
   return s.charAt(0).toUpperCase() + s.slice(1)
 }
-
-
-
 export { productDeatils, capitalize };
 console.log("Products Details", productDeatils);
-
-// {"pname":"moblie","sname":"shubham singh","betime":"2022-04-29","InitialBid":"1200","productId":"676","url":"https://firebasestorage.googleapis.com/v0/b/bidding-management-syste-da0d1.appspot.com/o/Images%2F1650369521398.JPEG?alt=media&token=6d8519ff-ca68-41b3-9e21-6ead392d9a0d","sellerId":"1"}
-
-
-// {"pname":"","sname":"shubham singh","betime":"2022-05-01","InitialBid":"25000","productId":"131","url":"https://firebasestorage.googleapis.com/v0/b/bidding-management-syste-da0d1.appspot.com/o/Images%2Fdownload.jpeg?alt=media&token=702708b6-7a38-4420-8499-726c4d96c20e","sellerId":"1","maximumBidPrice":" 25000 "}

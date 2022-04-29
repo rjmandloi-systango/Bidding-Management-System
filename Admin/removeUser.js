@@ -1,9 +1,12 @@
 import { db, set, ref, get, child, update, remove } from "../JS/firebase.js";
 const databaseRef = ref(db);
 
+//removal of user and also its products from bidding 
 window.removeUser =async function (userId) {
-    let productKeys=[];
+     
+  let productKeys=[];
     alert(userId);
+    //if multiple products  are sold by one user then all the product ids are store in product keys
     await get(child(databaseRef, `User/${userId}/Details/ProductSold`)).then((snapshot) => {
       if (typeof snapshot !== "undefined") {
         if (snapshot.exists()) {
@@ -13,6 +16,8 @@ window.removeUser =async function (userId) {
     })
     // console.log(productKeys);
     
+
+    //all the produts from bidding are also deleted when its owner is deleted 
     await remove(ref(db, `User/${userId}`), {
     }).then(() => {
         productKeys.forEach((element)=>{

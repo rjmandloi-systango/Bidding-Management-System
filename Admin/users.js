@@ -1,25 +1,17 @@
 import { db, set, ref, get, child, update, remove } from "../JS/firebase.js";
-// document.getElementById("userButton").addEventListener('click',userList);
-// location.reload();
-
 userList();
-// let userButtonStatus = false;
-  function userList() {
-  // document.getElementById("productTable").innerHTML="";
-let users=document.getElementById("users");
-  // if (userButtonStatus == false) {
-  //   userButtonStatus=true;
-    const databaseRef = ref(db);
-    // var ul = document.createElement("ul");
-    // document.body.appendChild(ul);
 
-    get(child(databaseRef, "User/")).then((snapshot) => {
-      if (typeof (snapshot) !== 'undefined') {
+// function fetches the user data and create list
+function userList() {
+  let users = document.getElementById("users");
+  const databaseRef = ref(db);
+  get(child(databaseRef, "User/")).then((snapshot) => {
+    if (typeof (snapshot) !== 'undefined') {
 
-        if (snapshot.exists()) {
-          snapshot.forEach((child) => {
-
-            let productContent = `
+      if (snapshot.exists()) {
+        snapshot.forEach((child) => {
+//card creation of users
+          let productContent = `
                     <div class="card productCard mt-5 rounded-3 ms-4 mr-5"  style="width: 18rem;">
                      
                          <div class="card-body text-center rounded-3" >
@@ -54,17 +46,12 @@ let users=document.getElementById("users");
                          </div>
                     </div>
                        `;
-
-                       users.innerHTML += productContent;
-          });
-        }
+          users.innerHTML += productContent;
+        });
       }
-    });
-  }
-// }
-
-// console.log(userDeatils);
-// export { userDeatils };
+    }
+  });
+}
 
 
 

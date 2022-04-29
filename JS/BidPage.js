@@ -44,8 +44,8 @@ bidDataContainer();
 function bidDataContainer() {
 
     let bidContent = ` 
-<h1 style="color: #194681;">${ProductData.pname}</h1>
-<div class="container">
+    <h1 style="color: #194681;">${ProductData.pname}</h1>
+    <div class="container">
     <div class="d-flex flex-column flex-md-row mb-4">
         <div class=" col-12 col-md-6">
         
@@ -108,7 +108,7 @@ function bidDataContainer() {
             <h2>My last Bid</h2>
         </div>
     </div>
-</div>`;
+   </div>`;
     bidData.innerHTML = bidContent;
 }
 

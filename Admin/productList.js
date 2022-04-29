@@ -4,12 +4,12 @@ let uniqueDeleteButtonCounter = 1;
 let uniqueDeleteButtonId = "deleteBtn";
 // document.getElementById("productButton").addEventListener("click", createProductList);
 createProductList();
+  //product list for admin 
 async function createProductList() {
-    
-        console.log("products");
-        console.log("productList");
-        let productTable = document.getElementById("productTable");
-        productTable.innerHTML=`
+    console.log("products");
+    console.log("productList");
+    let productTable = document.getElementById("productTable");
+    productTable.innerHTML = `
         <thead  class="table-dark">
         <tr>
         <th scope="col">Product image</th>
@@ -23,63 +23,59 @@ async function createProductList() {
         <th scope="col">Delete Items</th>
         </tr>
         <thead>   `;
-        const databaseRef = ref(db);
-        await get(child(databaseRef, "User/")).then((snapshot) => {
-            if (typeof (snapshot) !== 'undefined') {
 
-                if (snapshot.exists()) {
-                    snapshot.forEach((child) => {
+        //get product data by traversing users 
+    const databaseRef = ref(db);
+    await get(child(databaseRef, "User/")).then((snapshot) => {
+        if (typeof (snapshot) !== 'undefined') {
 
-                        productList.push({
-                            id: child.val().Details.ProductSold,
-                        })
+            if (snapshot.exists()) {
+                snapshot.forEach((child) => {
+
+                    productList.push({
+                        id: child.val().Details.ProductSold,
+                    })
+                });
+            }
+            productList.forEach((element) => {
+                if (element?.id) {
+                    Object.keys(element.id).forEach((key) => {
+                        let productId = key;    //prints the product id e.g. 339,557 ...
+                        let userId = element.id[key]["UserId"];
+                        let url = element.id[key]["ImageURl"];
+                        let productName = element.id[key]["ProductName"];
+                        let productDiscription = element.id[key]["ProductDiscription"];
+                        let productStartingBid = element.id[key]["ProductPrice"];
+                        let bidEndDate = element.id[key]["BidDate"];
+                        let sellerContact = element.id[key]["SellerContactNumber"];
+
+                        //show product table
+                        productTable.innerHTML += `<tr class="table-active "><td> <img class="imgShowInCard " src=${url}></td><td>${userId}</td><td>${productId} </td><td> ${productName}</td><td>${productDiscription}</td><td>${productStartingBid}</td><td>${bidEndDate}</td> <td> ${sellerContact}</td><td><button onclick="removeProduct(${userId} ,${productId})" id=${uniqueDeleteButtonId + uniqueDeleteButtonCounter}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                          </svg>
+                            </button></td></tr>`;
+                        uniqueDeleteButtonCounter++;
                     });
                 }
-                productList.forEach((element) => {
-                    if (element?.id) {
-                        Object.keys(element.id).forEach((key) => {
-                            // console.log(key);
-
-                            let productId = key;    //prints the product id e.g. 339,557 ...
-                            // let productId=element.id[key]["ProductId"];
-                            let userId = element.id[key]["UserId"];
-                            let url = element.id[key]["ImageURl"];
-                            let productName = element.id[key]["ProductName"];
-                            let productDiscription = element.id[key]["ProductDiscription"];
-                            let productStartingBid = element.id[key]["ProductPrice"];
-                            let bidEndDate = element.id[key]["BidDate"];
-                            let sellerContact = element.id[key]["SellerContactNumber"];
-                            productTable.innerHTML += `<tr class="table-active "><td> <img class="imgShowInCard " src=${url}></td><td>${userId}</td><td>${productId} </td><td> ${productName}</td><td>${productDiscription}</td><td>${productStartingBid}</td><td>${bidEndDate}</td> <td> ${sellerContact}</td><td><button onclick="removeProduct(${userId} ,${productId})" id=${uniqueDeleteButtonId + uniqueDeleteButtonCounter}>delete</button></td></tr>`;
-                            uniqueDeleteButtonCounter++;
-                        });
-
-                    }
-
-                });
-
-            }
+            });
+        }
+    });
+}
 
 
-        });
-    }
-
+//remove product and also its bids present in bidding 
 window.removeProduct = function (userId, productId) {
-
     remove(ref(db, `User/${userId}/Details/ProductSold/${productId}`), {
-
     }).then(() => {
         remove(ref(db, `Bidding-Products/${productId}`), {
-
         }).then(() => {
-        
             alert("bidding product is also deleted");
-
         });
-        
         alert('Congrats your product is deleted  successfully...');
     }).catch((error) => {
-            // alert("Something went wrong!!!!!!!!!");
-        });
+        // alert("Something went wrong!!!!!!!!!");
+    });
 }
 
 
