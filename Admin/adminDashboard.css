@@ -1,27 +1,38 @@
-#brand{
+#brand {
     color: rgb(70, 68, 68);
     font-family: 'Permanent Marker', cursive;
     font-weight: bolder;
 }
-body{
-    background-color:white;
+
+
+body {
+    /* background-color:rgb(249, 21, 21); */
+    background-color: rgb(238, 222, 222);
+
     justify-content: center;
 }
-.imgShowInCard{
+
+.imgShowInCard {
     /* border: 2px solid black; */
-    width: 100px; 
-   height: 100px;  
-   display: block; 
+    width: 100px;
+    height: 100px;
+    display: block;
     /* margin-left: auto;  */
     /* margin-right: auto;   */
     background-repeat: no-repeat;
-   background-size: contain;
-   object-fit: contain; 
+    background-size: contain;
+    object-fit: contain;
 
- }
- .tbl{
-     position:static;
-     justify-content: center;
-     margin-left: auto;
-     margin-right: auto;
- }
+}
+
+.tbl {
+    position: static;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.container-fluid {
+    background-color: rgb(242, 210, 210);
+
+}

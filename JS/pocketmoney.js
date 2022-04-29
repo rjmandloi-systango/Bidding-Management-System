@@ -13,7 +13,7 @@ async function walletUtilities() {
             }
         }
     });
-    document.getElementById("pocketmoney").innerHTML = `Your Current Money :${walletmoney}`;
+    document.getElementById("pocketmoney").innerHTML = `Your Current Money<p>${walletmoney}</p>`;
     let addMoney = document.getElementById("addMoney");
     addMoney.addEventListener('click', updateWallet);
     function updateWallet() {

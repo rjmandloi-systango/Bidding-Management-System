@@ -1,0 +1,33 @@
+/* body{
+    background-image: url(money.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+} */
+
+.img{
+    background-image: url(../images/Wallet.gif);
+    width: 350px;
+    height: 350px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+#pocketmoney{
+   text-align: center;
+   margin-top: 50px;
+   color: #3db39e;
+}
+#pocketmoney p{
+    color: black;
+}
+.nav-item{
+    margin-left: 1px;
+}
+.recharge{
+    border-radius: 30px 15px;
+    margin-left: 600px;
+    
+}
+.button{
+    border-radius: 5px;
+    box-shadow:  5px 5px rgb(17, 16, 16) ;
+}
