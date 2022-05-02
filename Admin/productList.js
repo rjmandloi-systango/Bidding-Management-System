@@ -4,7 +4,7 @@ let uniqueDeleteButtonCounter = 1;
 let uniqueDeleteButtonId = "deleteBtn";
 // document.getElementById("productButton").addEventListener("click", createProductList);
 createProductList();
-  //product list for admin 
+//product list for admin 
 async function createProductList() {
     console.log("products");
     console.log("productList");
@@ -24,7 +24,7 @@ async function createProductList() {
         </tr>
         <thead>   `;
 
-        //get product data by traversing users 
+    //get product data by traversing users 
     const databaseRef = ref(db);
     await get(child(databaseRef, "User/")).then((snapshot) => {
         if (typeof (snapshot) !== 'undefined') {
@@ -61,21 +61,52 @@ async function createProductList() {
             });
         }
     });
+   
 }
 
 
 //remove product and also its bids present in bidding 
+
 window.removeProduct = function (userId, productId) {
-    remove(ref(db, `User/${userId}/Details/ProductSold/${productId}`), {
-    }).then(() => {
-        remove(ref(db, `Bidding-Products/${productId}`), {
+
+    if (confirm("Are you sure want to delete this product ?"))
+        remove(ref(db, `User/${userId}/Details/ProductSold/${productId}`), {
         }).then(() => {
-            alert("bidding product is also deleted");
+            remove(ref(db, `Bidding-Products/${productId}`), {
+            }).then(() => {
+                btn.click();
+            });
+            // alert('Congrats your product is deleted  successfully...');
+        }).catch((error) => {
+            // alert("Something went wrong!!!!!!!!!");
         });
-        alert('Congrats your product is deleted  successfully...');
-    }).catch((error) => {
-        // alert("Something went wrong!!!!!!!!!");
-    });
+
 }
 
 
+let modal = document.getElementById("myModal");
+// Get the button that opens the modal
+let btn = document.getElementById("myBtn");
+// Get the <span> element that closes the modal
+let span = document.getElementsByClassName("close")[0];
+btn.addEventListener("click", popup);
+function popup() {
+    function popupMsg() {
+        document.getElementById("popupMessage").innerHTML = "Your product is deleted successfully";
+        modal.style.display = "block";
+    }
+    popupMsg();
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+        location.href = "products.html";
+    }
+    // // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+            location.href = "products.html";
+        }
+    }
+
+}

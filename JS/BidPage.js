@@ -1,7 +1,6 @@
 import { db, set, ref, get, child, update, remove } from "./firebase.js";
+
 const databaseRef = ref(db);
-
-
 let UserData = JSON.parse(localStorage.getItem("USERDATA"));
 let ProductData = JSON.parse(sessionStorage.ProductData);
 // fetch user data and product data frrm localStorage and sessionStorage
@@ -213,46 +212,49 @@ let bidMoneybtn = document.getElementById("bidMoneybtn");
 
 bidMoneybtn.addEventListener("click", insertBid);
 function insertBid() {
-    let walletMoney = parseInt(sessionStorage.getItem("WalletMoney"));
+    if (confirm("Are you sure want to place a bid?")) {
+        let walletMoney = parseInt(sessionStorage.getItem("WalletMoney"));
 
-    let bidMoney = parseInt(document.getElementById("bidMoney").value);
-    if (walletMoney >= bidMoney) {
-        if (bidMoney > ProductData.maximumBidPrice) {
-            set(ref(db, "Bidding-Products/" + (productId) + "/" + (buyerId) + "/"), {
-                BuyerID: buyerId,
-                BuyerBidMoney: bidMoney,
-                SellerID: sellerId,
-                ProductID: productId
-            })
-                .then(() => {
-                    alert('Cogrates your bid added successfully...')
-                    // window.open(`../index.html`);
-                    // alert('-')
-                    update(ref(db, "User/" + UserData.id + "/Details"), { WalletMoney: parseInt(walletmoney) - bidMoney })
-                        .then(() => {
-                            // alert('+')
-                            if (highestBidderWalletMoney != undefined) {
-                                update(ref(db, "User/" + ProductData.highestBidderId + "/Details"), { WalletMoney: parseInt(highestBidderWalletMoney) + parseInt(ProductData.maximumBidPrice) }).then(() => {
-                                })
-
-                            }
-                            location.href = '../index.html';
-                        })
-                    // 
-
+        let bidMoney = parseInt(document.getElementById("bidMoney").value);
+        if (walletMoney >= bidMoney) {
+            if (bidMoney > ProductData.maximumBidPrice) {
+                set(ref(db, "Bidding-Products/" + (productId) + "/" + (buyerId) + "/"), {
+                    BuyerID: buyerId,
+                    BuyerBidMoney: bidMoney,
+                    SellerID: sellerId,
+                    ProductID: productId
                 })
-                .catch((error) => {
-                    alert("error aa gai h");
-                });
-            /*************** */
-            // update(ref(db, "User/" + UserData.id + "/Details"), { WalletMoney: walletmoney - bidMoney })
+                    .then(() => {
+                        alert('Cogrates your bid added successfully...')
+                        // window.open(`../index.html`);
+                        // alert('-')
+                        update(ref(db, "User/" + UserData.id + "/Details"), { WalletMoney: parseInt(walletmoney) - bidMoney })
+                            .then(() => {
+                                // alert('+')
+                                if (highestBidderWalletMoney != undefined) {
+                                    update(ref(db, "User/" + ProductData.highestBidderId + "/Details"), { WalletMoney: parseInt(highestBidderWalletMoney) + parseInt(ProductData.maximumBidPrice) }).then(() => {
+                                    })
+
+                                }
+                                location.href = '../index.html';
+                            })
+                        // 
+
+                    })
+                    .catch((error) => {
+                        alert("error aa gai h");
+                    });
+                /*************** */
+                // update(ref(db, "User/" + UserData.id + "/Details"), { WalletMoney: walletmoney - bidMoney })
 
 
+            } else {
+                alert("you dose not bid smaller than Maximum Bid.")
+
+            }
         } else {
-            alert("you dose not bid smaller than Maximum Bid.")
+            alert("You do not have enough money in your wallet.");
 
         }
-    } else {
-        alert("You do not have enough money in your wallet.");
     }
 }

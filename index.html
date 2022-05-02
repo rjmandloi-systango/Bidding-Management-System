@@ -9,8 +9,8 @@
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://smtpjs.com/v3/smtp.js">
-    </script>
+  <script src="https://smtpjs.com/v3/smtp.js">
+  </script>
 
   <title>Bidding Management System</title>
   <link rel="stylesheet" href="./CSS/index.css" />
@@ -19,13 +19,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body>
-  <!-- onload="loaderFunction()" -->
 
-
-
-  <div id="loading"></div>
-
+<body >
+  <div id="loading" class="loader"></div>
   <!-- //navbar -->
   <div class="  col-sm" id="navbar">
     <nav class="navbar navbar-expand-lg navbar-light bg-light p-0">
@@ -49,11 +45,11 @@
             <li class="nav-item">
               <a class="nav-link" href="./HTML/Winners.html">Winners</a>
             </li>
-            
+
             <li class="nav-item">
               <a class="nav-link" id="pocketmoney" href="HTML/walletmoney.html">WalletMoney</a>
             </li>
-           
+
 
             <li class="nav-item dropdown">
               <div class="dropdown">
@@ -65,9 +61,7 @@
                   <table class="table table-striped table-hover table-bordered  mt-1" id="myProductTable">
 
                   </table>
-                  <!-- <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+
                 </ul>
               </div>
             </li>
@@ -97,11 +91,7 @@
               </button>
             </li>
             <li>
-              <!-- <button type="button" id="sellBtn" class="btn addProductButton m-1" data-bs-toggle="modal"
-                data-bs-target="#exampleModal3">
-                SELL
-              </button>
-            </li> -->
+
           </ul>
           <form class="d-flex">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
@@ -114,16 +104,8 @@
     </nav>
   </div>
   <!-- navbar -->
-
-
-
   <div class="loginSignupButton">
-
   </div>
-
-
-
-
   <!-- Modal -->
   <div class="modal fade " id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -145,9 +127,7 @@
             <span id="pass"></span>
 
           </div>
-          <!-- <div>
-            <a for="pass or uname" class="form-label">Forgot UserName or Password</a>
-          </div> -->
+          
         </div>
         <div class="modal-footer">
           <button type="button" id="loginUserData" class="btn btn-primary">Submit</button>
@@ -357,48 +337,48 @@
         <div class="modal-body">
           <!-- done newly -->
           <form>
-          <div class="mb-3">
-            <label for="productName" class="form-label">Product Name</label>
-            <input type="text" class="form-control " id="productName" required />
-          </div>
+            <div class="mb-3">
+              <label for="productName" class="form-label">Product Name</label>
+              <input type="text" class="form-control " id="productName" required />
+            </div>
 
 
 
-          <div class="mb-3">
-            <label>Image</label><label id="extlab"></label>
-            <input type="text" id="namebox" />
-            <img id="myimg" class="img-fluid img-thumbnail rounded"><label id="upprogress"></label>
-            <button id="selbtn">Select img</button>
-            <button id="upbtn">upload img </button>
-          </div>
+            <div class="mb-3">
+              <label>Image</label><label id="extlab"></label>
+              <input type="text" id="namebox" />
+              <img id="myimg" class="img-fluid img-thumbnail rounded"><label id="upprogress"></label>
+              <button id="selbtn">Select img</button>
+              <button id="upbtn">upload img </button>
+            </div>
 
-          <div class="mb-3">
-            <label for="productDiscription" class="form-label">Product Discription</label>
-            <input type="text" class="form-control" id="productDiscription" required />
-          </div>
-          <div class="mb-3">
-            <label for="productPrice" class="form-label">Product Price</label>
-            <input type="number" class="form-control" id="productPrice" min="0" required />
-          </div>
-          <!-- <div class="mb-3">
+            <div class="mb-3">
+              <label for="productDiscription" class="form-label">Product Discription</label>
+              <input type="text" class="form-control" id="productDiscription" required />
+            </div>
+            <div class="mb-3">
+              <label for="productPrice" class="form-label">Product Price</label>
+              <input type="number" class="form-control" id="productPrice" min="0" required />
+            </div>
+            <!-- <div class="mb-3">
             <label for="sellerContactNumber" class="form-label">Seller's contact:</label>
             <input type="text" class="form-control" id="sellerContactNumber" size="10" maxlength="10" required />
           </div> -->
 
-          <div class="mb-3 row">
-            <div class="col-sm">
-              <label for="bidDate" class="form-label">Bid end BY</label>
-              <input type="date" class="form-control" id="bidDate" required />
+            <div class="mb-3 row">
+              <div class="col-sm">
+                <label for="bidDate" class="form-label">Bid end BY</label>
+                <input type="date" class="form-control" id="bidDate" required />
+              </div>
+              <div class="col-sm">
+                <label for="bidTime" class="form-label">Bid end BY</label>
+                <input type="time" class="form-control" id="bidTime" required />
+              </div>
             </div>
-            <div class="col-sm">
-              <label for="bidTime" class="form-label">Bid end BY</label>
-              <input type="time" class="form-control" id="bidTime" required />
-            </div>
-          </div>
-          <!-- onclick="createCard()" -->
-          <button class="btn btn-primary" id="sellSubmitButton">
-            Submit
-          </button>
+            <!-- onclick="createCard()" -->
+            <button class="btn btn-primary" id="sellSubmitButton">
+              Submit
+            </button>
           </form>
           <!-- done newly -->
 
@@ -423,18 +403,18 @@
     crossorigin="anonymous"></script>
 
   <script>
-    
+
     let sellbtn = document.getElementById("sellBtn");
 
     let dropdownMenuButton3 = document.getElementById("dropdownMenuButton3");
-   
+
     let pocketmoney = document.getElementById("pocketmoney");
     let logoutbtn = document.getElementById("logoutBtn");
     let loginCheck = document.getElementById("loginCheck");
     let registerCheck = document.getElementById("registerBtn");
     sellbtn.style.display = "none";
     dropdownMenuButton3.style.display = "none";
-    
+
     pocketmoney.style.display = "none";
     logoutbtn.style.display = "none";
     loginCheck.style.display = "none";
@@ -446,24 +426,29 @@
     } else {
       sellbtn.style.display = "block";;
       dropdownMenuButton3.style.display = "block";;
-    
+
       logoutbtn.style.display = "block";;
       pocketmoney.style.display = "block";;
     }
   </script>
   <script>
     // let preloader=document.getElementById("loading");
-    setTimeout(() => {
+    // setTimeout(() => {
 
-      document.querySelector("body").addEventListener('onload', loadingFunction());
+    //   document.querySelector("body").addEventListener('onload', loadingFunction());
 
-      function loadingFunction() {
+    //   function loadingFunction() {
 
-        // console.log("loader chla");
-        document.getElementById("loading").style.display = "none";
-      }
-    }, 1000);
+    //     // console.log("loader chla");
+    //     document.getElementById("loading").style.display = "none";
+    //   }
+    // }, 1000);
+     window.addEventListener("load" , function (){
+        console.log("loader chla");
+       
+      document.getElementById("loading").style.display = "none";
 
+     });
   </script>
 
   <script>
@@ -558,6 +543,7 @@
   <script type="module" src="./JS/loginUserData.js"></script>
   <script type="module" src="./JS/imageUpload.js"></script>
   <script type="module" src="./JS/ListOfMyProducts.js"></script>
+ 
   <!-- <script type="module" src="./JS/"></script> -->
   <!-- <script type="module" src="./JS/firebaseQuering.js"></script> -->
 

@@ -1,5 +1,8 @@
 import { db, set, ref, get, child, update, remove } from "./firebase.js";
 import { userDeatils } from "./fetchUserData.js";
+// import {showPopup} from "./popups.js";
+
+
 console.log(userDeatils);
 let highestBidder = {};
 
@@ -32,6 +35,7 @@ let productDeatils = [];
 
 
 async function allProductDataFetch() {
+  // showPopup();
   let isLogout = localStorage.getItem("STATUS"); //FALSE=LOGIN   TRUE=LOGOUT
   const databaseRef = ref(db);
 
@@ -144,6 +148,7 @@ async function allProductDataFetch() {
     }
   });
 }
+
 let productObj;
 window.fetchProductData = function (
   pname,
@@ -157,32 +162,32 @@ window.fetchProductData = function (
   // alert(highestBidder)
 
   let maximumBidPrice = document.getElementById(`mb_${productId}`).innerHTML;
-   console.log(highestBidder[productId]);
-   let highestBidderId=0;
-   if(highestBidder[productId]!=undefined){
-   highestBidderId = highestBidder[productId].BuyerID;
+  console.log(highestBidder[productId]);
+  let highestBidderId = 0;
+  if (highestBidder[productId] != undefined) {
+    highestBidderId = highestBidder[productId].BuyerID;
   }
 
 
-    productObj = {
-      pname: pname,
-      sname: sname,
-      betime: betime,
-      InitialBid: InitialBid,
-      productId: productId,
-      url: url,
-      sellerId: sellerId,
-      maximumBidPrice: maximumBidPrice,
-      highestBidderId: highestBidderId,
-    };
-    sessionStorage.setItem("ProductData", JSON.stringify(productObj));
-    window.open(`HTML/BidPage.html`, '_blank');
+  productObj = {
+    pname: pname,
+    sname: sname,
+    betime: betime,
+    InitialBid: InitialBid,
+    productId: productId,
+    url: url,
+    sellerId: sellerId,
+    maximumBidPrice: maximumBidPrice,
+    highestBidderId: highestBidderId,
+  };
+  sessionStorage.setItem("ProductData", JSON.stringify(productObj));
+  window.open(`HTML/BidPage.html`, '_blank');
 
 };
 
-async function timer(uniqueProductId, uniqueBidButtonId, bidData1, bidTime1) {
-  let bidDate = bidData1;
-  let bidTime = bidTime1;
+async function timer(uniqueProductId, uniqueBidButtonId, bidEndingDate, bidEndingTime) {
+  let bidDate = bidEndingDate;
+  let bidTime = bidEndingTime;
   let dateArray = bidDate.split("-");
   let timeArray = bidTime.split(":");
   let date = new Date(dateArray[0], dateArray[1] - 1, dateArray[2]); //year-month-day
@@ -196,18 +201,13 @@ async function timer(uniqueProductId, uniqueBidButtonId, bidData1, bidTime1) {
     timeArray[0] <= hours &&
     timeArray[1] <= minutes
   ) {
-    // console.log("galat time diya user ne ");
-    // needto fix this 
     userInputDate = new Date(
-      `${shortMonth} ${dateArray[2]}, ${dateArray[0]} ${hours + 0
-      }:${minutes}:00`
-    ).getTime();
+      `${shortMonth} ${dateArray[2]}, ${dateArray[0]} ${hours}:${minutes}:00`).getTime();
   } else {
     userInputDate = new Date(
-      `${shortMonth} ${dateArray[2]}, ${dateArray[0]} ${timeArray[0]}:${timeArray[1]}:00`
-    ).getTime();
+      `${shortMonth} ${dateArray[2]}, ${dateArray[0]} ${timeArray[0]}:${timeArray[1]}:00`).getTime();
   }
-
+  // }
   let timeFunction = setInterval(async function () {
     // Get today's date and time
     let currentTime = new Date().getTime();
@@ -225,7 +225,7 @@ async function timer(uniqueProductId, uniqueBidButtonId, bidData1, bidTime1) {
     let isAlreadyInDatabaseWinners = false;
     // Output the result in an element with id="demo"
     document.getElementById(uniqueProductId).innerHTML =
-      days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+      days + "D " + hours + "H " + minutes + "M " + seconds + "S ";
 
     let currentProductId = document.getElementById(uniqueProductId).dataset.productId;
     // console.log("currentProductId"+currentProductId);
@@ -238,7 +238,6 @@ async function timer(uniqueProductId, uniqueBidButtonId, bidData1, bidTime1) {
         }
       }
     })
-
 
     // If the productIdIncrementor down is over, write some text
     if (distanceBetweenBidEndTimeAndCurrentTime < 0) {
@@ -317,19 +316,22 @@ function fetchHighestBidder(highestBidder) {
 
 
 async function insertWinnerData(expiredProductId) {
-  console.log(highestBidder[expiredProductId]);
-  set(ref(db, "Winners" + "/" + [expiredProductId] + "/"), {
-    BuyerBidMoney: highestBidder[expiredProductId].BuyerBidMoney,
-    BuyerID: highestBidder[expiredProductId].BuyerID,
-    ProductID: highestBidder[expiredProductId].ProductID,
-    SellerID: highestBidder[expiredProductId].SellerID
+  // check for empty object 
+  if (Object.keys(highestBidder).length !== 0 && highestBidder.constructor !== Object) {
 
-  }).then(() => {
-    alert('winner detected success');
-    fetchEmails(highestBidder[expiredProductId].BuyerBidMoney, highestBidder[expiredProductId].BuyerID, highestBidder[expiredProductId].ProductID, highestBidder[expiredProductId].SellerID);
-  })
-    .catch((error) => {
-    });
+    set(ref(db, "Winners" + "/" + [expiredProductId] + "/"), {
+      BuyerBidMoney: highestBidder[expiredProductId].BuyerBidMoney,
+      BuyerID: highestBidder[expiredProductId].BuyerID,
+      ProductID: highestBidder[expiredProductId].ProductID,
+      SellerID: highestBidder[expiredProductId].SellerID
+
+    }).then(() => {
+      alert('winner detected success');
+      fetchEmails(highestBidder[expiredProductId].BuyerBidMoney, highestBidder[expiredProductId].BuyerID, highestBidder[expiredProductId].ProductID, highestBidder[expiredProductId].SellerID);
+    })
+      .catch((error) => {
+      });
+  }
 }
 async function fetchEmails(BuyerBidMoney, BuyerID, ProductID, SellerID) {
   let buyerEmail, sellerEmail;
