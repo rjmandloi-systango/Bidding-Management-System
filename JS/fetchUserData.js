@@ -1,6 +1,4 @@
 import { db, set, ref,get,child, update, remove } from "./firebase.js";
-
-
 allDataFetch();
 let userDeatils = [];
 

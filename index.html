@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<body >
+<body>
   <div id="loading" class="loader"></div>
   <!-- //navbar -->
   <div class="  col-sm" id="navbar">
@@ -53,7 +53,7 @@
 
             <li class="nav-item dropdown">
               <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle buttonls m-1" type="button" id="dropdownMenuButton3"
+                <button class="btn  dropdown-toggle " type="button" id="dropdownMenuButton3"
                   data-bs-toggle="dropdown" aria-expanded="false" onclick="myProductList()">
                   My products
                 </button>
@@ -72,31 +72,35 @@
                 Login
               </button>
             </li>
-            <li>
+            <li class="nav-item">
               <button type="button" class="btn buttonls m-1" id="registerBtn" data-bs-toggle="modal"
                 data-bs-target="#exampleModal">
 
                 Register
               </button>
             </li>
-            <li>
-              <button type="button" id="sellBtn" class="btn addProductButton m-1" data-bs-toggle="modal"
+            <li class="nav-item">
+              <button type="button" id="sellBtn" class="btn addProductButton " data-bs-toggle="modal"
                 data-bs-target="#exampleModal3">
                 SELL
               </button>
             </li>
-            <li>
-              <button type="button" id="logoutBtn" class="btn addProductButton m-1">
+            <li  class="nav-item ms-5 " id="loggedInUser" >
+              <i class="fa fa-user fs-4" style="color:chocolate;">Welcome
+                <span class="fw-bolder" id="loggedInUserName" style="color:grey;"></span>
+                  </i>
+              <!-- <button type="button" id="logoutBtn" class="btn addProductButton m-1">
                 Logout
-              </button>
+              </button> -->
             </li>
-            <li>
-
           </ul>
           <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-            <button class="btn btn-outline-light navbarElements" style="color: grey" type="submit">
+            <!-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" /> -->
+            <!-- <button class="btn btn-outline-light navbarElements" style="color: grey" type="submit">
               Search
+            </button> -->
+            <button type="button" id="logoutBtn" class="btn addProductButton m-1">
+              Logout
             </button>
           </form>
         </div>
@@ -127,7 +131,7 @@
             <span id="pass"></span>
 
           </div>
-          
+
         </div>
         <div class="modal-footer">
           <button type="button" id="loginUserData" class="btn btn-primary">Submit</button>
@@ -421,14 +425,19 @@
     registerCheck.style.display = "none";
     let status = localStorage.getItem("STATUS");
     if (status == "true") {
-      loginCheck.style.display = "block";;
-      registerCheck.style.display = "block";;
-    } else {
-      sellbtn.style.display = "block";;
-      dropdownMenuButton3.style.display = "block";;
+      loginCheck.style.display = "block";
+      registerCheck.style.display = "block";
+      document.getElementById("loggedInUser").style.display="none";         
 
-      logoutbtn.style.display = "block";;
-      pocketmoney.style.display = "block";;
+    } else {
+      sellbtn.style.display = "block";
+      dropdownMenuButton3.style.display = "block";
+      logoutbtn.style.display = "block";
+      pocketmoney.style.display = "block";
+     let loggedInUserData= JSON.parse(localStorage.getItem("USERDATA"));
+
+      document.getElementById("loggedInUserName").innerHTML= (loggedInUserData.FirstName).toUpperCase(); 
+
     }
   </script>
   <script>
@@ -443,12 +452,12 @@
     //     document.getElementById("loading").style.display = "none";
     //   }
     // }, 1000);
-     window.addEventListener("load" , function (){
-        console.log("loader chla");
-       
+    window.addEventListener("load", function () {
+      console.log("loader chla");
+
       document.getElementById("loading").style.display = "none";
 
-     });
+    });
   </script>
 
   <script>
@@ -543,7 +552,7 @@
   <script type="module" src="./JS/loginUserData.js"></script>
   <script type="module" src="./JS/imageUpload.js"></script>
   <script type="module" src="./JS/ListOfMyProducts.js"></script>
- 
+
   <!-- <script type="module" src="./JS/"></script> -->
   <!-- <script type="module" src="./JS/firebaseQuering.js"></script> -->
 
