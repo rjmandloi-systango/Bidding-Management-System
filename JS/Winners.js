@@ -1,14 +1,12 @@
 import { db, set, ref, get, child, update, remove } from "./firebase.js";
 const databaseRef = ref(db);
-
-// let winnersId = {};
 getWinners();
 async function getWinners() {
     let winnersTable = document.getElementById("winnersTable");
     let winnerCount = 1;
     let tableHead = `
                 <thead>
-                <tr>
+                <tr class="tableData">
                 <th scope="col">#</th>
                 <th scope="col">Product image</th>
                 <th scope="col">Winner</th>
@@ -40,9 +38,9 @@ async function getWinners() {
                                         if (snapshot.exists()) {
                                             console.log(snapshot.val());
                                             let tableContent = `
-                                                    <tr>
+                                                    <tr class="tableData">
                                                     <th scope="row">${winnerCount}</th>
-                                                    <td><img style=" width: 150px;  height: 150px     background-repeat: no-repeat; background-size: contain; object-fit: contain;" src=${imageUrl}></td>
+                                                    <td><img  class=" historyTableImage " style=" width: 150px;  height: 150px     background-repeat: no-repeat; background-size: contain; object-fit: contain;" src=${imageUrl}></td>
                                                     <td>${snapshot.val().FirstName} ${snapshot.val().LastName} </td>
                                                     <td>${productName}</td>
                                                     <td>${startingBid}</td>
@@ -50,7 +48,7 @@ async function getWinners() {
                                                     <td>${sellerName}</td>                                                    
                                                     </tr>
                                                 `;
-                                                winnerCount++;
+                                            winnerCount++;
                                             winnersTable.innerHTML += tableContent;
                                         }
 

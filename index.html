@@ -39,7 +39,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Daily Auctions</a>
+              <a class="nav-link active" aria-current="page" href="./index.html">Daily Auctions</a>
             </li>
 
             <li class="nav-item">
@@ -50,11 +50,14 @@
               <a class="nav-link" id="pocketmoney" href="HTML/walletmoney.html">WalletMoney</a>
             </li>
 
+            <li class="nav-item">
+              <a class="nav-link" href="./HTML/productHistory.html">History</a>
+            </li>
 
             <li class="nav-item dropdown">
               <div class="dropdown">
-                <button class="btn  dropdown-toggle " type="button" id="dropdownMenuButton3"
-                  data-bs-toggle="dropdown" aria-expanded="false" onclick="myProductList()">
+                <button class="btn  dropdown-toggle " type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown"
+                  aria-expanded="false" onclick="myProductList()">
                   My products
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3" id="listOfMyProducts">
@@ -85,10 +88,10 @@
                 SELL
               </button>
             </li>
-            <li  class="nav-item ms-5 " id="loggedInUser" >
+            <li class="nav-item ms-5 " id="loggedInUser">
               <i class="fa fa-user fs-4" style="color:chocolate;">Welcome
                 <span class="fw-bolder" id="loggedInUserName" style="color:grey;"></span>
-                  </i>
+              </i>
               <!-- <button type="button" id="logoutBtn" class="btn addProductButton m-1">
                 Logout
               </button> -->
@@ -427,16 +430,16 @@
     if (status == "true") {
       loginCheck.style.display = "block";
       registerCheck.style.display = "block";
-      document.getElementById("loggedInUser").style.display="none";         
+      document.getElementById("loggedInUser").style.display = "none";
 
     } else {
       sellbtn.style.display = "block";
       dropdownMenuButton3.style.display = "block";
       logoutbtn.style.display = "block";
       pocketmoney.style.display = "block";
-     let loggedInUserData= JSON.parse(localStorage.getItem("USERDATA"));
+      let loggedInUserData = JSON.parse(localStorage.getItem("USERDATA"));
 
-      document.getElementById("loggedInUserName").innerHTML= (loggedInUserData.FirstName).toUpperCase(); 
+      document.getElementById("loggedInUserName").innerHTML = (loggedInUserData.FirstName).toUpperCase();
 
     }
   </script>
@@ -552,6 +555,7 @@
   <script type="module" src="./JS/loginUserData.js"></script>
   <script type="module" src="./JS/imageUpload.js"></script>
   <script type="module" src="./JS/ListOfMyProducts.js"></script>
+
 
   <!-- <script type="module" src="./JS/"></script> -->
   <!-- <script type="module" src="./JS/firebaseQuering.js"></script> -->

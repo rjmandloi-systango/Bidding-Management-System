@@ -85,19 +85,26 @@ async function allProductDataFetch() {
                   <div >
                     <img src=${url} class="card-img-top img-thumbnail imgShowInCard" alt="...">
                   </div>
-                  <div>
-                    <p class="card-text text-start  text-dark"><span class ="fw-bold">Discription:</span>${capitalize(productDiscription)}</p>
-                  </div>
-                  <div >
-                    <p class="card-text   text-dark"><span class ="fw-bold">Initial bid:</span>${productStartingBid} &#8377</p>
-                  </div>
+
                   <div class="col-sm">
                     <span class="clock fs-2" fw-bold >&#128336</span>
                     <span class=" fs-5 fw-bold" data-product-id=${productId}  id=${uniqueProductId}></span>
                   </div>
+
                   <div class="col-sm fw-bold">
                     Max bid  &#8377 <span id=mb_${productId}> ${productStartingBid} </span>
                   </div>
+
+                  <div >
+                    <p class="card-text   text-dark"><span class ="fw-bold">Starting bid:</span>${productStartingBid} &#8377</p>
+                  </div>
+                  
+                  <div>
+                    <p class="card-text text-start  text-dark"><span class ="fw-bold">Discription:</span>${capitalize(productDiscription)}</p>
+                  </div>
+                  
+                  
+                  
                   <div class="d-flex justify-content-between border text-dark" >
                     <div>
                     <i class="fa fa-user fs-2" style="color:chocolate;"></i> <span class="col-6" id="maxBidderName_${productId}">--::--</span>
@@ -317,8 +324,9 @@ function fetchHighestBidder(highestBidder) {
 
 async function insertWinnerData(expiredProductId) {
   // check for empty object 
-  if (Object.keys(highestBidder).length !== 0 && highestBidder.constructor !== Object) {
-
+  console.log("inside Insert winner data");
+  if (Object.keys(highestBidder).length !== 0) {
+    console.log("inside if");
     set(ref(db, "Winners" + "/" + [expiredProductId] + "/"), {
       BuyerBidMoney: highestBidder[expiredProductId].BuyerBidMoney,
       BuyerID: highestBidder[expiredProductId].BuyerID,

@@ -123,3 +123,23 @@ h1 {
 
 
 }
+
+.tableData{
+    vertical-align: middle;
+}
+
+.productHistoryHeadings{
+    color: chocolate;
+    text-decoration:underline;
+}
+.historyTable{
+    box-shadow: 5px 10px 10px ;
+    border-radius: 10px;
+    /* border-color: black; */
+    border: 2px dashed chocolate;
+    
+}
+.historyTableImage{
+    border-radius: 20%;
+    box-shadow: 5px 5px 10px;
+}
