@@ -20,11 +20,15 @@
     color: black;
 }
 .nav-item{
-    margin-left: 1px;
+    margin-left: -14px;
+    width: 160px;
+}
+.nav-link{
+    margin-left: 33px;
 }
 .recharge{
     border-radius: 30px 15px;
-    margin-left: 600px;
+    margin-left: 1200px;
     
 }
 .button{

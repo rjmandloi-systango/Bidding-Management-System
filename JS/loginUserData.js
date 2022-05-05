@@ -11,29 +11,44 @@ function loginClickFun() {
   checkUserLogin(userNameLogin, userPassLogin);
 }
 
-function checkUserLogin(userNameLogin, userPassLogin) {
-  let flag = 0;
-  for (let index = 0; index < userDeatils.length; index++) {
-    if (userDeatils[index].Email === userNameLogin && userDeatils[index].UserPass === userPassLogin) {
-      flag = 1;
 
-      localStorage.setItem("USERDATA", JSON.stringify(userDeatils[index]));
+async function checkUserLogin(userNameLogin,userPassLogin){
+  let flag=0;
+  for(let index=0;index<userDeatils.length;index++){
+    if(userDeatils[index].Email===userNameLogin && userDeatils[index].UserPass===userPassLogin)
+    {
+      flag=1;
+      // console.log("kkkkkkkkkkkkkkkk"+userDeatils[index]);
+      localStorage.setItem("USERDATA",JSON.stringify(userDeatils[index]));
     }
   }
-  if (flag == 1) {
+  if(flag==1){
+    
+//  alert("welcome !");
+await swal({
+    title: "you are login successful !",
+    text: "You clicked the button!",
+    icon: "success",
+    button: "Aww yiss!",
+  });
+      // alert('ok');
+ localStorage.setItem("STATUS",false);
+let newStatus= localStorage.getItem("STATUS");  
 
-    alert("welcome !");
-    localStorage.setItem("STATUS", false);
-    let newStatus = localStorage.getItem("STATUS");
-
-    if (newStatus == "false") {
-      location.reload();
-      document.querySelector(".btn-close").click();
-    }
-
-
-  } else {
-    alert("invalid user or pass !");
+  if(newStatus=="false"){
+    location.reload();
+ document.querySelector(".btn-close").click();
+  }
+  
+  
+}else{
+  await swal({
+    title: "Invalid User/Email Or Password!",
+    text: "You clicked the button!",
+    icon: "error",
+    button: "Try Again!",
+  });
+    // alert("invalid user or pass !");
   }
 }
 
@@ -49,6 +64,7 @@ function logoutClickFun() {
 
 
 console.log('User Details....', userDeatils);
+
 
 
 
