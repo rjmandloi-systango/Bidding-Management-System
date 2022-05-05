@@ -51,12 +51,5 @@ function insertProcuctDetails(productInformation) {
     .catch((error) => {
       // alert("error aa gai h");
     });
-  // set(ref(db, "ID"), (ID + 1))
-  // .then(() => {
-  //   // alert("serial count update");
-  // })
-  // .catch((error) => {
-  //   alert("error");
-  // });
+  
 }
-  // console.log("ProductArray-->",time)

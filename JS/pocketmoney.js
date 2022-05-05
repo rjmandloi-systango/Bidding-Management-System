@@ -23,8 +23,7 @@ async function walletUtilities() {
 
             update(ref(db, "User/" + UserData.id + "/Details"), { WalletMoney: walletmoney + insertMoney })
             alert("Congretes Your Money Added Successfully.");
-            // sessionStorage.setItem("WalletMoney",walletmoney+insertMoney);
-            // document.getElementById("pocketmoney").innerHTML=`Your Current Money :${walletmoney}`
+          
 
         } else {
             alert("you can add atmost 1000000 rs. in your wallet .")

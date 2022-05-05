@@ -77,13 +77,13 @@ async function allProductDataFetch() {
                 isLogin = 1;
               }
               let productContent = `
-            <div class="card productCard mt-5 rounded-3 mx-auto "  id=${productId} style="width: 18rem;">
+            <div class="card productCard  mt-5 rounded-3 mx-auto "  id=${productId} style="width: 18rem; ">
               <div class="card-body  rounded-3" >
                   <div class="productName text-center p-1 rounded-3">
                     <h5 class="card-title">${capitalize(productName)}</h5>
                   </div>
                   <div >
-                    <img src=${url} class="card-img-top img-thumbnail imgShowInCard" alt="...">
+                    <img src=${url} class="card-img-top img-thumbnail imgShowInCard " alt="...">
                   </div>
 
                   <div class="col-sm">
@@ -99,8 +99,11 @@ async function allProductDataFetch() {
                     <p class="card-text   text-dark"><span class ="fw-bold">Starting bid:</span>${productStartingBid} &#8377</p>
                   </div>
                   
-                  <div>
-                    <p class="card-text text-start  text-dark"><span class ="fw-bold">Discription:</span>${capitalize(productDiscription)}</p>
+                   <div>
+                  <details>
+                     <summary style="color:white; background-color:chocolate; width:130px; "><b>View details</b></summary>
+                    <p class="card-text text-start  text-dark"><span class ="fw-bold"></span>${capitalize(productDiscription)}</p>
+                    </details>
                   </div>
                   
                   
@@ -112,19 +115,19 @@ async function allProductDataFetch() {
                   `;
               let productContentWhenNotLogin = `
                     <button class="btn btn-primary col-6 biddingStatus" id=${uniqueBidButtonId}  data-bs-toggle="modal" data-bs-target="#exampleModal1">Your bid</button>
-                  </div>
+                        </div>
                  
-                </div>
-            </div>
-            `;
+                        </div>
+                   </div>
+                          `;
               let productContentWhenLogin = `
-            <button  class="btn btn-primary col-6 biddingStatus" id=${uniqueBidButtonId} onclick="fetchProductData('${productName}','${sellerName}','${bidEndingDate}','${productStartingBid}','${productId}','${url}','${sellerId}')" >Your bid</button>
-            </div>
-      
-            </div>
-            </div>
+                    <button  class="btn btn-primary col-6 biddingStatus" id=${uniqueBidButtonId} onclick="fetchProductData('${productName}','${sellerName}','${bidEndingDate}','${productStartingBid}','${productId}','${url}','${sellerId}')" >Your bid</button>
+                    </div>
+              
+                    </div>
+                    </div>
             
-            `;
+                          `;
 
               let productLayout;
               if (isLogin) {
@@ -140,6 +143,26 @@ async function allProductDataFetch() {
                 // console.log("inside disabled");
                 document.getElementById(uniqueBidButtonId).disabled = true;
               }
+              
+
+              //to auto close discription of other products while targetting specific product 
+              const details = document.querySelectorAll("details");
+              // Add the onclick listeners.
+              details.forEach((targetDetail) => {
+                targetDetail.addEventListener("click", () => {
+                  // Close all the details that are not targetDetail.
+                  details.forEach((detail) => {
+                    if (detail !== targetDetail) {
+                      detail.removeAttribute("open");
+
+                    }
+                  });
+                });
+              });
+
+
+
+
               timer(
                 uniqueProductId,
                 uniqueBidButtonId,
@@ -319,6 +342,7 @@ function fetchHighestBidder(highestBidder) {
     let person = userDeatils.find(user => user.id === `${highestBidder[key].BuyerID}`);
     document.getElementById(`maxBidderName_${highestBidder[key].ProductID}`).innerText = capitalize(`${person.FirstName}`);
   });
+
 }
 
 

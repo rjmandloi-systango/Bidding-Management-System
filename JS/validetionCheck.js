@@ -31,10 +31,7 @@ function validetion(userDataObj, userDatavalidetionObj) {
         userDatavalidetionObj.lmark.innerHTML = "Enter Land Mark";
         userDatavalidetionObj.lmark.style.color = "red";
     }
-    // else if(userDataObj.userName===""){
-    //     userDatavalidetionObj.uname.innerHTML = "Enter User Name";
-    //     userDatavalidetionObj.uname.style.color = "red";
-    // }
+    
     else if(userDataObj.userPassword===""){
         userDatavalidetionObj.pass.innerHTML = "Enter you password";
         userDatavalidetionObj.pass.style.color = "red";

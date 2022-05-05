@@ -1,22 +1,23 @@
-#logo{
-    color: rgb(70, 68, 68);
-    font-family: 'Permanent Marker', cursive;
-    font-weight: bolder;
-    
+#logo {
+  color: rgb(70, 68, 68);
+  font-family: 'Permanent Marker', cursive;
+  font-weight: bolder;
+
 }
+
 body {
-    display: flex;
-    align-items: center;
-   justify-content: center;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    background-color: #D1913C;
-  }
-   .admin{
-    background: #ECE9E6;
-    background: -webkit-linear-gradient(to right, #FFFFFF, #ECE9E6); 
-    background: linear-gradient(to right, #FFFFFF, #ECE9E6); 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #D1913C;
+}
+
+.admin {
+  background: #FF8008;
+  background: -webkit-linear-gradient(to right, #FFC837, #FF8008);
+  background: linear-gradient(to right, #FFC837, #FF8008);
 
 
-  }  
-  
+}
