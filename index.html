@@ -11,6 +11,7 @@
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <script src="https://smtpjs.com/v3/smtp.js">
   </script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
   <title>Bidding Management System</title>
   <link rel="stylesheet" href="./CSS/index.css" />
@@ -39,7 +40,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Daily Auctions</a>
+              <a class="active nav-link " aria-current="page" href="#">Daily Auctions</a>
             </li>
 
             <li class="nav-item">
@@ -127,7 +128,7 @@
           </div>
           <div class="col-md-6">
             <label for="Password" class="form-label">Password</label>
-            <input type="text" class="form-control" id="userPasswordLogin" value="" required>
+            <input type="password" class="form-control" id="userPasswordLogin" value="" required>
             <span id="pass"></span>
 
           </div>
@@ -546,13 +547,16 @@
 
   <script type="module" src="./JS/InsertProductData.js"></script>
   <!-- <script type="module" src="./JS/sendEmail.js"></script> -->
+  <!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
   <script type="module" src="./JS/FetchProductData.js"></script>
   <script type="module" src="./JS/index.js"></script>
   <script type="module" src="./JS/insertUserData.js"></script>
+
   <script type="module" src="./JS/loginUserData.js"></script>
+  <script  src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
   <script type="module" src="./JS/imageUpload.js"></script>
   <script type="module" src="./JS/ListOfMyProducts.js"></script>
-
   <!-- <script type="module" src="./JS/"></script> -->
   <!-- <script type="module" src="./JS/firebaseQuering.js"></script> -->
 

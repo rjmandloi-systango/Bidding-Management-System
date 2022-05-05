@@ -11,7 +11,7 @@ function loginClickFun(){
   checkUserLogin(userNameLogin,userPassLogin);
 }
 
-function checkUserLogin(userNameLogin,userPassLogin){
+async function checkUserLogin(userNameLogin,userPassLogin){
   let flag=0;
   for(let index=0;index<userDeatils.length;index++){
     if(userDeatils[index].Email===userNameLogin && userDeatils[index].UserPass===userPassLogin)
@@ -23,7 +23,14 @@ function checkUserLogin(userNameLogin,userPassLogin){
   }
   if(flag==1){
     
- alert("welcome !");
+//  alert("welcome !");
+await swal({
+    title: "you are login successful !",
+    text: "You clicked the button!",
+    icon: "success",
+    button: "Aww yiss!",
+  });
+      // alert('ok');
  localStorage.setItem("STATUS",false);
 let newStatus= localStorage.getItem("STATUS");  
 
@@ -34,7 +41,13 @@ let newStatus= localStorage.getItem("STATUS");
   
   
 }else{
-    alert("invalid user or pass !");
+  await swal({
+    title: "Invalid User/Email Or Password!",
+    text: "You clicked the button!",
+    icon: "error",
+    button: "Try Again!",
+  });
+    // alert("invalid user or pass !");
   }
 }
 
@@ -52,6 +65,7 @@ let newStatus= localStorage.getItem("STATUS");
 
 
 console.log('User Details....',userDeatils);
+
 
 
 

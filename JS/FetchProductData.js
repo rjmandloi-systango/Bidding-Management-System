@@ -181,6 +181,8 @@ window.fetchProductData = function (
     highestBidderId: highestBidderId,
   };
   sessionStorage.setItem("ProductData", JSON.stringify(productObj));
+
+  // export defa {prducts};
   window.open(`HTML/BidPage.html`, '_blank');
 
 };
@@ -258,10 +260,12 @@ let productBidList = [];
 
 highestBiddersOfProducts();
 //maximum bidding function
+
 async function highestBiddersOfProducts() {
   // let highestBidder = {};
-  let products = {};
   let productsKey = [];
+  let products = {};
+  let sortedBidders={};
   let productArray = [];
 
   const que = ref(db, "Bidding-Products");
@@ -297,11 +301,14 @@ async function highestBiddersOfProducts() {
         return 0;
       });
       highestBidder[key] = productArray[0];
+      sortedBidders[key]=productArray;
       console.log(productArray);
       productArray = [];
     }
   });
   fetchHighestBidder(highestBidder);
+  sessionStorage.setItem("SortedBidders", JSON.stringify(sortedBidders));
+
 }
 
 function fetchHighestBidder(highestBidder) {
@@ -317,7 +324,7 @@ function fetchHighestBidder(highestBidder) {
 
 async function insertWinnerData(expiredProductId) {
   // check for empty object 
-  if (Object.keys(highestBidder).length !== 0 && highestBidder.constructor !== Object) {
+  if (Object.keys(highestBidder).length !== 0) {
 
     set(ref(db, "Winners" + "/" + [expiredProductId] + "/"), {
       BuyerBidMoney: highestBidder[expiredProductId].BuyerBidMoney,
@@ -445,10 +452,25 @@ async function sendEmail(buyerEmail, sellerEmail, productData, BuyerBidMoney) {
     </div>`,
     })
 
-      .then(function (message) {
+      .then(async function (message) {
+        await swal({
+          title: "Email Send Successufully!",
+          text: "You clicked the button!",
+          icon: "success",
+          button: "Try Again!",
+        });
+
         alert("mail sent successfully")
+
       })
-      .catch(function (message) {
+      .catch(async function (message) {
+        await swal({
+          title: "Error !",
+          text: "You clicked the button!",
+          icon: "error",
+          button: "Try Again!",
+        });
+
         alert("error")
       });
 
