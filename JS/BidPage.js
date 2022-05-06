@@ -1,5 +1,6 @@
 import { db, set, ref, get, child, update, remove } from "./firebase.js";
 import { userDeatils } from "./fetchUserData.js";
+import {capitalize}  from "./capitalize.js"
 
 
 
@@ -7,26 +8,19 @@ const databaseRef = ref(db);
 let UserData = JSON.parse(localStorage.getItem("USERDATA"));
 let ProductData = JSON.parse(sessionStorage.ProductData);
 let sortedBidders = JSON.parse(sessionStorage.getItem("SortedBidders"));
-
 // fetch user data and product data frrm localStorage and sessionStorage
 let productInitialBid = parseInt(ProductData.InitialBid);
 let productId = parseInt(ProductData.productId);
 console.log(sortedBidders);
 console.log(productId);
 console.log('User Details-->', userDeatils);
-
 let sellerId = parseInt(ProductData.sellerId);
 let buyerId = parseInt(UserData.id);
-
 let bidData = document.getElementById("bidData");
 //fetching wallet money from data base and set the wallet money in session...
 let walletmoney;
 let highestBidderWalletMoney;
 let biddersList = {};
-
-
-
-
 
 async function walletUtilities() {
     await get(child(databaseRef, "User/" + UserData.id + "/Details")).then((snapshot) => {
@@ -51,20 +45,12 @@ async function walletUtilities() {
         console.log(sortedBidders[productId][element].BuyerBidMoney);
         let user = userDeatils.find(user => user.id === `${sortedBidders[productId][element].BuyerID}`);
         console.log(user.FirstName);
-        // biddersList.push(
-        //     {
-        //         "name": user.FirstName,
-        //         "money": sortedBidders[productId][element].BuyerBidMoney
-        //     })
         biddersList[element] = {
             "name": user.FirstName,
             "money": sortedBidders[productId][element].BuyerBidMoney
-
         }
     });
-
     sessionStorage.setItem("WalletMoney", walletmoney);
-
 }
 
 walletUtilities().then(() => {
@@ -82,8 +68,10 @@ walletUtilities().then(() => {
         if (counter <= 4) {
             let row = document.createElement("tr");
             let name = document.createElement("td");
+            name.className="fw-bolder";
             let money = document.createElement("td");
-            name.innerHTML = biddersList[key]["name"];
+            money.className="fw-bolder";
+            name.innerHTML = capitalize(biddersList[key]["name"]);
             money.innerHTML = biddersList[key]["money"];
             row.appendChild(name);
             row.appendChild(money);
@@ -116,22 +104,24 @@ async function bidDataContainer() {
                     </div>
 
                     <div >
-                    <p class="card-text   text-dark"><span class ="fw-bold">Initial bid:</span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp${productInitialBid} &#8377</p>
+                    <p class="fw-bold">Starting bid:<span class="textColorInBidPage"> &#8377 ${productInitialBid}</span></p>
+                    </div>
+ 
+                    <div>
+                    <p class ="fw-bold">Maximum Bid:<span class="textColorInBidPage">${ProductData.maximumBidPrice}</span></p>
                     </div>
 
                     <div>
-                    <p class="card-text   text-dark"><span class ="fw-bold">bid last date:&nbsp&nbsp&nbsp</span>${ProductData.betime}</p>
+                    <p class ="fw-bold">Bid ends on:<span class="textColorInBidPage">${ProductData.betime}</span></p>
                     </div>
 
-                    <div>
-                    <p class="card-text   text-dark"><span class ="fw-bold">Maximum Bid:</span>${ProductData.maximumBidPrice}</p>
-                    </div>
+                   
                     </div>
                     </div>
       <div class=" card productCard col-md-4 mt-4  rounded-3">
                     <h5 class="text-center textColorInBidPage">Place Your Bid here...</h5>
                     <div>
-                    <input  type="number" placeholder="place bid" id="bidMoney">
+                    <input  type="number" min="0"  placeholder="place bid" id="bidMoney " oninput="validity.valid||(value=value.replace(/\D+/g, ''))">
                     <button class="addProductButton" id="bidMoneybtn">Place</button>
                     </div>
                     <p class="mt-4 textColorInBidPage "># Make sure you have enough money to place your bid. </p>
@@ -143,17 +133,14 @@ async function bidDataContainer() {
 
         <h2 class="textColorInBidPage text-center">Top Bidders</h2>
                
-        <table id="biddersTable">
+        <table class="table text-center" id="biddersTable">
                 <thead>
                     <tr>
-                    <th>Bidder Name</th>
-                    <th>Bidding Money</th>
+                    <th class="textColorInBidPage">Bidder Name</th>
+                    <th class="textColorInBidPage">Bidding Money</th>
                     </tr>
                 </thead>          
-                <tbody id="tbodyid">
-                    
-                   
-                   
+                <tbody id="tbodyid">       
                 </tbody>
                     
         </table>
@@ -161,14 +148,7 @@ async function bidDataContainer() {
     </div>
   </div>
 `;
-
-
     bidData.innerHTML = bidContent;
-
-
-
-
-
 }
 
 
@@ -191,34 +171,26 @@ function insertBid() {
                 })
                     .then(() => {
                         alert('Cogrates your bid added successfully...')
-                        // window.open(`../index.html`);
-                        // alert('-')
+                        
                         update(ref(db, "User/" + UserData.id + "/Details"), { WalletMoney: parseInt(walletmoney) - bidMoney })
                             .then(() => {
-                                // alert('+')
                                 if (highestBidderWalletMoney != undefined) {
                                     update(ref(db, "User/" + ProductData.highestBidderId + "/Details"), { WalletMoney: parseInt(highestBidderWalletMoney) + parseInt(ProductData.maximumBidPrice) }).then(() => {
                                     })
-
                                 }
                                 location.href = '../index.html';
                             })
                         // 
-
                     })
                     .catch((error) => {
                         alert("error aa gai h");
                     });
                 // update(ref(db, "User/" + UserData.id + "/Details"), { WalletMoney: walletmoney - bidMoney })
-
-
             } else {
                 alert("you dose not bid smaller than Maximum Bid.")
-
             }
         } else {
             alert("You do not have enough money in your wallet.");
-
         }
     }
 }

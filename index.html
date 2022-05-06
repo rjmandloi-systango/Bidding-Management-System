@@ -53,7 +53,7 @@
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="./HTML/productHistory.html">History</a>
+              <a class="nav-link" id="soldAndBuyHistory" href="./HTML/productHistory.html">History</a>
             </li>
 
             <li class="nav-item dropdown">
@@ -94,16 +94,9 @@
               <i class="fa fa-user fs-4" style="color:chocolate;">Welcome
                 <span class="fw-bolder" id="loggedInUserName" style="color:grey;"></span>
               </i>
-              <!-- <button type="button" id="logoutBtn" class="btn addProductButton m-1">
-                Logout
-              </button> -->
             </li>
           </ul>
           <form class="d-flex">
-            <!-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" /> -->
-            <!-- <button class="btn btn-outline-light navbarElements" style="color: grey" type="submit">
-              Search
-            </button> -->
             <button type="button" id="logoutBtn" class="btn addProductButton m-1">
               Logout
             </button>
@@ -124,7 +117,6 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-
           <div class="col-md-6">
             <label for="userName" class="form-label">Email/Username</label>
             <input type="text" class="form-control" id="userNameLogin" value="" required>
@@ -134,9 +126,7 @@
             <label for="Password" class="form-label">Password</label>
             <input type="password" class="form-control" id="userPasswordLogin" value="" required>
             <span id="pass"></span>
-
           </div>
-
         </div>
         <div class="modal-footer">
           <button type="button" id="loginUserData" class="btn btn-primary">Submit</button>
@@ -144,17 +134,14 @@
       </div>
     </div>
   </div>
-
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-
           <h5 class="modal-title" id="exampleModalLabel">New Users? Register Here!</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-
           <div class="row g-3 needs-validation" novalidate>
             <div class="col-md-6">
               <label for="firstName" class="form-label">First Name</label>
@@ -165,7 +152,6 @@
               <label for="lastName" class="form-label">Last name</label>
               <input type="text" class="form-control" id="lastName" value="" required>
               <span id="lname"></span>
-
             </div>
             <div class="col-md-6">
               <label for="userPhone" class="form-label">Phone No</label>
@@ -177,83 +163,59 @@
                     <option value="+61">+61</option>
                   </select>
                 </span>
-
                 <input type="text" class="form-control" id="userPhone" aria-describedby="inputGroupPrepend" required>
                 <span id="phone"></span>
               </div>
-
             </div>
             <div class="col-md-6">
               <label for="userEmail" class="form-label">Email(UserName)</label>
               <div class="input-group has-validation">
                 <span class="input-group-text" id="userEmailIcon">@</span>
-
                 <input type="text" class="form-control" id="userEmail" aria-describedby="inputGroupPrepend" required>
                 <span id="email"></span>
-
               </div>
-
             </div>
-
             <div class="col-md-6">
               <label for="userCountry" class="form-label">Country</label>
               <select class="form-select" name="state" id="userCountry" size="1">
                 <option value="" selected="selected">Select Country</option>
               </select>
-
               <span id="country"></span>
-
             </div>
-
-
             <div class="col-md-6">
               <label for="userState" class="form-label">State</label>
               <select class="form-select" name="countrya" id="userState" size="1">
                 <option value="" selected="selected"> Select State</option>
               </select>
               <span id="state"></span>
-
             </div>
-
             <div class="col-md-6">
               <label for="userCity" class="form-label">City</label>
               <select class="form-select" name="district" id="userCity" size="1">
                 <option value="" selected="selected">select City</option>
               </select>
-
               <span id="city"></span>
-
             </div>
             <div class="col-md-5">
               <label for="userPinCode" class="form-label">Pin Code</label>
               <input type="text" class="form-control" id="userPinCode" required>
               <span id="pin"></span>
-
             </div>
             <div class="col-md-7">
               <label for="userFullAddress" class="form-label">Full Address</label>
               <input type="text" class="form-control" id="userFullAddress" required>
               <span id="add"></span>
-
             </div>
-
-
             <div class="col-md-5">
               <label for="userLandMark" class="form-label">LandMark</label>
               <input type="text" class="form-control" id="userLandMark" required>
               <span id="lmark"></span>
             </div>
-
-
             <div class="col-md-6">
               <label for="userPassword" class="form-label">Create Your Password</label>
-
               <input type="password" class="form-control" id="userPassword" required>
               <span id="pass"></span>
-
             </div>
-
-
             <div class="col-12">
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="invalidCheck" onclick="clickFun()" required>
@@ -273,8 +235,6 @@
       </div>
     </div>
   </div>
-
-
   <div id="carouselExampleControls" class="carousel slide carousel w-100 mx-0" data-bs-ride="carousel">
     <div class="carousel-inner h-25 mt-1 mb-2">
       <div class="carousel-item active w-100 h-100">
@@ -296,9 +256,6 @@
         <img src="./images/108-website-banner--dreembox-(1920-×-420-px)-(1).jpg"
           class="d-block carouselImage w-100 mx-0" alt="..." />
       </div>
-
-
-
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -309,11 +266,9 @@
       <span class="visually-hidden">Next</span>
     </button>
   </div>
-
   <div class="advertise1 fs-1 text-center w-100 fw-bolder">
     <span> India's Most Trusted Bidding Website </span>
   </div>
-
   <div class="advertise2">
     <div class="col-sm text-center w-100">
       <p class="fw-bolder  fs-3 lh-1 ">1000+ <br> <span class="fw-bold fs-5">bids placed</span> </p>
@@ -324,16 +279,8 @@
       <!-- <p class="fs-5 lh-1">dream delevered</p> -->
     </div>
   </div>
-
   <!-- <button type="button" class="btn btn-primary" onclick="createCard()">add cards</button> -->
   <div id="container" class="d-flex flex-wrap"></div>
-
-
-
-  <!-- <button type="button" class="btn addProductButton mt-1" data-bs-toggle="modal" data-bs-target="#exampleModal3">
-    Add new product
-  </button> -->
-
 
   <!-- Modal -->
   <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -350,9 +297,6 @@
               <label for="productName" class="form-label">Product Name</label>
               <input type="text" class="form-control " id="productName" required />
             </div>
-
-
-
             <div class="mb-3">
               <label>Image</label><label id="extlab"></label>
               <input type="text" id="namebox" />
@@ -369,10 +313,7 @@
               <label for="productPrice" class="form-label">Product Price</label>
               <input type="number" class="form-control" id="productPrice" min="0" required />
             </div>
-            <!-- <div class="mb-3">
-            <label for="sellerContactNumber" class="form-label">Seller's contact:</label>
-            <input type="text" class="form-control" id="sellerContactNumber" size="10" maxlength="10" required />
-          </div> -->
+
 
             <div class="mb-3 row">
               <div class="col-sm">
@@ -389,20 +330,8 @@
               Submit
             </button>
           </form>
-          <!-- done newly -->
-
         </div>
-        <!-- onclick="createCard()" -->
-        <!-- <button class="btn btn-primary" id="sellSubmitButton"> -->
-        <!-- Submit -->
-        <!-- </button> -->
-        <!-- </form> -->
       </div>
-      <!-- <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
-        </button>
-      </div> -->
     </div>
   </div>
   </div>
@@ -421,9 +350,10 @@
     let logoutbtn = document.getElementById("logoutBtn");
     let loginCheck = document.getElementById("loginCheck");
     let registerCheck = document.getElementById("registerBtn");
+    let soldAndBuyHistory = document.getElementById("soldAndBuyHistory");
     sellbtn.style.display = "none";
     dropdownMenuButton3.style.display = "none";
-
+    soldAndBuyHistory.style.display = "none";
     pocketmoney.style.display = "none";
     logoutbtn.style.display = "none";
     loginCheck.style.display = "none";
@@ -439,6 +369,7 @@
       dropdownMenuButton3.style.display = "block";
       logoutbtn.style.display = "block";
       pocketmoney.style.display = "block";
+      soldAndBuyHistory.style.display = "block";
       let loggedInUserData = JSON.parse(localStorage.getItem("USERDATA"));
 
       document.getElementById("loggedInUserName").innerHTML = (loggedInUserData.FirstName).toUpperCase();
@@ -446,22 +377,8 @@
     }
   </script>
   <script>
-    // let preloader=document.getElementById("loading");
-    // setTimeout(() => {
-
-    //   document.querySelector("body").addEventListener('onload', loadingFunction());
-
-    //   function loadingFunction() {
-
-    //     // console.log("loader chla");
-    //     document.getElementById("loading").style.display = "none";
-    //   }
-    // }, 1000);
     window.addEventListener("load", function () {
-      console.log("loader chla");
-
       document.getElementById("loading").style.display = "none";
-
     });
   </script>
 
@@ -543,36 +460,19 @@
     var myModal = document.getElementById('myModal')
     var myInput = document.getElementById('myInput')
   </script>
-
-<script>
-
-</script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"></script>
-
   <script type="module" src="./JS/InsertProductData.js"></script>
-  <!-- <script type="module" src="./JS/sendEmail.js"></script> -->
-  <!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
   <script type="module" src="./JS/FetchProductData.js"></script>
-  <script type="module" src="./JS/index.js"></script>
   <script type="module" src="./JS/insertUserData.js"></script>
-
   <script type="module" src="./JS/loginUserData.js"></script>
-  <script  src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script type="module" src="./JS/imageUpload.js"></script>
   <script type="module" src="./JS/ListOfMyProducts.js"></script>
-
-
-
-  <!-- <script type="module" src="./JS/"></script> -->
-  <!-- <script type="module" src="./JS/firebaseQuering.js"></script> -->
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"></script>
-
 </body>
 
 </html>

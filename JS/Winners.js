@@ -1,5 +1,6 @@
 import { db, set, ref, get, child, update, remove } from "./firebase.js";
 const databaseRef = ref(db);
+import {capitalize} from "./capitalize.js"
 getWinners();
 async function getWinners() {
     let winnersTable = document.getElementById("winnersTable");
@@ -29,10 +30,11 @@ async function getWinners() {
                     get(child(databaseRef, `User/${winners.val().SellerID}/Details/ProductSold/${winners.val().ProductID}/`)).then((snapshot) => {
                         if (typeof (snapshot) !== 'undefined') {
                             if (snapshot.exists()) {
-                                let productName = snapshot.val().ProductName;
+                                // console.log(snapshot.val());
+                                let productName = capitalize(snapshot.val().ProductName);
                                 let startingBid = snapshot.val().ProductPrice;
                                 let imageUrl = snapshot.val().ImageURl;
-                                let sellerName = snapshot.val().SellerName;
+                                let sellerName = capitalize(snapshot.val().SellerName);
                                 get(child(databaseRef, `User/${winners.val().BuyerID}/Details/`)).then((snapshot) => {
                                     if (typeof (snapshot) !== 'undefined') {
                                         if (snapshot.exists()) {
@@ -41,11 +43,11 @@ async function getWinners() {
                                                     <tr class="tableData">
                                                     <th scope="row">${winnerCount}</th>
                                                     <td><img  class=" historyTableImage " style=" width: 150px;  height: 150px     background-repeat: no-repeat; background-size: contain; object-fit: contain;" src=${imageUrl}></td>
-                                                    <td>${snapshot.val().FirstName} ${snapshot.val().LastName} </td>
-                                                    <td>${productName}</td>
+                                                    <td class="fw-bold">${capitalize(snapshot.val().FirstName)} ${capitalize(snapshot.val().LastName)} <br> <span><small><b>${snapshot.val().Email}</b></small></span></td>
+                                                    <td>${capitalize(productName)}</td>
                                                     <td>${startingBid}</td>
                                                     <td>${maxBid}</td>
-                                                    <td>${sellerName}</td>                                                    
+                                                    <td>${capitalize(sellerName)}</td>                                                    
                                                     </tr>
                                                 `;
                                             winnerCount++;

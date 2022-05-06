@@ -60,7 +60,8 @@ body {
 
 
 .productCard:hover {
-    transform: scale(1.01);
+    transform: scale(1.07);
+    transition: transform 500ms;
 
 }
 
@@ -141,7 +142,14 @@ h1 {
     color: chocolate;
 }
 .biddingPageDiv{
-    height: 500px;
+    height: 500px;    
+}
 
-    
+.bidNowButton{
+    color:white;
+    background-color: black;
+}
+.bidNowButton:hover{
+    background-color: chocolate;
+    color:beige;
 }

@@ -1,5 +1,6 @@
 import { db, set, ref, get, child, update, remove } from "./firebase.js";
 import { userDeatils } from "./fetchUserData.js";
+import {capitalize} from "./capitalize.js"
 // import {showPopup} from "./popups.js";
 
 
@@ -87,41 +88,45 @@ async function allProductDataFetch() {
                   </div>
 
                   <div class="col-sm">
-                    <span class="clock fs-2" fw-bold >&#128336</span>
+                    <span class="clock fs-4" fw-bold >&#128336</span>
                     <span class=" fs-5 fw-bold" data-product-id=${productId}  id=${uniqueProductId}></span>
                   </div>
-
+                 
+                 <div class="d-flex justify-content-between"  >
                   <div class="col-sm fw-bold">
-                    Max bid  &#8377 <span id=mb_${productId}> ${productStartingBid} </span>
+                    Max bid  &#8377 <span id=mb_${productId} class="textColorInBidPage"> ${productStartingBid} </span>
+                  </div class="col-sm fw-bold">
+                  <div>
+                    <i class="fa fa-user " style="color:chocolate;"></i> <span class="col-6 fw-bold"  id="maxBidderName_${productId}">--::--</span>
+                  </div>
                   </div>
 
                   <div >
-                    <p class="card-text   text-dark"><span class ="fw-bold">Starting bid:</span>${productStartingBid} &#8377</p>
+                    <p class="card-text fw-bold text-dark"><span class ="fw-bold">Starting bid:</span> &#8377 ${productStartingBid} </p>
                   </div>
                   
-                   <div>
+                  
+                  
+                  
+                  
+                  <div class="d-flex justify-content-between  border text-dark" >
+                  <div>
                   <details>
                      <summary style="color:white; background-color:chocolate; width:130px; "><b>View details</b></summary>
                     <p class="card-text text-start  text-dark"><span class ="fw-bold"></span>${capitalize(productDiscription)}</p>
                     </details>
                   </div>
-                  
-                  
-                  
-                  <div class="d-flex justify-content-between border text-dark" >
-                    <div>
-                    <i class="fa fa-user fs-2" style="color:chocolate;"></i> <span class="col-6" id="maxBidderName_${productId}">--::--</span>
-                    </div>
+                    
                   `;
               let productContentWhenNotLogin = `
-                    <button class="btn btn-primary col-6 biddingStatus" id=${uniqueBidButtonId}  data-bs-toggle="modal" data-bs-target="#exampleModal1">Your bid</button>
-                        </div>
+                <button class="btn bidNowButton fw-bold col-5 biddingStatus " id=${uniqueBidButtonId}  data-bs-toggle="modal" data-bs-target="#exampleModal1">Bid now</button>
+               </div>
                  
                         </div>
                    </div>
                           `;
               let productContentWhenLogin = `
-                    <button  class="btn btn-primary col-6 biddingStatus" id=${uniqueBidButtonId} onclick="fetchProductData('${productName}','${sellerName}','${bidEndingDate}','${productStartingBid}','${productId}','${url}','${sellerId}')" >Your bid</button>
+                    <button  class="btn bidNowButton fw-bold col-5 biddingStatus " id=${uniqueBidButtonId} onclick="fetchProductData('${productName}','${sellerName}','${bidEndingDate}','${productStartingBid}','${productId}','${url}','${sellerId}')" >Bid now</button>
                     </div>
               
                     </div>
@@ -566,9 +571,9 @@ async function sendEmail(buyerEmail, sellerEmail, productData, BuyerBidMoney) {
   }
 }
 console.log(productBidList);
-const capitalize = (s) => {
-  if (typeof s !== 'string') return ''
-  return s.charAt(0).toUpperCase() + s.slice(1)
-}
+// const capitalize = (s) => {
+//   if (typeof s !== 'string') return ''
+//   return s.charAt(0).toUpperCase() + s.slice(1)
+// }
 export { productDeatils, capitalize };
 console.log("Products Details", productDeatils);

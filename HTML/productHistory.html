@@ -17,6 +17,7 @@
 </head>
 
 <body>
+  <div id="loading" class="loader"></div>
 
   <div class="col-sm ms-5 mb-5" id="navbar">
     <nav class="navbar navbar-expand-lg navbar-light bg-light p-0">
@@ -59,22 +60,48 @@
       </div>
     </nav>
   </div>
-  <div class="row">
-    <div class="text-center table-responsive col-md-5 historyTable mx-auto">
-      <span class="fs-3 fw-bolder productHistoryHeadings"> Sold </span>
-      <table class="table" id="soldProductTable">
+  <!-- <div class="container"> -->
+    <div class="row">
+      <div class="text-center table-responsive col-md-5  historyTable mx-auto">
+        <span class="fs-3 fw-bolder productHistoryHeadings"> Sold </span>
+        <table class="table" id="soldProductTable">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Image</th>
+              <th scope="col">Id</th>
+              <th scope="col">Product name</th>
+              <th scope="col">Starting Price</th>
+              <th scope="col">Final price</th>
+              <th scope="col">Buyer</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
 
-      </table>
+      <div class="text-center table-responsive col-md-5  historyTable mx-auto">
+        <span class=" fs-3 fw-bolder productHistoryHeadings"> Bought </span>
+        <table class="table" id="purchasedProductTable">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Image</th>
+              <th scope="col">Id</th>
+              <th scope="col">Product name</th>
+              <th scope="col">Starting Price</th>
+              <th scope="col">Final price</th>
+              <th scope="col">Seller</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
     </div>
-
-    <div class="text-center table-responsive col-md-5 historyTable mx-auto">
-      <span class=" fs-3 fw-bolder productHistoryHeadings"> Bought </span>
-      <table class="table" id="purchasedProductTable">
-      </table>
-    </div>
-
-  </div>
-
+  <!-- </div> -->
+  <script>
+    window.addEventListener("load", function () {
+      document.getElementById("loading").style.display = "none";
+    });
+  </script>
   <script>
     let loggedInUserData = JSON.parse(localStorage.getItem("USERDATA"));
     document.getElementById("loggedInUserName").innerHTML = (loggedInUserData.FirstName).toUpperCase();

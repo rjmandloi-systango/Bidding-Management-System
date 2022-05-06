@@ -1,45 +1,21 @@
 import { db, set, ref, get, child, update, remove } from "./firebase.js";
-import { userDeatils } from "./fetchUserData.js";
+import { userDeatils} from "./fetchUserData.js";
+import {capitalize} from "./capitalize.js"
 
 let userDATA = JSON.parse(localStorage.getItem("USERDATA"));
 const databaseRef = ref(db);
 
-userProductHistory().then(()=>{
-   
-     
-});
+userProductHistory()
+
 async function userProductHistory() {
-    
     let purchasedProductCounter = 1;
     let  soldProductCounter = 1;
     let purchasedProductTable = document.getElementById("purchasedProductTable");
     let soldProductTable = document.getElementById("soldProductTable");
-
-    let tableHead = `
-     <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Image</th>
-      <th scope="col">Id</th>
-      <th scope="col">Product name</th>
-      <th scope="col">Starting Price</th>
-      <th scope="col">Final price</th>
-      <th scope="col">Buyer/Seller</th>
-
-    </tr>
-  </thead>
-     `;
-     soldProductTable.innerHTML +=tableHead;
-     purchasedProductTable.innerHTML +=tableHead;
-
-
     await get(child(databaseRef, "Winners/")).then((snapshot) => {
         if (typeof (snapshot) !== 'undefined') {
             if (snapshot.exists()) {
-
                 snapshot.forEach(winners => {
-
                     // console.log(winners.key);//product key 
                     if (winners.val().SellerID == userDATA.id)//for sold products 
                     {
@@ -55,17 +31,14 @@ async function userProductHistory() {
                                     <th scope="row">${soldProductCounter}</th>
                                     <td><img class="historyTableImage" style=" width: 150px;  height: 150px     background-repeat: no-repeat; background-size: contain; object-fit: contain;" src=${soldProduct.val().ImageURl}></td>
                                     <td>${soldProduct.val().ProductId} </td>
-                                    <td>${soldProduct.val().ProductName}</td>
+                                    <td>${capitalize(soldProduct.val().ProductName)}</td>
                                     <td>${soldProduct.val().ProductPrice}</td>
                                     <td>${winners.val().BuyerBidMoney}</td>
-                                    <td>${buyerName. FirstName}</td>
+                                    <td> ${capitalize(buyerName. FirstName)}<br> <span><small><b>${buyerName.Email}</b></small></span></td>
                                     </tr>
-
                                     `;
-                                    
                                     soldProductTable.innerHTML +=tableContent;
                                     soldProductCounter++;
-
                                 }
                             }
                         })
@@ -82,24 +55,19 @@ async function userProductHistory() {
                                     <th scope="row">${purchasedProductCounter}</th>
                                     <td><img class=" historyTableImage " style=" width: 150px;  height: 150px     background-repeat: no-repeat; background-size: contain; object-fit: contain;" src=${purchasedProduct.val().ImageURl}></td>
                                     <td>${purchasedProduct.val().ProductId} </td>
-                                    <td>${purchasedProduct.val().ProductName}</td>
+                                    <td>${capitalize(purchasedProduct.val().ProductName)}</td>
                                     <td>${purchasedProduct.val().ProductPrice}</td>
                                     <td>${winners.val().BuyerBidMoney}</td>
-                                    <td>${sellerName.FirstName}</td>
-                                    
+                                    <td>${capitalize(sellerName.FirstName)}<br> <span><small><b>${sellerName.Email}</b></small></span></td>
                                     </tr>
-
                                     `;
                                     purchasedProductTable.innerHTML +=tableContent;
                                     purchasedProductCounter++;
-
                                 }
                             }
                         })
 
                     }
-
-
                 });
             }
         }
