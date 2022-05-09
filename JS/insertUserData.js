@@ -25,6 +25,8 @@ function userData() {
     userInvalidCheck: document.getElementById("invalidCheck").value
   }
 
+  // console.log(userDataObj.userFullAddress);
+  // console.log(userDataObj.userPassword);
   let userDatavalidetionObj = {
     fname: document.getElementById("fname"),
     lname: document.getElementById("lname"),
@@ -36,10 +38,13 @@ function userData() {
     pin: document.getElementById("pin"),
     add: document.getElementById("add"),
     lmark: document.getElementById("lmark"),
-    pass: document.getElementById("pass"),
+
+    // uname: document.getElementById("uname"),
+    passData: document.getElementById("passData"),
     agree: document.getElementById("agree"),
   }
-
+  console.log(fname);
+console.log(passData);
   if (validetion(userDataObj, userDatavalidetionObj)) {
     let flag = 0;
     userDeatils.forEach(element => {
@@ -50,14 +55,15 @@ function userData() {
     if (flag == 1) {
       // alert('alredy exist...')
     } else {
+
       let userDataInssert = document.getElementById("userDataInssert");
       userDataInssert.addEventListener('click', sendEmail);
       let otp = Math.floor(Math.random() * (999999 - 100000) + 100000);
 
-      function sendEmail() {
+   async  function sendEmail() {
         let userEmail = document.getElementById("userEmail").value;
 
-        alert(userEmail)
+        // alert(userEmail)
 
         Email.send({
           Host: "smtp.gmail.com",
@@ -68,15 +74,36 @@ function userData() {
           Subject: "One Time Password",
           Body: "OTP: " + otp,
         })
-          .then(function (message) {
-            alert("mail sent successfully")
+          .then(async function (message) {
+
+            // alert("mail sent successfully")
+            await swal({
+              title: "Mail Sent Successfully!",
+              text: "You clicked the button!",
+              icon: "info",
+              button: "Done",
+            });
             let prm = prompt('Enter OTP');
             if (prm == otp) {
               insertUser(userDataObj);
-              alert('verification done!')
-            
+        
+              // alert('verification done!')
+              await swal({
+                title: "verification done!",
+                text: "You clicked the button!",
+                icon: "success",
+                button: "Done",
+              });
+              
             } else {
-              alert('verification fail')
+              // alert('verification fail')
+              await swal({
+                title: "verification fail!",
+                text: "You clicked the button!",
+                icon: "error",
+                button: "Done",
+              });
+          
             }
           })
           .catch(function (message) {
@@ -90,7 +117,7 @@ function userData() {
 }
 
 
-function insertUser(userDataObj) {
+async function insertUser(userDataObj) {
   set(ref(db, "User/" + (ID + 1) + "/"), {
 
     "Details": {
@@ -108,8 +135,15 @@ function insertUser(userDataObj) {
       UserPass: userDataObj.userPassword,
       UserID: ID + 1                        //newly added on 15-04-22 
     }
-  }).then(() => {
-    alert('You are Registered...')
+  }).then(async() => {
+    // alert('You are Registered...')
+    await swal({
+      title: "You are Registered!",
+      text: "You clicked the button!",
+      icon: "success",
+      button: "Done",
+    });
+
     location.href = '../index.html';
   })
     .catch((error) => {

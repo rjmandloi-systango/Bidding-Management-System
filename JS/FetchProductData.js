@@ -5,7 +5,8 @@ import {capitalize} from "./capitalize.js"
 console.log(userDeatils);
 let highestBidder = {};
 let productIdIncrementor = 1;
-let userDATA = JSON.parse(localStorage.getItem("USERDATA"));
+
+
 let bidButtonIdIncrementor = 1;
 let bidDate = document.getElementById("bidDate");
 let currentDateObj = new Date();
@@ -29,6 +30,17 @@ let minutes = currentDateObj.getMinutes();
 allProductDataFetch();
 let productDeatils = [];
 async function allProductDataFetch() {
+  // showPopup();
+  let userDATA = JSON.parse(localStorage.getItem("USERDATA"));
+  if (userDATA == null || userDATA == undefined) {
+    //  alert('null')
+    let userDATA = {
+      id: 0
+    };
+
+    localStorage.setItem('USERDATA', JSON.stringify(userDATA));
+  }
+
   let isLogout = localStorage.getItem("STATUS"); //FALSE=LOGIN   TRUE=LOGOUT
   const databaseRef = ref(db);
 
@@ -121,7 +133,8 @@ async function allProductDataFetch() {
                       </div>
                     </div>
                           `;
-              
+
+              userDATA = JSON.parse(localStorage.getItem("USERDATA"));
               let productLayout;
               if (isLogin) {
                 productLayout = productContent + productContentWhenLogin;
@@ -135,7 +148,7 @@ async function allProductDataFetch() {
               if (userDATA.id == userId) {
                 document.getElementById(uniqueBidButtonId).disabled = true;
               }
-              
+
 
               //to auto close discription of other products while targetting specific product 
               const details = document.querySelectorAll("details");
@@ -291,7 +304,7 @@ highestBiddersOfProducts();
 async function highestBiddersOfProducts() {
   let productsKey = [];
   let products = {};
-  let sortedBidders={};
+  let sortedBidders = {};
   let productArray = [];
 
   const dbPath = ref(db, "Bidding-Products");
@@ -329,7 +342,7 @@ async function highestBiddersOfProducts() {
 
       //pushing max bidders to highestBidder
       highestBidder[key] = productArray[0];
-      sortedBidders[key]=productArray;
+      sortedBidders[key] = productArray;
       console.log(productArray);
       productArray = [];
     }

@@ -9,7 +9,8 @@
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <script src="https://smtpjs.com/v3/smtp.js">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+ <script src="https://smtpjs.com/v3/smtp.js">
   </script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
@@ -64,12 +65,12 @@
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3" id="listOfMyProducts">
                   <table class="table table-striped table-hover table-bordered  mt-1" id="myProductTable">
-
                   </table>
-
+                  
                 </ul>
               </div>
             </li>
+
 
             <li class="nav-item">
               <button type="button" id="loginCheck" class="btn buttonls m-1" data-bs-toggle="modal"
@@ -83,7 +84,7 @@
                 Register
               </button>
             </li>
-            
+
             <li class="nav-item">
               <button type="button" id="sellBtn" class="btn addProductButton " data-bs-toggle="modal"
                 data-bs-target="#exampleModal3">
@@ -101,6 +102,7 @@
               Logout
             </button>
             <!-- <a href="./Admin/AdminLogin.HTML" class="btn addProductButton" id="AdminBtn" style="color: white;">Admin</a> -->
+
           </form>
         </div>
       </div>
@@ -164,7 +166,7 @@
                     <option value="+61">+61</option>
                   </select>
                 </span>
-                <input type="text" class="form-control" id="userPhone" aria-describedby="inputGroupPrepend" required>
+                <input type="tel" class="form-control" id="userPhone" aria-describedby="inputGroupPrepend" required>
                 <span id="phone"></span>
               </div>
             </div>
@@ -199,7 +201,7 @@
             </div>
             <div class="col-md-5">
               <label for="userPinCode" class="form-label">Pin Code</label>
-              <input type="text" class="form-control" id="userPinCode" required>
+              <input type="number" class="form-control" id="userPinCode" required>
               <span id="pin"></span>
             </div>
             <div class="col-md-7">
@@ -213,9 +215,9 @@
               <span id="lmark"></span>
             </div>
             <div class="col-md-6">
-              <label for="userPassword" class="form-label">Create Your Password</label>
+              <label for="userPassword" class="form-label">Create Your Password </label>
               <input type="password" class="form-control" id="userPassword" required>
-              <span id="pass"></span>
+              <span id="passData"></span>
             </div>
             <div class="col-12">
               <div class="form-check">
@@ -351,6 +353,7 @@
     let registerCheck = document.getElementById("registerBtn");
     let soldAndBuyHistory = document.getElementById("soldAndBuyHistory");
     // let AdminBtn=document.getElementById("AdminBtn");
+    
     sellbtn.style.display = "none";
     dropdownMenuButton3.style.display = "none";
     soldAndBuyHistory.style.display = "none";
@@ -365,7 +368,7 @@
       registerCheck.style.display = "block";
       // AdminBtn.style.display = "block";
       document.getElementById("loggedInUser").style.display = "none";
- 
+      // location.replace("./index.html");
     } else {
       sellbtn.style.display = "block";
       dropdownMenuButton3.style.display = "block";
@@ -466,6 +469,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   <script type="module" src="./JS/InsertProductData.js"></script>
   <script type="module" src="./JS/FetchProductData.js"></script>
   <script type="module" src="./JS/insertUserData.js"></script>
@@ -473,9 +477,9 @@
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script type="module" src="./JS/imageUpload.js"></script>
   <script type="module" src="./JS/ListOfMyProducts.js"></script>
-  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-    crossorigin="anonymous"></script> -->
+    crossorigin="anonymous"></script>
 </body>
 
 </html>
