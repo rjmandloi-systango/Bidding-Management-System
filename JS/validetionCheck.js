@@ -1,4 +1,12 @@
 function validetion(userDataObj, userDatavalidetionObj) {
+    let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    let passLenght=userDataObj.userPassword;
+    // console.log(userDataObj.userPasswordData);
+    // console.log( passLenght.length+"bbbbbbbbbbbbbbbbbbbbbb");
+    // // console.log(typeof 0);
+    //     if(passLenght.length==0){
+    //         console.log('okkkkkkkkkkkkkkkkkkkkkkk');
+    //     }
 
     if (userDataObj.userFirstName === "") {
         userDatavalidetionObj.fname.innerHTML = "Enter First Name";
@@ -9,8 +17,8 @@ function validetion(userDataObj, userDatavalidetionObj) {
     }else if(userDataObj.userPhone===""){
         userDatavalidetionObj.phone.innerHTML = "Enter Phone No";
         userDatavalidetionObj.phone.style.color = "red";
-    }else if(userDataObj.userEmail===""){
-        userDatavalidetionObj.email.innerHTML = "Enter Email";
+    }else if(userDataObj.userEmail===""  || !(userDataObj.userEmail.match(validRegex))){
+        userDatavalidetionObj.email.innerHTML = "Enter Valid Email";
         userDatavalidetionObj.email.style.color = "red";
     }else if(userDataObj.userCountry===""){
         userDatavalidetionObj.country.innerHTML = "Select Country";
@@ -32,9 +40,10 @@ function validetion(userDataObj, userDatavalidetionObj) {
         userDatavalidetionObj.lmark.style.color = "red";
     }
     
-    else if(userDataObj.userPassword===""){
-        userDatavalidetionObj.pass.innerHTML = "Enter you password";
-        userDatavalidetionObj.pass.style.color = "red";
+    else if(passLenght.length<3){
+        userDatavalidetionObj.passData.innerHTML = "Enter Valid Password";
+        userDatavalidetionObj.passData.style.color = "red";
+        // console.log(userDataObj.userPassword+"aaaaaaaaaaaaaaaaaaaaa");
     }else {
         userDatavalidetionObj.fname.style.display = "none";
         userDatavalidetionObj.lname.style.display = "none";

@@ -16,14 +16,14 @@ async function walletUtilities() {
     document.getElementById("pocketmoney").innerHTML = `Your Current Money<p>${walletmoney}</p>`;
     let addMoney = document.getElementById("addMoney");
     addMoney.addEventListener('click', updateWallet);
-    function updateWallet() {
+   async function updateWallet() {
         let money = document.getElementById('insertMoney').value;
         let insertMoney = parseInt(money);
         if (walletmoney + insertMoney < 1000000) {
 
 
             // alert(UserData.Email)
-            function sendEmail() {
+           async function sendEmail() {
                 // let userEmail = document.getElementById("userEmail").value;
                 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
                 let emailMsg='';
@@ -49,16 +49,35 @@ async function walletUtilities() {
                     
                     <p>Message: "${emailMsg}"</p>`,
                 })
-                    .then(function (message) {
-                        alert("Send a Mail to conformation.")
+                    .then(async function (message) {
+                        // alert("Send a Mail to conformation.")
+                        await swal({
+                            title: "Send a Mail to conformation!",
+                            text: "You clicked the button!",
+                            icon: "info",
+                            button: "Aww yiss!",
+                          });
+                        
                         let msg=prompt('Enter text');
                         if(msg==emailMsg){
                             update(ref(db, "User/" + UserData.id + "/Details"), { WalletMoney: walletmoney + insertMoney })
-                            alert("Congretes Your Money Added Successfully.");
+                            // alert("Congretes Your Money Added Successfully.");
+                            await swal({
+                                title: "Congretes Your Money Added Successfully!",
+                                text: "You clicked the button!",
+                                icon: "success",
+                                button: "Aww yiss!",
+                              });
                             location.href="./walletmoney.html"
                         }
                         else{
-                            alert('Enter wrong text.')
+                            // alert('you enter wrong text.')
+                            await swal({
+                                title: "you enter wrong text!",
+                                text: "You clicked the button!",
+                                icon: "error",
+                                button: "Try Again",
+                              });
                         }
                     })
                     .catch(function (message) {
@@ -68,8 +87,13 @@ async function walletUtilities() {
 
             sendEmail();
         } else {
-            alert("you can add atmost 1000000 rs. in your wallet .")
-
+            // alert("you can add atmost 1000000 rs. in your wallet .")
+            await swal({
+                title: "Sorry !! you can add atmost 1000000 rs. in your wallet!",
+                text: "You clicked the button!",
+                icon: "info",
+                button: "Done!",
+              });
         }
     }
 }

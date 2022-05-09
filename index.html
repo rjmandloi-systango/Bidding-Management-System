@@ -83,7 +83,7 @@
                 Register
               </button>
             </li>
-            
+
             <li class="nav-item">
               <button type="button" id="sellBtn" class="btn addProductButton " data-bs-toggle="modal"
                 data-bs-target="#exampleModal3">
@@ -102,7 +102,7 @@
             </button>
 
             <a href="./Admin/AdminLogin.HTML" class="btn addProductButton" id="AdminBtn" style="color: white;">Admin</a>
-             
+
           </form>
         </div>
       </div>
@@ -166,7 +166,7 @@
                     <option value="+61">+61</option>
                   </select>
                 </span>
-                <input type="text" class="form-control" id="userPhone" aria-describedby="inputGroupPrepend" required>
+                <input type="tel" class="form-control" id="userPhone" aria-describedby="inputGroupPrepend" required>
                 <span id="phone"></span>
               </div>
             </div>
@@ -201,7 +201,7 @@
             </div>
             <div class="col-md-5">
               <label for="userPinCode" class="form-label">Pin Code</label>
-              <input type="text" class="form-control" id="userPinCode" required>
+              <input type="number" class="form-control" id="userPinCode" required>
               <span id="pin"></span>
             </div>
             <div class="col-md-7">
@@ -215,9 +215,9 @@
               <span id="lmark"></span>
             </div>
             <div class="col-md-6">
-              <label for="userPassword" class="form-label">Create Your Password</label>
+              <label for="userPassword" class="form-label">Create Your Password </label>
               <input type="password" class="form-control" id="userPassword" required>
-              <span id="pass"></span>
+              <span id="passData"></span>
             </div>
             <div class="col-12">
               <div class="form-check">
@@ -354,7 +354,7 @@
     let loginCheck = document.getElementById("loginCheck");
     let registerCheck = document.getElementById("registerBtn");
     let soldAndBuyHistory = document.getElementById("soldAndBuyHistory");
-    let AdminBtn=document.getElementById("AdminBtn");
+    let AdminBtn = document.getElementById("AdminBtn");
     sellbtn.style.display = "none";
     dropdownMenuButton3.style.display = "none";
     soldAndBuyHistory.style.display = "none";
@@ -369,7 +369,7 @@
       registerCheck.style.display = "block";
       AdminBtn.style.display = "block";
       document.getElementById("loggedInUser").style.display = "none";
- 
+      // location.replace("./index.html");
     } else {
       sellbtn.style.display = "block";
       dropdownMenuButton3.style.display = "block";

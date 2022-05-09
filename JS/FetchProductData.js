@@ -1,6 +1,6 @@
 import { db, set, ref, get, child, update, remove } from "./firebase.js";
 import { userDeatils } from "./fetchUserData.js";
-import {capitalize} from "./capitalize.js"
+import { capitalize } from "./capitalize.js"
 // import {showPopup} from "./popups.js";
 
 
@@ -8,7 +8,6 @@ console.log(userDeatils);
 let highestBidder = {};
 
 let productIdIncrementor = 1;
-let userDATA = JSON.parse(localStorage.getItem("USERDATA"));
 
 let bidButtonIdIncrementor = 1;
 let bidDate = document.getElementById("bidDate");
@@ -37,6 +36,16 @@ let productDeatils = [];
 
 async function allProductDataFetch() {
   // showPopup();
+  let userDATA = JSON.parse(localStorage.getItem("USERDATA"));
+  if (userDATA == null || userDATA == undefined) {
+    //  alert('null')
+    let userDATA = {
+      id: 0
+    };
+
+    localStorage.setItem('USERDATA', JSON.stringify(userDATA));
+  }
+
   let isLogout = localStorage.getItem("STATUS"); //FALSE=LOGIN   TRUE=LOGOUT
   const databaseRef = ref(db);
 
@@ -133,7 +142,7 @@ async function allProductDataFetch() {
                     </div>
             
                           `;
-
+              userDATA = JSON.parse(localStorage.getItem("USERDATA"));
               let productLayout;
               if (isLogin) {
                 productLayout = productContent + productContentWhenLogin;
@@ -148,7 +157,7 @@ async function allProductDataFetch() {
                 // console.log("inside disabled");
                 document.getElementById(uniqueBidButtonId).disabled = true;
               }
-              
+
 
               //to auto close discription of other products while targetting specific product 
               const details = document.querySelectorAll("details");
@@ -300,7 +309,7 @@ async function highestBiddersOfProducts() {
   // let highestBidder = {};
   let productsKey = [];
   let products = {};
-  let sortedBidders={};
+  let sortedBidders = {};
   let productArray = [];
 
   const que = ref(db, "Bidding-Products");
@@ -336,7 +345,7 @@ async function highestBiddersOfProducts() {
         return 0;
       });
       highestBidder[key] = productArray[0];
-      sortedBidders[key]=productArray;
+      sortedBidders[key] = productArray;
       console.log(productArray);
       productArray = [];
     }

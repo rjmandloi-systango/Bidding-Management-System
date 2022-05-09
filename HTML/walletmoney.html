@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <title>Bidding Management System</title>
+    <title>Wallet money</title>
     <link rel="stylesheet" href="../CSS/index.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,72 +18,20 @@
     <link rel="stylesheet" href="../CSS/wallet.css">
     <script src="https://smtpjs.com/v3/smtp.js">
     </script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   
 </head>
 
 <body>
-    <!-- //navbar -->
-    <!-- <div class="  col-sm" id="navbar">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light p-0">
-            <div class="container-fluid" style="background-color: #f8f8f8">
-                <a class="navbar-brand navbarElements" href="./index.html">
-                    <p class="fs-1 ms-3" id="bidIt"><span style="color: chocolate">B</span>id it
-                        <i class="fa fa-gavel" id="gavel" style="color: chocolate"></i>
-                    </p>
-                </a>
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Daily Auctions</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Winners</a>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Dropdown
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </li>
-                        <li>
-                            <button type="button" id="logoutBtn" class="btn addProductButton m-1">
-                                Logout
-                            </button>
-                        </li>
-
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </div>
-
-    
    
+    <script>
+    let status = localStorage.getItem("STATUS");
+            if(status=="true"){
+                window.location.href="../index.html";
+            }
+            
+    </script>
 
-<div class="container">
-        <h2 id="pocketmoney"></h2>
-        <div  style="width: 340px; margin:10% 75%" id="insertMoneycss">
-            <div class="productName text-center  rounded-3 mb-3">
-                <h5 class="card-title">Recharge your wallet</h5>
-              </div>
-            <input type="number" placeholder="enter money" id="insertMoney">
-                <button type="button" id="addMoney" class="btn addProductButton m-1">
-                Add</button>
-        </div>
-    </div> --> 
     <div class="cotainer">
         <div class="  col-sm" id="navbar">
             <nav class="navbar navbar-expand-lg navbar-light bg-light p-0">
@@ -102,25 +50,17 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link " aria-current="page" href="../index.html">Home</a>
-                            </li>
+                                <a class="nav-link active" aria-current="page" href="../index.html">Daily Auctions</a>
+                              </li>
+                              <!-- <li class="nav-item">
+                                <a class="nav-link" href="./Winners.html">Winners</a>
+                              </li>                  
                             <li class="nav-item">
                                 <a class="nav-link active" href="walletmoney.html">Wallet Money</a>
                             </li>
-    
-                            <!-- <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Dropdown
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
-                            </li>
-                            -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="./productHistory.html">History</a>
+                              </li> -->
                             <div class=" text-center  rounded-3 mb-3">
                                 <h5 class="card-title recharge"></h5>
                                 <!-- <input class="button" type="number" min="1" placeholder="Enter money" id="insertMoney"> -->
@@ -138,17 +78,17 @@
     
         <div class="img rounded mx-auto d-block "></div>
     
-    
-    
-      
-           
         <h2 id="pocketmoney"></h2>
     </div>
     
     
     
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script type="module" src="../JS/walletMoney.js"></script>
 </body>
 
 </html>
+
+
+<!-- {"id":"4","FirstName":"shubham","LastName":"singh","Phone":"9993438574","Email":"shubhamking2299@gmail.com","Country":"India","State":"Madhya Pradesh","PinCode":"112233","Address":"dewas","LandMakr":"baba mahakal ki jai ho","UserPass":"11","UserId":4} -->

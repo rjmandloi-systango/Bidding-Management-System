@@ -21,6 +21,7 @@ let bidData = document.getElementById("bidData");
 let walletmoney;
 let highestBidderWalletMoney;
 let biddersList = {};
+document.getElementById("loggedInUserName").innerHTML=UserData.FirstName;
 
 async function walletUtilities() {
     await get(child(databaseRef, "User/" + UserData.id + "/Details")).then((snapshot) => {
@@ -121,7 +122,7 @@ async function bidDataContainer() {
       <div class=" card productCard col-md-4 mt-4  rounded-3">
                     <h5 class="text-center textColorInBidPage">Place Your Bid here...</h5>
                     <div>
-                    <input  type="number" min="0"  placeholder="place bid" id="bidMoney " oninput="validity.valid||(value=value.replace(/\D+/g, ''))">
+                    <input  type="number" min="0"  placeholder="place bid" id="bidMoney" oninput="validity.valid||(value=value.replace(/\D+/g, ''))">
                     <button class="addProductButton" id="bidMoneybtn">Place</button>
                     </div>
                     <p class="mt-4 textColorInBidPage "># Make sure you have enough money to place your bid. </p>
@@ -156,7 +157,7 @@ async function bidDataContainer() {
 let bidMoneybtn = document.getElementById("bidMoneybtn");
 
 bidMoneybtn.addEventListener("click", insertBid);
-function insertBid() {
+async function insertBid() {
     if (confirm("Are you sure want to place a bid?")) {
         let walletMoney = parseInt(sessionStorage.getItem("WalletMoney"));
 
@@ -169,9 +170,14 @@ function insertBid() {
                     SellerID: sellerId,
                     ProductID: productId
                 })
-                    .then(() => {
-                        alert('Cogrates your bid added successfully...')
-                        
+                    .then(async () => {
+                        // alert('Cogrates your bid added successfully...')
+                        await swal({
+                            title: "Cogrates your bid added successfully!",
+                            text: "You clicked the button!",
+                            icon: "success",
+                            button: "Done",
+                          });
                         update(ref(db, "User/" + UserData.id + "/Details"), { WalletMoney: parseInt(walletmoney) - bidMoney })
                             .then(() => {
                                 if (highestBidderWalletMoney != undefined) {
@@ -187,10 +193,24 @@ function insertBid() {
                     });
                 // update(ref(db, "User/" + UserData.id + "/Details"), { WalletMoney: walletmoney - bidMoney })
             } else {
-                alert("you dose not bid smaller than Maximum Bid.")
+                // alert("you dose not bid smaller than Maximum Bid.")
+                await swal({
+                    title: "you dose not bid smaller than Maximum Bid!",
+                    text: "You clicked the button!",
+                    icon: "info",
+                    button: "Done",
+                  });
+              
             }
         } else {
-            alert("You do not have enough money in your wallet.");
+            // alert("You do not have enough money in your wallet.");
+            await swal({
+                title: "You do not have enough money in your wallet!",
+                text: "You clicked the button!",
+                icon: "error",
+                button: "Done",
+              });
+          
         }
     }
 }
