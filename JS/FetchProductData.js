@@ -82,7 +82,7 @@ async function allProductDataFetch() {
 
               //card content
               let productContent = `
-            <div class="card productCard  mt-5 rounded-3 mx-auto "  id=${productId} style="width: 18rem; ">
+            <div class="card productCard  mt-5 rounded-3 mx-auto " data-product-status id=${productId} style="width: 18rem; ">
               <div class="card-body  rounded-3" >
                   <div class="productName text-center p-1 rounded-3">
                     <h5 class="card-title">${capitalize(productName)}</h5>
@@ -93,7 +93,7 @@ async function allProductDataFetch() {
 
                   <div class="col-sm">
                     <span class="clock fs-4" fw-bold >&#128336</span>
-                    <span class=" fs-5 fw-bold" data-product-id=${productId}  id=${uniqueProductId}></span>
+                    <span class=" fs-5 fw-bold" data-product-Status  data-product-id=${productId}  id=${uniqueProductId}></span>
                   </div>
                  
                  <div class="d-flex justify-content-between"  >
@@ -164,6 +164,7 @@ async function allProductDataFetch() {
                 });
               });
             
+            
               // calling timer for all products
               timer(
                 uniqueProductId,
@@ -222,7 +223,8 @@ window.fetchProductData = function (
 
 
 // reverse timer function for products
-async function timer(uniqueProductId, uniqueBidButtonId, bidEndingDate, bidEndingTime) {
+async function timer(uniqueProductId, uniqueBidButtonId, bidEndingDate, bidEndingTime ) {
+
   let bidDate = bidEndingDate;
   let bidTime = bidEndingTime;
   let dateArray = bidDate.split("-");
@@ -262,14 +264,15 @@ async function timer(uniqueProductId, uniqueBidButtonId, bidEndingDate, bidEndin
     let seconds = Math.floor((distanceBetweenBidEndTimeAndCurrentTime % (1000 * 60)) / 1000);
     let isAlreadyInDatabaseWinners = false;
     // Output the result in an element with id="demo"
+
     document.getElementById(uniqueProductId).innerHTML =
       days + "D " + hours + "H " + minutes + "M " + seconds + "S ";
-
     let currentProductId = document.getElementById(uniqueProductId).dataset.productId;
     // console.log("currentProductId"+currentProductId);
     const databaseRef = ref(db);
-
-    //check if the products is already present in the winngig list 
+        
+    // console.log(document.getElementById(`maxBidderName_${currentProductId}`).innerHTML);
+    //check if the products is already present in the winning list 
     await get(child(databaseRef, `Winners/${currentProductId}`)).then((snapshot) => {
       if (typeof snapshot !== "undefined") {
         if (snapshot.exists()) {
@@ -281,10 +284,12 @@ async function timer(uniqueProductId, uniqueBidButtonId, bidEndingDate, bidEndin
 
     //checking for expired products
     if (distanceBetweenBidEndTimeAndCurrentTime < 0) {
+      // document.getElementById(uniqueProductId).dataset.productStatus='unsold';
       document.getElementById(uniqueProductId).innerHTML = "EXPIRED";
       document.getElementById(uniqueBidButtonId).style.display = "none";
      //if the product is already present in winners list it wont be repeated again
-      if (!isAlreadyInDatabaseWinners) {
+      if (!isAlreadyInDatabaseWinners && document.getElementById(`maxBidderName_${currentProductId}`).innerHTML != "--::--") {
+        console.log(isAlreadyInDatabaseWinners);
         let expiredProductId = document.getElementById(uniqueProductId).dataset.productId;
         // console.log("expired product id " + expiredProductId);
         insertWinnerData(expiredProductId);
@@ -368,7 +373,7 @@ function fetchHighestBidder(highestBidder) {
 //if a product is expired the data is stored inside Winners 
 async function insertWinnerData(expiredProductId) {
   // check for empty object 
-  if (Object.keys(highestBidder).length !== 0) {
+  if (Object.keys(highestBidder).length !==0 ) {
     set(ref(db, "Winners" + "/" + [expiredProductId] + "/"), {
       BuyerBidMoney: highestBidder[expiredProductId].BuyerBidMoney,
       BuyerID: highestBidder[expiredProductId].BuyerID,
