@@ -1,15 +1,11 @@
 import { db, set, ref, get, child, update, remove } from "./firebase.js";
 import { userDeatils } from "./fetchUserData.js";
 import {capitalize} from "./capitalize.js"
-// import {showPopup} from "./popups.js";
-
 
 console.log(userDeatils);
 let highestBidder = {};
-
 let productIdIncrementor = 1;
 let userDATA = JSON.parse(localStorage.getItem("USERDATA"));
-
 let bidButtonIdIncrementor = 1;
 let bidDate = document.getElementById("bidDate");
 let currentDateObj = new Date();
@@ -27,16 +23,12 @@ if (currentDate < 10) {
   minDateString += `${currentDate}`;
 }
 bidDate.min = minDateString;
-
 let hours = currentDateObj.getHours();
 let minutes = currentDateObj.getMinutes();
 
 allProductDataFetch();
 let productDeatils = [];
-
-
 async function allProductDataFetch() {
-  // showPopup();
   let isLogout = localStorage.getItem("STATUS"); //FALSE=LOGIN   TRUE=LOGOUT
   const databaseRef = ref(db);
 
@@ -51,13 +43,11 @@ async function allProductDataFetch() {
       }
 
       productDeatils.forEach((element) => {
-        // console.log('line 27',element);
         if (element?.id) {
           Object.keys(element.id).forEach((key) => {
-
             createCard();
+            //create card for all the products
             function createCard() {
-              // ;
               let productName = element.id[key]["ProductName"];
               let sellerName = element.id[key]["SellerName"];
               let bidEndingDate = element.id[key]["BidDate"];
@@ -70,13 +60,15 @@ async function allProductDataFetch() {
               let uniqueProductId = "productId" + productIdIncrementor;
               let uniqueBidButtonId = "bidButton" + bidButtonIdIncrementor;
 
-              // Construct card content
+              //check for login status            
               let isLogin;
               if (isLogout === "true") {
                 isLogin = 0;
               } else {
                 isLogin = 1;
               }
+
+              //card content
               let productContent = `
             <div class="card productCard  mt-5 rounded-3 mx-auto "  id=${productId} style="width: 18rem; ">
               <div class="card-body  rounded-3" >
@@ -105,10 +97,6 @@ async function allProductDataFetch() {
                     <p class="card-text fw-bold text-dark"><span class ="fw-bold">Starting bid:</span> &#8377 ${productStartingBid} </p>
                   </div>
                   
-                  
-                  
-                  
-                  
                   <div class="d-flex justify-content-between  border text-dark" >
                   <div>
                   <details>
@@ -118,22 +106,22 @@ async function allProductDataFetch() {
                   </div>
                     
                   `;
+
+                  // added to card when user is logged out 
               let productContentWhenNotLogin = `
                 <button class="btn bidNowButton fw-bold col-5 biddingStatus " id=${uniqueBidButtonId}  data-bs-toggle="modal" data-bs-target="#exampleModal1">Bid now</button>
-               </div>
-                 
+                          </div>
                         </div>
-                   </div>
+                      </div>
                           `;
+                  // added to card when user is logged in 
               let productContentWhenLogin = `
                     <button  class="btn bidNowButton fw-bold col-5 biddingStatus " id=${uniqueBidButtonId} onclick="fetchProductData('${productName}','${sellerName}','${bidEndingDate}','${productStartingBid}','${productId}','${url}','${sellerId}')" >Bid now</button>
+                        </div>
+                      </div>
                     </div>
-              
-                    </div>
-                    </div>
-            
                           `;
-
+              
               let productLayout;
               if (isLogin) {
                 productLayout = productContent + productContentWhenLogin;
@@ -143,9 +131,8 @@ async function allProductDataFetch() {
               }
               // Append newly created card element to the container
               container.innerHTML += productLayout;
-
+              // bid now button is disabled when 
               if (userDATA.id == userId) {
-                // console.log("inside disabled");
                 document.getElementById(uniqueBidButtonId).disabled = true;
               }
               
@@ -159,15 +146,12 @@ async function allProductDataFetch() {
                   details.forEach((detail) => {
                     if (detail !== targetDetail) {
                       detail.removeAttribute("open");
-
                     }
                   });
                 });
               });
-
-
-
-
+            
+              // calling timer for all products
               timer(
                 uniqueProductId,
                 uniqueBidButtonId,
@@ -194,10 +178,11 @@ window.fetchProductData = function (
   url,
   sellerId
 ) {
-  // alert(highestBidder)
 
+
+  
   let maximumBidPrice = document.getElementById(`mb_${productId}`).innerHTML;
-  console.log(highestBidder[productId]);
+  // console.log(highestBidder[productId]);
   let highestBidderId = 0;
   if (highestBidder[productId] != undefined) {
     highestBidderId = highestBidder[productId].BuyerID;
@@ -222,6 +207,8 @@ window.fetchProductData = function (
 
 };
 
+
+// reverse timer function for products
 async function timer(uniqueProductId, uniqueBidButtonId, bidEndingDate, bidEndingTime) {
   let bidDate = bidEndingDate;
   let bidTime = bidEndingTime;
@@ -244,7 +231,8 @@ async function timer(uniqueProductId, uniqueBidButtonId, bidEndingDate, bidEndin
     userInputDate = new Date(
       `${shortMonth} ${dateArray[2]}, ${dateArray[0]} ${timeArray[0]}:${timeArray[1]}:00`).getTime();
   }
-  // }
+
+//timer operates on 1 second of interval
   let timeFunction = setInterval(async function () {
     // Get today's date and time
     let currentTime = new Date().getTime();
@@ -267,22 +255,25 @@ async function timer(uniqueProductId, uniqueBidButtonId, bidEndingDate, bidEndin
     let currentProductId = document.getElementById(uniqueProductId).dataset.productId;
     // console.log("currentProductId"+currentProductId);
     const databaseRef = ref(db);
+
+    //check if the products is already present in the winngig list 
     await get(child(databaseRef, `Winners/${currentProductId}`)).then((snapshot) => {
       if (typeof snapshot !== "undefined") {
         if (snapshot.exists()) {
-          console.log("dbms check kiya" + currentProductId);
+          // console.log("dbms check kiya" + currentProductId);
           isAlreadyInDatabaseWinners = true;
         }
       }
     })
 
-    // If the productIdIncrementor down is over, write some text
+    //checking for expired products
     if (distanceBetweenBidEndTimeAndCurrentTime < 0) {
       document.getElementById(uniqueProductId).innerHTML = "EXPIRED";
       document.getElementById(uniqueBidButtonId).style.display = "none";
+     //if the product is already present in winners list it wont be repeated again
       if (!isAlreadyInDatabaseWinners) {
         let expiredProductId = document.getElementById(uniqueProductId).dataset.productId;
-        console.log("expired product id " + expiredProductId);
+        // console.log("expired product id " + expiredProductId);
         insertWinnerData(expiredProductId);
       } else {
         console.log("existing winner,,,,,,,,,,,,,,");
@@ -291,30 +282,29 @@ async function timer(uniqueProductId, uniqueBidButtonId, bidEndingDate, bidEndin
     }
   }, 1000);
 }
+
+
 let productBidList = [];
-
 highestBiddersOfProducts();
-//maximum bidding function
 
+//maximum bidding function
 async function highestBiddersOfProducts() {
-  // let highestBidder = {};
   let productsKey = [];
   let products = {};
   let sortedBidders={};
   let productArray = [];
 
-  const que = ref(db, "Bidding-Products");
-  await get(que).then((snapshot) => {
+  const dbPath = ref(db, "Bidding-Products");
+  await get(dbPath).then((snapshot) => {
     products = { ...snapshot.val() }; //all objects are stored inside products
     productsKey = Object.keys(products);//all object keys are stored inside productsKeys
   });
-  console.log('products--->', products);
+  // console.log('products--->', products);
   productsKey.forEach((key) => {
-    let pro = Object.keys(products[key])
-
+    let productKeysForParticularUser = Object.keys(products[key])
     if (Object.keys(products[key]).length) {
       // console.log("else ");
-      pro.forEach((key2) => {
+      productKeysForParticularUser.forEach((key2) => {
         // console.log(products[key][key2]);
         productArray.push(
           products[key][key2]
@@ -326,6 +316,7 @@ async function highestBiddersOfProducts() {
 
       })
 
+      //sorting for maximum bidder 
       productArray.sort((a, b) => {
         if (a.BuyerBidMoney < b.BuyerBidMoney) {
           return 1;
@@ -335,19 +326,23 @@ async function highestBiddersOfProducts() {
         }
         return 0;
       });
+
+      //pushing max bidders to highestBidder
       highestBidder[key] = productArray[0];
       sortedBidders[key]=productArray;
       console.log(productArray);
       productArray = [];
     }
   });
+
   fetchHighestBidder(highestBidder);
   sessionStorage.setItem("SortedBidders", JSON.stringify(sortedBidders));
 
 }
 
+//getting highrst bidders and also setting their values to the product cards 
 function fetchHighestBidder(highestBidder) {
-  console.log("highestBidders", highestBidder);
+  // console.log("highestBidders", highestBidder);
   let productIds = Object.keys(highestBidder);
   productIds.forEach((key) => {
     document.getElementById(`mb_${highestBidder[key].ProductID}`).innerHTML = `${highestBidder[key].BuyerBidMoney}`;
@@ -357,31 +352,28 @@ function fetchHighestBidder(highestBidder) {
 
 }
 
-
+//if a product is expired the data is stored inside Winners 
 async function insertWinnerData(expiredProductId) {
   // check for empty object 
-
-  // console.log("inside Insert winner data");
   if (Object.keys(highestBidder).length !== 0) {
-    // console.log("inside if");
     set(ref(db, "Winners" + "/" + [expiredProductId] + "/"), {
       BuyerBidMoney: highestBidder[expiredProductId].BuyerBidMoney,
       BuyerID: highestBidder[expiredProductId].BuyerID,
       ProductID: highestBidder[expiredProductId].ProductID,
       SellerID: highestBidder[expiredProductId].SellerID
-
     }).then(() => {
-      alert('winner detected success');
+      // alert('winner detected success');
       fetchEmails(highestBidder[expiredProductId].BuyerBidMoney, highestBidder[expiredProductId].BuyerID, highestBidder[expiredProductId].ProductID, highestBidder[expiredProductId].SellerID);
     })
       .catch((error) => {
       });
   }
 }
+
+// getting the email of winner and also the seller 
 async function fetchEmails(BuyerBidMoney, BuyerID, ProductID, SellerID) {
   let buyerEmail, sellerEmail;
   let productData = {};
-  console.log('afafa');
   userDeatils.forEach(element => {
     if (element.id == BuyerID) {
       buyerEmail = element.Email;
@@ -392,19 +384,14 @@ async function fetchEmails(BuyerBidMoney, BuyerID, ProductID, SellerID) {
 
   });
 
+  // getting the details of products for mailing both winner and seller
   productDeatils.forEach(element => {
-    // console.log('elem-->',element);
     let a = Object.keys(element);
-    // console.log('a-->',a);
     a.forEach(el => {
-      // console.log(element[el]);
       if (element[el] != undefined) {
         let b = Object.keys(element[el]);
-        // console.log("bbbbbbbbbbbbbbb--->"+b);
         b.forEach(elb => {
-          // console.log(element[el][elb].ProductId);
           if (element[el][elb].ProductId == ProductID) {
-            // console.log(element[el][elb]);
             productData = {
               BidDate: element[el][elb].BidDate,
               BitTime: element[el][elb].BitTime,
@@ -426,11 +413,11 @@ async function fetchEmails(BuyerBidMoney, BuyerID, ProductID, SellerID) {
     console.log('product data--->', productData);
   });
 }
+
+// sending mail to winner and seller
 async function sendEmail(buyerEmail, sellerEmail, productData, BuyerBidMoney) {
-
-  console.log('send email wala chlaa', buyerEmail, sellerEmail);
-
   if (productData != undefined) {
+     //  mail to Winner 
     Email.send({
       Host: "smtp.gmail.com",
       Username: "BidItValueForYourValuables@gmail.com",
@@ -512,6 +499,8 @@ async function sendEmail(buyerEmail, sellerEmail, productData, BuyerBidMoney) {
         alert("error")
       });
 
+
+      //  mail to seller 
     Email.send({
       Host: "smtp.gmail.com",
       Username: "BidItValueForYourValuables@gmail.com",
@@ -561,19 +550,16 @@ async function sendEmail(buyerEmail, sellerEmail, productData, BuyerBidMoney) {
         </div>`,
     })
       .then(function (message) {
-        alert("mail sent successfully222222")
+        // alert("mail sent successfully222222");
       })
       .catch(function (message) {
-        alert("error")
+        // alert("error");
       });
   } else {
-    console.log("else")
+    // console.log("else");
   }
 }
 console.log(productBidList);
-// const capitalize = (s) => {
-//   if (typeof s !== 'string') return ''
-//   return s.charAt(0).toUpperCase() + s.slice(1)
-// }
+
 export { productDeatils, capitalize };
 console.log("Products Details", productDeatils);

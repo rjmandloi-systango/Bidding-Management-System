@@ -100,9 +100,7 @@
             <button type="button" id="logoutBtn" class="btn addProductButton m-1">
               Logout
             </button>
-
-            <a href="./Admin/AdminLogin.HTML" class="btn addProductButton" id="AdminBtn" style="color: white;">Admin</a>
-             
+            <!-- <a href="./Admin/AdminLogin.HTML" class="btn addProductButton" id="AdminBtn" style="color: white;">Admin</a> -->
           </form>
         </div>
       </div>
@@ -346,15 +344,13 @@
   <script>
 
     let sellbtn = document.getElementById("sellBtn");
-
     let dropdownMenuButton3 = document.getElementById("dropdownMenuButton3");
-
     let pocketmoney = document.getElementById("pocketmoney");
     let logoutbtn = document.getElementById("logoutBtn");
     let loginCheck = document.getElementById("loginCheck");
     let registerCheck = document.getElementById("registerBtn");
     let soldAndBuyHistory = document.getElementById("soldAndBuyHistory");
-    let AdminBtn=document.getElementById("AdminBtn");
+    // let AdminBtn=document.getElementById("AdminBtn");
     sellbtn.style.display = "none";
     dropdownMenuButton3.style.display = "none";
     soldAndBuyHistory.style.display = "none";
@@ -362,12 +358,12 @@
     logoutbtn.style.display = "none";
     loginCheck.style.display = "none";
     registerCheck.style.display = "none";
-    AdminBtn.style.display = "none";
+    // AdminBtn.style.display = "none";
     let status = localStorage.getItem("STATUS");
     if (status == "true") {
       loginCheck.style.display = "block";
       registerCheck.style.display = "block";
-      AdminBtn.style.display = "block";
+      // AdminBtn.style.display = "block";
       document.getElementById("loggedInUser").style.display = "none";
  
     } else {
@@ -382,6 +378,8 @@
     }
   </script>
   <script>
+
+    //loader implimentation 
     window.addEventListener("load", function () {
       document.getElementById("loading").style.display = "none";
     });
@@ -465,7 +463,7 @@
     var myModal = document.getElementById('myModal')
     var myInput = document.getElementById('myInput')
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"></script>
   <script type="module" src="./JS/InsertProductData.js"></script>
@@ -475,9 +473,9 @@
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script type="module" src="./JS/imageUpload.js"></script>
   <script type="module" src="./JS/ListOfMyProducts.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-    crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script> -->
 </body>
 
 </html>

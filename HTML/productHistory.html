@@ -64,6 +64,7 @@
     <div class="row">
       <div class="text-center table-responsive col-md-5  historyTable mx-auto">
         <span class="fs-3 fw-bolder productHistoryHeadings"> Sold </span>
+        <!-- table for sold products  by particular user-->
         <table class="table" id="soldProductTable">
           <thead>
             <tr>
@@ -81,6 +82,7 @@
 
       <div class="text-center table-responsive col-md-5  historyTable mx-auto">
         <span class=" fs-3 fw-bolder productHistoryHeadings"> Bought </span>
+        <!-- table for Purchased  products by particular user -->
         <table class="table" id="purchasedProductTable">
           <thead>
             <tr>
@@ -98,11 +100,13 @@
     </div>
   <!-- </div> -->
   <script>
+    // loader
     window.addEventListener("load", function () {
       document.getElementById("loading").style.display = "none";
     });
   </script>
   <script>
+    //welcome username message to currewntly logged in user
     let loggedInUserData = JSON.parse(localStorage.getItem("USERDATA"));
     document.getElementById("loggedInUserName").innerHTML = (loggedInUserData.FirstName).toUpperCase();
   </script>

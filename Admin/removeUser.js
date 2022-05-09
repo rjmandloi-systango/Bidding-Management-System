@@ -3,6 +3,7 @@ const databaseRef = ref(db);
 
 //removal of user and also its products from bidding 
 window.removeUser = async function (userId) {
+  //confirming from user to delete a product
   if (confirm("Are you sure want to delete this product ?")) {
     let productKeys = [];
     alert(userId);

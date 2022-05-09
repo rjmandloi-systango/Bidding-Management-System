@@ -6,7 +6,7 @@ let userDATA = JSON.parse(localStorage.getItem("USERDATA"));
 const databaseRef = ref(db);
 
 userProductHistory()
-
+//creates the history of sold and purchased of currently logged in user 
 async function userProductHistory() {
     let purchasedProductCounter = 1;
     let  soldProductCounter = 1;

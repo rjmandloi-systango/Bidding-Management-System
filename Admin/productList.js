@@ -6,9 +6,10 @@ let uniqueDeleteButtonId = "deleteBtn";
 createProductList();
 //product list for admin 
 async function createProductList() {
-    console.log("products");
-    console.log("productList");
+    //get the id from products.html
     let productTable = document.getElementById("productTable");
+       
+    // table heading for product list 
     productTable.innerHTML = `
         <thead  class="table-dark">
         <tr>
@@ -31,12 +32,14 @@ async function createProductList() {
 
             if (snapshot.exists()) {
                 snapshot.forEach((child) => {
-
+                    // push all the products into productList array
                     productList.push({
                         id: child.val().Details.ProductSold,
                     })
                 });
             }
+
+            //printing the table by traversing productList array
             productList.forEach((element) => {
                 if (element?.id) {
                     Object.keys(element.id).forEach((key) => {
@@ -60,25 +63,21 @@ async function createProductList() {
                 }
             });
         }
-    });
-   
+    });  
 }
-
-
 //remove product and also its bids present in bidding 
-
 window.removeProduct = function (userId, productId) {
 
     if (confirm("Are you sure want to delete this product ?"))
+         //remove product form user
         remove(ref(db, `User/${userId}/Details/ProductSold/${productId}`), {
         }).then(() => {
+            // remove product  from Bidding-Products in database 
             remove(ref(db, `Bidding-Products/${productId}`), {
             }).then(() => {
                 btn.click();
             });
-            // alert('Congrats your product is deleted  successfully...');
         }).catch((error) => {
-            // alert("Something went wrong!!!!!!!!!");
         });
 
 }
@@ -90,6 +89,8 @@ let btn = document.getElementById("myBtn");
 // Get the <span> element that closes the modal
 let span = document.getElementsByClassName("close")[0];
 btn.addEventListener("click", popup);
+
+// function to popup while deleting a product 
 function popup() {
     function popupMsg() {
         document.getElementById("popupMessage").innerHTML = "Your product is deleted successfully";

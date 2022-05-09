@@ -1,14 +1,11 @@
 import { db, set, ref,get,child, update, remove } from "./firebase.js";
 allDataFetch();
 let userDeatils = [];
-
+// get all users from DB and store inside userDeatils
 function allDataFetch() {
-
   const databaseRef = ref(db);
-
   get(child(databaseRef, "User/")).then((snapshot) => {
     if (typeof (snapshot) !== 'undefined') {
-
       if (snapshot.exists()) {
         snapshot.forEach((child) => {
                 userDeatils.push({
@@ -22,7 +19,6 @@ function allDataFetch() {
                     "PinCode":child.val().Details.PinCode,
                     "Address":child.val().Details.FullAddress,
                     "LandMakr":child.val().Details.LandMark,
-                    // "UserName":child.val().Details.UserName,
                     "UserPass":child.val().Details.UserPass,
                     "UserId":child.val().Details.UserID,
                     "WalletMoney":child.val().Details.PocketMoney
@@ -33,7 +29,4 @@ function allDataFetch() {
 
   });
 }
-
-
 export {userDeatils};
-// console.log('UserDetailsaaaaa....',userDeatils)

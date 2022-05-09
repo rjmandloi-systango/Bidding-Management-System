@@ -1,14 +1,14 @@
 
 import { db, set, ref, get, child, update, remove } from "./firebase.js";
 import { validetion } from "./validetionCheck.js";
-// import { validetion } from "./validetionCheck";
 import { userDeatils } from "./fetchUserData.js";
-// console.log(userDeatils);
+
 let ID = 0;
 idFetch();
 let userDataInsert = document.getElementById("userDataInssert");
 userDataInsert.addEventListener('click', userData);
 
+// getting user data from registration form 
 function userData() {
   let userDataObj = {
     userFirstName: document.getElementById("firstName").value,
@@ -21,10 +21,10 @@ function userData() {
     userPinCode: document.getElementById("userPinCode").value,
     userFullAddress: document.getElementById("userFullAddress").value,
     userLandmark: document.getElementById("userLandMark").value,
-    // userName: document.getElementById("userName").value,
     userPassword: document.getElementById("userPassword").value,
     userInvalidCheck: document.getElementById("invalidCheck").value
   }
+
   let userDatavalidetionObj = {
     fname: document.getElementById("fname"),
     lname: document.getElementById("lname"),
@@ -36,7 +36,6 @@ function userData() {
     pin: document.getElementById("pin"),
     add: document.getElementById("add"),
     lmark: document.getElementById("lmark"),
-    // uname: document.getElementById("uname"),
     pass: document.getElementById("pass"),
     agree: document.getElementById("agree"),
   }
@@ -45,15 +44,11 @@ function userData() {
     let flag = 0;
     userDeatils.forEach(element => {
       if (element.Email === userDataObj.userEmail) {
-        // alert('alredy exist...')
         flag = 1;
       }
-      // else{
-      //   insertUser(userDataObj);
-      // }
     });
     if (flag == 1) {
-      alert('alredy exist...')
+      // alert('alredy exist...')
     } else {
       let userDataInssert = document.getElementById("userDataInssert");
       userDataInssert.addEventListener('click', sendEmail);
@@ -111,7 +106,7 @@ function insertUser(userDataObj) {
       LandMark: userDataObj.userLandmark,
       WalletMoney: 0,
       UserPass: userDataObj.userPassword,
-      UserID: ID + 1                        //newly added on 15-04-22
+      UserID: ID + 1                        //newly added on 15-04-22 
     }
   }).then(() => {
     alert('You are Registered...')
@@ -122,7 +117,6 @@ function insertUser(userDataObj) {
     });
   set(ref(db, "ID"), (ID + 1))
     .then(() => {
-      // alert("serial count update");
     })
     .catch((error) => {
       alert("error");

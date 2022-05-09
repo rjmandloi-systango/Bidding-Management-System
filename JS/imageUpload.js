@@ -1,5 +1,6 @@
-
 import {  storage,  sRef, uploadBytesResumable, getDownloadURL } from "./firebase.js";
+
+// upload image into firestorage and export its url 
 
 let files = [];
 let reader = new FileReader();
@@ -7,7 +8,6 @@ let namebox = document.getElementById("namebox");
 let extlab = document.getElementById("extlab");
 let myimg = document.getElementById("myimg");
 let upprogress = document.getElementById("upprogress");
-// let namebox = document.getElementById("namebox");
 let selbtn = document.getElementById("selbtn");
 let upbtn = document.getElementById("upbtn");
 let input = document.createElement("input");
@@ -28,12 +28,9 @@ reader.onload = function () {
     myimg.src = reader.result;
 }
 
-
-
 selbtn.onclick = function () {
     input.click();
 }
-
 
 function GetFileExt(file) {
     let temp = file.name.split(".");
@@ -47,8 +44,6 @@ function GetFileName(file) {
     let fname = temp.slice(0, -1).join(".");
     return fname;
 }
-
-
 async function UploadProcess() {
     productImageURL="";
     let ImgToUpload = files[0];
@@ -62,23 +57,16 @@ async function UploadProcess() {
         let progess = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         upprogress.innerHTML = "Upload " + progess + "%";
     },
-
         (error) => {
-
             alert("error: image not uploaded!");
-
         },
         () => {
             getDownloadURL(UploadTask.snapshot.ref).then((downlodURL) => {
                 productImageURL=downlodURL;
-                // console.log(downlodURL);
 
             });
-
         }
-
     );
 }
 upbtn.onclick = UploadProcess;
-
 export {productImageURL};

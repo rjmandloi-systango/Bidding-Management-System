@@ -1,3 +1,5 @@
+
+//validate all fields of user regsitration 
 function validetion(userDataObj, userDatavalidetionObj) {
 
     if (userDataObj.userFirstName === "") {

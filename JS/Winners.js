@@ -2,9 +2,12 @@ import { db, set, ref, get, child, update, remove } from "./firebase.js";
 const databaseRef = ref(db);
 import {capitalize} from "./capitalize.js"
 getWinners();
+//getting all the winners 
 async function getWinners() {
     let winnersTable = document.getElementById("winnersTable");
     let winnerCount = 1;
+    
+    //creating winners table headings 
     let tableHead = `
                 <thead>
                 <tr class="tableData">
@@ -14,19 +17,19 @@ async function getWinners() {
                 <th scope="col">Product name</th>
                 <th scope="col">Starting bid </th>
                 <th scope="col">Max. bid </th>
-                
                 <th scope="col">Seller name </th>
-                                        
                 </tr>
                 </thead>                    
-                     
                   `;
     winnersTable.innerHTML += tableHead;
+
+    //get all the winners 
     await get(child(databaseRef, "Winners/")).then((snapshot) => {
         if (typeof (snapshot) !== 'undefined') {
             if (snapshot.exists()) {
                 snapshot.forEach(winners => {
                     let maxBid = winners.val().BuyerBidMoney;
+                    //getting the information of product via seller Id
                     get(child(databaseRef, `User/${winners.val().SellerID}/Details/ProductSold/${winners.val().ProductID}/`)).then((snapshot) => {
                         if (typeof (snapshot) !== 'undefined') {
                             if (snapshot.exists()) {
@@ -35,6 +38,8 @@ async function getWinners() {
                                 let startingBid = snapshot.val().ProductPrice;
                                 let imageUrl = snapshot.val().ImageURl;
                                 let sellerName = capitalize(snapshot.val().SellerName);
+                    
+                                //getting the information of Buyer via Buyer  Id
                                 get(child(databaseRef, `User/${winners.val().BuyerID}/Details/`)).then((snapshot) => {
                                     if (typeof (snapshot) !== 'undefined') {
                                         if (snapshot.exists()) {
