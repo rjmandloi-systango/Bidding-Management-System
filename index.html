@@ -80,10 +80,10 @@
             <li class="nav-item">
               <button type="button" class="btn buttonls m-1" id="registerBtn" data-bs-toggle="modal"
                 data-bs-target="#exampleModal">
-
                 Register
               </button>
             </li>
+            
             <li class="nav-item">
               <button type="button" id="sellBtn" class="btn addProductButton " data-bs-toggle="modal"
                 data-bs-target="#exampleModal3">
@@ -100,6 +100,9 @@
             <button type="button" id="logoutBtn" class="btn addProductButton m-1">
               Logout
             </button>
+
+            <a href="./Admin/AdminLogin.HTML" class="btn addProductButton" id="AdminBtn" style="color: white;">Admin</a>
+             
           </form>
         </div>
       </div>
@@ -351,6 +354,7 @@
     let loginCheck = document.getElementById("loginCheck");
     let registerCheck = document.getElementById("registerBtn");
     let soldAndBuyHistory = document.getElementById("soldAndBuyHistory");
+    let AdminBtn=document.getElementById("AdminBtn");
     sellbtn.style.display = "none";
     dropdownMenuButton3.style.display = "none";
     soldAndBuyHistory.style.display = "none";
@@ -358,12 +362,14 @@
     logoutbtn.style.display = "none";
     loginCheck.style.display = "none";
     registerCheck.style.display = "none";
+    AdminBtn.style.display = "none";
     let status = localStorage.getItem("STATUS");
     if (status == "true") {
       loginCheck.style.display = "block";
       registerCheck.style.display = "block";
+      AdminBtn.style.display = "block";
       document.getElementById("loggedInUser").style.display = "none";
-
+ 
     } else {
       sellbtn.style.display = "block";
       dropdownMenuButton3.style.display = "block";
@@ -371,7 +377,6 @@
       pocketmoney.style.display = "block";
       soldAndBuyHistory.style.display = "block";
       let loggedInUserData = JSON.parse(localStorage.getItem("USERDATA"));
-
       document.getElementById("loggedInUserName").innerHTML = (loggedInUserData.FirstName).toUpperCase();
 
     }
