@@ -52,7 +52,7 @@ async function walletUtilities() {
                     .then(async function (message) {
                         // alert("Send a Mail to conformation.")
                         await swal({
-                            title: "Send a Mail to conformation!",
+                            title: "confirmation mail sent...",
                             text: "You clicked the button!",
                             icon: "info",
                             button: "Aww yiss!",
@@ -63,7 +63,7 @@ async function walletUtilities() {
                             update(ref(db, "User/" + UserData.id + "/Details"), { WalletMoney: walletmoney + insertMoney })
                             // alert("Congretes Your Money Added Successfully.");
                             await swal({
-                                title: "Congretes Your Money Added Successfully!",
+                                title: "Congrats recharge successfull!",
                                 text: "You clicked the button!",
                                 icon: "success",
                                 button: "Aww yiss!",
@@ -73,7 +73,7 @@ async function walletUtilities() {
                         else{
                             // alert('you enter wrong text.')
                             await swal({
-                                title: "you enter wrong text!",
+                                title: "You enter wrong text!",
                                 text: "You clicked the button!",
                                 icon: "error",
                                 button: "Try Again",
@@ -88,7 +88,7 @@ async function walletUtilities() {
         } else {
             // alert("you can add atmost 1000000 rs. in your wallet .")
             await swal({
-                title: "Sorry !! you can add atmost 1000000 rs. in your wallet!",
+                title: "Sorry !! you can add atmost 10Lakh rs. in your wallet!",
                 text: "You clicked the button!",
                 icon: "info",
                 button: "Done!",

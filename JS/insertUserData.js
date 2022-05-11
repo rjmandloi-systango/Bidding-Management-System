@@ -83,13 +83,13 @@ console.log(passData);
               icon: "info",
               button: "Done",
             });
-            let prm = prompt('Enter OTP');
-            if (prm == otp) {
+            let inputFromPrompt = prompt('Enter OTP');
+            if (inputFromPrompt == otp) {
               insertUser(userDataObj);
         
               // alert('verification done!')
               await swal({
-                title: "verification done!",
+                title: "Successfully verified ",
                 text: "You clicked the button!",
                 icon: "success",
                 button: "Done",
@@ -98,7 +98,7 @@ console.log(passData);
             } else {
               // alert('verification fail')
               await swal({
-                title: "verification fail!",
+                title: "Opps verification failed!",
                 text: "You clicked the button!",
                 icon: "error",
                 button: "Done",
@@ -119,7 +119,6 @@ console.log(passData);
 
 async function insertUser(userDataObj) {
   set(ref(db, "User/" + (ID + 1) + "/"), {
-
     "Details": {
       FirstName: userDataObj.userFirstName,
       LastName: userDataObj.userLastName,

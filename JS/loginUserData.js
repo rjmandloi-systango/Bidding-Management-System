@@ -27,7 +27,7 @@ async function checkUserLogin(userNameLogin,userPassLogin){
     
 //  alert("welcome !");
 await swal({
-    title: "you are login successful !",
+    title: "Logged in successfully!",
     text: "You clicked the button!",
     icon: "success",
     button: "Aww yiss!",

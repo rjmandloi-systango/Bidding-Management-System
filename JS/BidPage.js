@@ -21,7 +21,7 @@ let bidData = document.getElementById("bidData");
 let walletmoney;
 let highestBidderWalletMoney;
 let biddersList = {};
-document.getElementById("loggedInUserName").innerHTML=UserData.FirstName;
+document.getElementById("loggedInUserName").innerHTML=capitalize(UserData.FirstName);
 
 async function walletUtilities() {
     await get(child(databaseRef, "User/" + UserData.id + "/Details")).then((snapshot) => {
@@ -126,6 +126,7 @@ async function bidDataContainer() {
                     <button class="addProductButton" id="bidMoneybtn">Place</button>
                     </div>
                     <p class="mt-4 textColorInBidPage "># Make sure you have enough money to place your bid. </p>
+                    <p class="mt-4 textColorInBidPage "><b style="color:red;">* Once you placed the bid , there is no going back. </b></p>
                     
                     <img  src="../images/bid.jpg" class="image-fluid"  alt="...">
                     
@@ -173,7 +174,7 @@ async function insertBid() {
                     .then(async () => {
                         // alert('Cogrates your bid added successfully...')
                         await swal({
-                            title: "Cogrates your bid added successfully!",
+                            title: "Congrats your bid added successfully!",
                             text: "You clicked the button!",
                             icon: "success",
                             button: "Done",
@@ -195,7 +196,7 @@ async function insertBid() {
             } else {
                 // alert("you dose not bid smaller than Maximum Bid.")
                 await swal({
-                    title: "you dose not bid smaller than Maximum Bid!",
+                    title: "You cannot bid smaller than Maximum Bid!",
                     text: "You clicked the button!",
                     icon: "info",
                     button: "Done",
@@ -205,7 +206,7 @@ async function insertBid() {
         } else {
             // alert("You do not have enough money in your wallet.");
             await swal({
-                title: "You do not have enough money in your wallet!",
+                title: "Opps insuffucient funds in wallet",
                 text: "You clicked the button!",
                 icon: "error",
                 button: "Done",

@@ -9,8 +9,9 @@
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
- <script src="https://smtpjs.com/v3/smtp.js">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://smtpjs.com/v3/smtp.js">
   </script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
@@ -45,7 +46,7 @@
 
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item" id="winnersBtn">
               <a class="nav-link" href="./HTML/Winners.html">Winners</a>
             </li>
 
@@ -59,14 +60,14 @@
 
             <li class="nav-item dropdown">
               <div class="dropdown">
-                <button class="btn  dropdown-toggle " type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown"
+                <button class="btn  dropdown-toggle me-3" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown"
                   aria-expanded="false" onclick="myProductList()">
                   My products
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3" id="listOfMyProducts">
                   <table class="table table-striped table-hover table-bordered  mt-1" id="myProductTable">
                   </table>
-                  
+
                 </ul>
               </div>
             </li>
@@ -345,6 +346,15 @@
 
   <script>
 
+  let userDATA = JSON.parse(localStorage.getItem("USERDATA"));
+  if (userDATA == null || userDATA == undefined) {
+    //  alert('null');
+    let userDATA = {
+      id: 0
+    };
+
+    localStorage.setItem('USERDATA', JSON.stringify(userDATA));
+  }
     let sellbtn = document.getElementById("sellBtn");
     let dropdownMenuButton3 = document.getElementById("dropdownMenuButton3");
     let pocketmoney = document.getElementById("pocketmoney");
@@ -352,8 +362,9 @@
     let loginCheck = document.getElementById("loginCheck");
     let registerCheck = document.getElementById("registerBtn");
     let soldAndBuyHistory = document.getElementById("soldAndBuyHistory");
-    let AdminBtn=document.getElementById("AdminBtn");
-    
+    let AdminBtn = document.getElementById("AdminBtn");
+    let winnersBtn = document.getElementById("winnersBtn");
+    winnersBtn.style.display="none";
     sellbtn.style.display = "none";
     dropdownMenuButton3.style.display = "none";
     soldAndBuyHistory.style.display = "none";
@@ -363,13 +374,21 @@
     registerCheck.style.display = "none";
     AdminBtn.style.display = "none";
     let status = localStorage.getItem("STATUS");
-    if (status == "true") {
+    ///////////////////////////////
+    // console.log(localStorage.length);
+    let checkLogin = JSON.parse(localStorage.getItem("USERDATA"));
+    // console.log(checkLogin.id);
+    ////////////////////////
+    if (status == "true" || checkLogin.id == 0) {
+    // if (status == "true") {
+
       loginCheck.style.display = "block";
       registerCheck.style.display = "block";
       AdminBtn.style.display = "block";
       document.getElementById("loggedInUser").style.display = "none";
       // location.replace("./index.html");
     } else {
+      winnersBtn.style.display="block";
       sellbtn.style.display = "block";
       dropdownMenuButton3.style.display = "block";
       logoutbtn.style.display = "block";
@@ -377,7 +396,6 @@
       soldAndBuyHistory.style.display = "block";
       let loggedInUserData = JSON.parse(localStorage.getItem("USERDATA"));
       document.getElementById("loggedInUserName").innerHTML = (loggedInUserData.FirstName).toUpperCase();
-
     }
   </script>
   <script>
@@ -469,7 +487,9 @@
   <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
   <script type="module" src="./JS/InsertProductData.js"></script>
   <script type="module" src="./JS/FetchProductData.js"></script>
   <script type="module" src="./JS/insertUserData.js"></script>

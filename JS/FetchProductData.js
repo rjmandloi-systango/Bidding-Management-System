@@ -31,17 +31,19 @@ allProductDataFetch();
 let productDeatils = [];
 async function allProductDataFetch() {
   // showPopup();
-  let userDATA = JSON.parse(localStorage.getItem("USERDATA"));
-  if (userDATA == null || userDATA == undefined) {
-    //  alert('null')
-    let userDATA = {
-      id: 0
-    };
+  // let userDATA = JSON.parse(localStorage.getItem("USERDATA"));
+  // if (userDATA == null || userDATA == undefined) {
+  //   //  alert('null')
+  //   let userDATA = {
+  //     id: 0
+  //   };
 
-    localStorage.setItem('USERDATA', JSON.stringify(userDATA));
-  }
+  //   localStorage.setItem('USERDATA', JSON.stringify(userDATA));
+  // }
 
   let isLogout = localStorage.getItem("STATUS"); //FALSE=LOGIN   TRUE=LOGOUT
+  let checkLogin = JSON.parse(localStorage.getItem("USERDATA"));
+
   const databaseRef = ref(db);
 
   get(child(databaseRef, "User/")).then((snapshot) => {
@@ -72,9 +74,9 @@ async function allProductDataFetch() {
               let uniqueProductId = "productId" + productIdIncrementor;
               let uniqueBidButtonId = "bidButton" + bidButtonIdIncrementor;
 
-              //check for login status            
+              //check for login status                 
               let isLogin;
-              if (isLogout === "true") {
+              if (isLogout === "true" || checkLogin.id == 0 ) {
                 isLogin = 0;
               } else {
                 isLogin = 1;
@@ -98,7 +100,7 @@ async function allProductDataFetch() {
                  
                  <div class="d-flex justify-content-between"  >
                   <div class="col-sm fw-bold">
-                    Max bid  &#8377 <span id=mb_${productId} class="textColorInBidPage"> ${productStartingBid} </span>
+                    Max bid:  &#8377 <span id=mb_${productId} class="textColorInBidPage"> ${productStartingBid} </span>
                   </div class="col-sm fw-bold">
                   <div>
                     <i class="fa fa-user " style="color:chocolate;"></i> <span class="col-6 fw-bold"  id="maxBidderName_${productId}">--::--</span>
