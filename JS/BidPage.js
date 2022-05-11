@@ -1,8 +1,6 @@
 import { db, set, ref, get, child, update, remove } from "./firebase.js";
 import { userDeatils } from "./fetchUserData.js";
-import {capitalize}  from "./capitalize.js"
-
-
+import { capitalize } from "./capitalize.js"
 
 const databaseRef = ref(db);
 let UserData = JSON.parse(localStorage.getItem("USERDATA"));
@@ -21,25 +19,43 @@ let bidData = document.getElementById("bidData");
 let walletmoney;
 let highestBidderWalletMoney;
 let biddersList = {};
-document.getElementById("loggedInUserName").innerHTML=capitalize(UserData.FirstName);
+document.getElementById("loggedInUserName").innerHTML = capitalize(UserData.FirstName);
 
 async function walletUtilities() {
     await get(child(databaseRef, "User/" + UserData.id + "/Details")).then((snapshot) => {
         if (typeof (snapshot) !== 'undefined') {
             if (snapshot.exists()) {
-                console.log("log--" + snapshot.val().WalletMoney)
-                walletmoney = snapshot.val().WalletMoney
+                // console.log("log--" + snapshot.val().WalletMoney);
+                walletmoney = snapshot.val().WalletMoney;
             }
         }
     });
     await get(child(databaseRef, "User/" + ProductData.highestBidderId + "/Details/")).then((snapshot) => {
         if (typeof (snapshot) !== 'undefined') {
             if (snapshot.exists()) {
-                console.log("log--" + snapshot.val().WalletMoney)
+                // console.log("log--" + snapshot.val().WalletMoney)
                 highestBidderWalletMoney = snapshot.val().WalletMoney
             }
         }
     });
+
+    // let a = Object.keys(sortedBidders[productId]);
+    // a.forEach(element => {
+    //     console.log(sortedBidders[productId][element].BuyerID);
+    //     console.log(sortedBidders[productId][element].BuyerBidMoney);
+    //     let user = userDeatils.find(user => user.id === `${sortedBidders[productId][element].BuyerID}`);
+    //     console.log(user.FirstName);
+    //     biddersList[element] = {
+    //         "name": user.FirstName,
+    //         "money": sortedBidders[productId][element].BuyerBidMoney
+    //     }
+    // });
+    sessionStorage.setItem("WalletMoney", walletmoney);
+}
+
+walletUtilities().then(() => {
+
+
     let a = Object.keys(sortedBidders[productId]);
     a.forEach(element => {
         console.log(sortedBidders[productId][element].BuyerID);
@@ -51,10 +67,8 @@ async function walletUtilities() {
             "money": sortedBidders[productId][element].BuyerBidMoney
         }
     });
-    sessionStorage.setItem("WalletMoney", walletmoney);
-}
 
-walletUtilities().then(() => {
+
 
     console.log(biddersList);
     let tablebody = document.getElementById("tbodyid");
@@ -62,16 +76,14 @@ walletUtilities().then(() => {
     let biddersListKeys = Object.keys(biddersList);
     biddersListKeys.forEach(key => {
 
-
-
         console.log(biddersList[key]["name"]);
         console.log(biddersList[key]["money"]);
         if (counter <= 4) {
             let row = document.createElement("tr");
             let name = document.createElement("td");
-            name.className="fw-bolder";
+            name.className = "fw-bolder";
             let money = document.createElement("td");
-            money.className="fw-bolder";
+            money.className = "fw-bolder";
             name.innerHTML = capitalize(biddersList[key]["name"]);
             money.innerHTML = biddersList[key]["money"];
             row.appendChild(name);
@@ -178,16 +190,25 @@ async function insertBid() {
                             text: "You clicked the button!",
                             icon: "success",
                             button: "Done",
-                          });
+                        });
+                        if(UserData.id == ProductData.highestBidderId)
+                        {
+                            update(ref(db, "User/" + UserData.id + "/Details"), { WalletMoney: parseInt(walletmoney) +(parseInt(ProductData.maximumBidPrice - bidMoney)) });
+                            // console.log(parseInt(ProductData.maximumBidPrice) , parseInt(highestBidderWalletMoney) , bidMoney ,parseInt(walletmoney));
+                            // console.log(UserData.id , ProductData.highestBidderId) ;
+                            location.href = '../index.html';                                    
+                        }
+                        else{               
                         update(ref(db, "User/" + UserData.id + "/Details"), { WalletMoney: parseInt(walletmoney) - bidMoney })
                             .then(() => {
                                 if (highestBidderWalletMoney != undefined) {
                                     update(ref(db, "User/" + ProductData.highestBidderId + "/Details"), { WalletMoney: parseInt(highestBidderWalletMoney) + parseInt(ProductData.maximumBidPrice) }).then(() => {
                                     })
                                 }
-                                location.href = '../index.html';
+                                    location.href = '../index.html';                                    
                             })
                         // 
+                         }
                     })
                     .catch((error) => {
                         alert("error aa gai h");
@@ -200,8 +221,8 @@ async function insertBid() {
                     text: "You clicked the button!",
                     icon: "info",
                     button: "Done",
-                  });
-              
+                });
+
             }
         } else {
             // alert("You do not have enough money in your wallet.");
@@ -210,8 +231,8 @@ async function insertBid() {
                 text: "You clicked the button!",
                 icon: "error",
                 button: "Done",
-              });
-          
+            });
+
         }
     }
 }
