@@ -6,12 +6,12 @@ import { productImageURL } from "./imageUpload.js";
 // let UserID = UserData.id;
 // let UserName=UserData.FirstName+" "+UserData.LastName;
 // let UserPhone=UserData.Phone;
-// {"id":"2","FirstName":"Antim","LastName":"fulwere","Phone":"9993438574","Email":"antimfulwere1022@gmail.com","Country":"Australia","State":"South Australia","PinCode":"aa","Address":"aa","LandMakr":"baba mahakal ki jai ho","UserPass":"11","UserId":2}
 let sellButton = document.getElementById("sellSubmitButton");
 sellButton.addEventListener("click", productData);
 let productIdArray = [];
 let date = new Date();
 let time = date.getMilliseconds();
+let productListingDate = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
  
 //getting all the new product data so as to make an entry in DB
 function productData() {
@@ -26,8 +26,8 @@ function productData() {
     // sellerContactNumber: document.getElementById("sellerContactNumber").value,
     sellerContactNumber: UserPhone,
     bidDate: document.getElementById("bidDate").value,
-    bidTime: document.getElementById("bidTime").value
-
+    bidTime: document.getElementById("bidTime").value ,
+    productListingDate : productListingDate 
   }
   insertProcuctDetails(productInformation);
 }
@@ -48,7 +48,8 @@ function insertProcuctDetails(productInformation) {
     ImageURl:url,
     ProductId:productInformation.productId,
     UserId:UserID,
-    SellerName:UserName
+    SellerName:UserName,
+    ProductListingDate:productInformation.productListingDate
   }).then(() => {
     productIdArray.push(time)
     // alert('Congrats your product added successfully...')
