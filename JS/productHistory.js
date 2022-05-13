@@ -48,8 +48,6 @@ async function userProductHistory() {
                             if (typeof (purchasedProduct) !== 'undefined') {
                                 if (purchasedProduct.exists()) {
                                     let sellerName = userDeatils.find(user => user.id === `${winners.val().SellerID}`);
-                                    console.log(sellerName.FirstName);
-                                    // document.getElementById("seller").innerHTML="Seller";
                                     let tableContent = `
                                     <tr class="tableData">
                                     <th scope="row">${purchasedProductCounter}</th>

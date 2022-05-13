@@ -2,7 +2,7 @@ import { db, set, ref, get, child, update, remove } from "./firebase.js";
 import { userDeatils } from "./fetchUserData.js";
 import { capitalize } from "./capitalize.js"
 
-console.log(userDeatils);
+// console.log(userDeatils);
 
 let highestBidder = {}; // object to store only highest bidders 
 let productIdIncrementor = 1;  
@@ -553,7 +553,7 @@ async function sendEmail(buyerEmail, sellerEmail, productData, BuyerBidMoney) {
     // console.log("else");
   }
 }
-console.log(productBidList);
+// console.log(productBidList);
 
 export { productDeatils, capitalize };
-console.log("Products Details", productDeatils);
+// console.log("Products Details", productDeatils);

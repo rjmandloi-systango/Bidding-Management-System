@@ -7,7 +7,7 @@ async function walletUtilities() {
     await get(child(databaseRef, "User/" + UserData.id + "/Details")).then((snapshot) => {
         if (typeof (snapshot) !== 'undefined') {
             if (snapshot.exists()) {
-                console.log("log--" + snapshot.val().WalletMoney)
+                // console.log("log--" + snapshot.val().WalletMoney)
                 walletmoney = snapshot.val().WalletMoney
             }
         }
@@ -34,6 +34,8 @@ async function walletUtilities() {
                     emailMsg += characters.charAt(Math.floor(Math.random() * charactersLength));
                 }
                 // money adding confirmation opt 
+               
+               
                 Email.send({
                     Host: "smtp.gmail.com",
                     Username: "BidItValueForYourValuables@gmail.com",
@@ -49,8 +51,15 @@ async function walletUtilities() {
                     <p>Message: "${emailMsg}"</p>`,
                 })
 
-                    .then(async function (message) {
+               
+               
+               
+                .then(async function (message) {
                         // alert("Send a Mail to conformation.")
+                        console.log(emailMsg);
+                       
+                       
+                       
                         await swal({
                             title: "confirmation mail sent...",
                             text: "You clicked the button!",
@@ -79,6 +88,7 @@ async function walletUtilities() {
                                 button: "Try Again",
                               });
                         }
+                    
                     })
                     .catch(function (message) {
                         alert("error")

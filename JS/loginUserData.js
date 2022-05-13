@@ -65,7 +65,7 @@ function logoutClickFun() {
 }
 
 
-console.log('User Details....', userDeatils);
+// console.log('User Details....', userDeatils);
 
 
 

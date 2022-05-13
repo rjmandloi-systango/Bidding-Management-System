@@ -47,7 +47,7 @@ async function getWinners() {
                                 get(child(databaseRef, `User/${winners.val().BuyerID}/Details/`)).then((snapshot) => {
                                     if (typeof (snapshot) !== 'undefined') {
                                         if (snapshot.exists()) {
-                                            console.log(snapshot.val());
+                                            // console.log(snapshot.val());
                                             let tableContent = `
                                                     <tr class="tableData">
                                                     <th scope="row">${winnerCount}</th>
