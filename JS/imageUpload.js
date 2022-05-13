@@ -9,7 +9,7 @@ let extlab = document.getElementById("extlab");
 let myimg = document.getElementById("myimg");
 let upprogress = document.getElementById("upprogress");
 let selbtn = document.getElementById("selbtn");
-let upbtn = document.getElementById("upbtn");
+let uploadBtn = document.getElementById("upbtn");
 let input = document.createElement("input");
 
 let productImageURL;
@@ -63,10 +63,10 @@ async function UploadProcess() {
         () => {
             getDownloadURL(UploadTask.snapshot.ref).then((downlodURL) => {
                 productImageURL=downlodURL;
-
+                           
             });
         }
     );
 }
-upbtn.onclick = UploadProcess;
+uploadBtn.onclick = UploadProcess;
 export {productImageURL};

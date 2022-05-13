@@ -4,13 +4,21 @@
   // https://firebase.google.com/docs/web/setup#available-libraries
 
   // Your web app's Firebase configuration
+  // const firebaseConfig = {
+  //   apiKey: "AIzaSyBtT7SoJwQwbMzzvBaQIoC37DoXAfhYt9o",
+  //   authDomain: "bidding-management-syste-da0d1.firebaseapp.com",
+  //   projectId: "bidding-management-syste-da0d1",
+  //   storageBucket: "bidding-management-syste-da0d1.appspot.com",
+  //   messagingSenderId: "464106697543",
+  //   appId: "1:464106697543:web:0cc24fd654a3aaa4ce1262"
+  // };
   const firebaseConfig = {
-    apiKey: "AIzaSyBtT7SoJwQwbMzzvBaQIoC37DoXAfhYt9o",
-    authDomain: "bidding-management-syste-da0d1.firebaseapp.com",
-    projectId: "bidding-management-syste-da0d1",
-    storageBucket: "bidding-management-syste-da0d1.appspot.com",
-    messagingSenderId: "464106697543",
-    appId: "1:464106697543:web:0cc24fd654a3aaa4ce1262"
+    apiKey: "AIzaSyClZhB3SYWLp3DsxcpZFSQ0S_IuGkAiD3E",
+    authDomain: "bidding-management-system-2.firebaseapp.com",
+    projectId: "bidding-management-system-2",
+    storageBucket: "bidding-management-system-2.appspot.com",
+    messagingSenderId: "14027773148",
+    appId: "1:14027773148:web:8ca297da45a12807cf5019"
   };
 
   // Initialize Firebase

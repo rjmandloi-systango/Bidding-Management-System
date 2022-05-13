@@ -43,8 +43,8 @@ function userData() {
     passData: document.getElementById("passData"),
     agree: document.getElementById("agree"),
   }
-  console.log(fname);
-console.log(passData);
+  // console.log(fname);
+// console.log(passData);
   if (validetion(userDataObj, userDatavalidetionObj)) {
     let flag = 0;
     userDeatils.forEach(element => {
@@ -59,12 +59,11 @@ console.log(passData);
       let userDataInssert = document.getElementById("userDataInssert");
       userDataInssert.addEventListener('click', sendEmail);
       let otp = Math.floor(Math.random() * (999999 - 100000) + 100000);
-
+     
    async  function sendEmail() {
         let userEmail = document.getElementById("userEmail").value;
 
         // alert(userEmail)
-
         Email.send({
           Host: "smtp.gmail.com",
           Username: "BidItValueForYourValuables@gmail.com",
@@ -77,6 +76,8 @@ console.log(passData);
           .then(async function (message) {
 
             // alert("mail sent successfully")
+            console.log(otp);
+
             await swal({
               title: "Mail Sent Successfully!",
               text: "You clicked the button!",
@@ -132,7 +133,7 @@ async function insertUser(userDataObj) {
       LandMark: userDataObj.userLandmark,
       WalletMoney: 0,
       UserPass: userDataObj.userPassword,
-      UserID: ID + 1                        //newly added on 15-04-22 
+      UserID: ID + 1                       
     }
   }).then(async() => {
     // alert('You are Registered...')
