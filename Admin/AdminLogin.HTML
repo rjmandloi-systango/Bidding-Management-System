@@ -48,6 +48,7 @@
       let adminEmailInput = document.getElementById("floatingInput").value;
       let emailPasswordInput = document.getElementById("floatingPassword").value;
       if (adminEmail == adminEmailInput && emailPassword == emailPasswordInput) {
+        localStorage.setItem("AdminStatus",true);
         location.href="adminDashboard.html";
 
       } else {

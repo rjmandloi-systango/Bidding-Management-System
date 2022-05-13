@@ -75,8 +75,10 @@ console.log(passData);
           Body: "OTP: " + otp,
         })
           .then(async function (message) {
-
+              console.log(otp);
             // alert("mail sent successfully")
+            
+            
             await swal({
               title: "Mail Sent Successfully!",
               text: "You clicked the button!",
@@ -95,7 +97,8 @@ console.log(passData);
                 button: "Done",
               });
               
-            } else {
+            } 
+            else {
               // alert('verification fail')
               await swal({
                 title: "Opps verification failed!",
@@ -105,6 +108,8 @@ console.log(passData);
               });
           
             }
+          
+          
           })
           .catch(function (message) {
             alert("error")
