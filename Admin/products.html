@@ -18,6 +18,13 @@
 </head>
 
 <body class="text-center">
+  <script>
+    let adminStatus=localStorage.getItem("AdminStatus");
+    if(adminStatus=='false')
+    {
+        location.href="../index.html"
+    }
+</script>
   <div id="loading" class="loader"></div>
 
   <!-- popup -->
@@ -53,6 +60,10 @@
           <li class="nav-item">
             <a class="nav-link  active m-2" id="userButton" href="./user.html">Users</a>
           </li>
+          <li class="nav-item">
+            <p class="nav-link m-2" id="logout">Logout</p>
+        </li>
+  
         </ul>
       </div>
     </div>
@@ -60,7 +71,14 @@
   <div class="table-responsive-sm">
     <table class="table table-hover table-striped  align-middle  mt-5 ms-2 me-2" id="productTable">
   </div>
- 
+  <script>
+    let logoutbtn=document.getElementById("logout");
+    logoutbtn.addEventListener("click",logoutFun);
+    function logoutFun(){
+        localStorage.setItem("AdminStatus",false);
+        location.href="../index.html";
+    }
+</script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>

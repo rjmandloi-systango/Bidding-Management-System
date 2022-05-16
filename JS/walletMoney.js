@@ -44,7 +44,6 @@ async function walletUtilities() {
                     // these IDs from the previous steps
                     emailjs.sendForm('service_azr4btl', 'template_6xrullv', this)
                         .then(async function () {
-
                             await swal({
                                 title: "confirmation mail sent...",
                                 text: "Please check your mail...",
@@ -78,9 +77,7 @@ async function walletUtilities() {
                             console.log('FAILED...', error);
                         });
                 });
-
                 document.getElementById("OTPBtn").click();
-
             }
             sendEmail();
         } else {

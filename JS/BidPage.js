@@ -10,8 +10,7 @@ let sortedBidders = JSON.parse(sessionStorage.getItem("SortedBidders"));
 let productInitialBid = parseInt(ProductData.InitialBid);
 let productId = parseInt(ProductData.productId);
 // console.log(sortedBidders);
-// console.log(productId);
-// console.log('User Details-->', userDeatils);
+
 let sellerId = parseInt(ProductData.sellerId);
 let buyerId = parseInt(UserData.id);
 let bidData = document.getElementById("bidData");
@@ -25,7 +24,6 @@ async function walletUtilities() {
     await get(child(databaseRef, "User/" + UserData.id + "/Details")).then((snapshot) => {
         if (typeof (snapshot) !== 'undefined') {
             if (snapshot.exists()) {
-                // console.log("log--" + snapshot.val().WalletMoney);
                 walletmoney = snapshot.val().WalletMoney;
             }
         }
@@ -33,7 +31,6 @@ async function walletUtilities() {
     await get(child(databaseRef, "User/" + ProductData.highestBidderId + "/Details/")).then((snapshot) => {
         if (typeof (snapshot) !== 'undefined') {
             if (snapshot.exists()) {
-                // console.log("log--" + snapshot.val().WalletMoney)
                 highestBidderWalletMoney = snapshot.val().WalletMoney
             }
         }
@@ -46,10 +43,8 @@ walletUtilities().then(() => {
 
     let a = Object.keys(sortedBidders[productId]);
     a.forEach(element => {
-        // console.log(sortedBidders[productId][element].BuyerID);
-        // console.log(sortedBidders[productId][element].BuyerBidMoney);
+
         let user = userDeatils.find(user => user.id === `${sortedBidders[productId][element].BuyerID}`);
-        // console.log(user.FirstName);
         biddersList[element] = {
             "name": user.FirstName,
             "money": sortedBidders[productId][element].BuyerBidMoney
@@ -58,12 +53,11 @@ walletUtilities().then(() => {
 
 
 
-    // console.log(biddersList);
+
     let tablebody = document.getElementById("tbodyid");
     let counter = 0;
     let biddersListKeys = Object.keys(biddersList);
     biddersListKeys.forEach(key => {
-
         // console.log(biddersList[key]["name"]);
         // console.log(biddersList[key]["money"]);
         if (counter <= 4) {
@@ -85,7 +79,6 @@ walletUtilities().then(() => {
 
 bidDataContainer();
 async function bidDataContainer() {
-    {/* <h1 style="color: #194681;">${ProductData.pname}</h1> */ }
 
     let bidContent = ` 
 
@@ -172,7 +165,6 @@ async function insertBid() {
                     ProductID: productId
                 })
                     .then(async () => {
-                        // alert('Cogrates your bid added successfully...')
                         await swal({
                             title: "Congrats your bid added successfully!",
                             text: "You clicked the button!",
@@ -182,8 +174,6 @@ async function insertBid() {
                         if(UserData.id == ProductData.highestBidderId)
                         {
                             update(ref(db, "User/" + UserData.id + "/Details"), { WalletMoney: parseInt(walletmoney) +(parseInt(ProductData.maximumBidPrice - bidMoney)) });
-                            // console.log(parseInt(ProductData.maximumBidPrice) , parseInt(highestBidderWalletMoney) , bidMoney ,parseInt(walletmoney));
-                            // console.log(UserData.id , ProductData.highestBidderId) ;
                             location.href = '../index.html';                                    
                         }
                         else{               
@@ -201,9 +191,7 @@ async function insertBid() {
                     .catch((error) => {
                         alert("error aa gai h");
                     });
-                // update(ref(db, "User/" + UserData.id + "/Details"), { WalletMoney: walletmoney - bidMoney })
             } else {
-                // alert("you dose not bid smaller than Maximum Bid.")
                 await swal({
                     title: "You cannot bid smaller than Maximum Bid!",
                     text: "You clicked the button!",
@@ -213,7 +201,6 @@ async function insertBid() {
 
             }
         } else {
-            // alert("You do not have enough money in your wallet.");
             await swal({
                 title: "Opps insuffucient funds in wallet",
                 text: "You clicked the button!",
