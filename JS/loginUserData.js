@@ -2,17 +2,13 @@ import { userDeatils } from "./fetchUserData.js";
 
 
 let loginClick = document.getElementById("loginUserData");
-
-
 loginClick.addEventListener('click', loginClickFun);
-
 //getting username and password 
 function loginClickFun() {
   let userNameLogin = document.getElementById("userNameLogin").value;
   let userPassLogin = document.getElementById("userPasswordLogin").value;
   checkUserLogin(userNameLogin, userPassLogin);
 }
-
 //validate userEmail and password 
 async function checkUserLogin(userNameLogin,userPassLogin){
   let flag=0;
@@ -61,13 +57,5 @@ logoutClick2.addEventListener('click', logoutClickFun);
 function logoutClickFun() {
   localStorage.setItem("STATUS", true);
   location.reload();
-
 }
-
-
-console.log('User Details....', userDeatils);
-
-
-
-
-
+// console.log('User Details....', userDeatils);

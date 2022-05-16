@@ -9,9 +9,9 @@ let sortedBidders = JSON.parse(sessionStorage.getItem("SortedBidders"));
 // fetch user data and product data frrm localStorage and sessionStorage
 let productInitialBid = parseInt(ProductData.InitialBid);
 let productId = parseInt(ProductData.productId);
-console.log(sortedBidders);
-console.log(productId);
-console.log('User Details-->', userDeatils);
+// console.log(sortedBidders);
+// console.log(productId);
+// console.log('User Details-->', userDeatils);
 let sellerId = parseInt(ProductData.sellerId);
 let buyerId = parseInt(UserData.id);
 let bidData = document.getElementById("bidData");
@@ -38,18 +38,6 @@ async function walletUtilities() {
             }
         }
     });
-
-    // let a = Object.keys(sortedBidders[productId]);
-    // a.forEach(element => {
-    //     console.log(sortedBidders[productId][element].BuyerID);
-    //     console.log(sortedBidders[productId][element].BuyerBidMoney);
-    //     let user = userDeatils.find(user => user.id === `${sortedBidders[productId][element].BuyerID}`);
-    //     console.log(user.FirstName);
-    //     biddersList[element] = {
-    //         "name": user.FirstName,
-    //         "money": sortedBidders[productId][element].BuyerBidMoney
-    //     }
-    // });
     sessionStorage.setItem("WalletMoney", walletmoney);
 }
 
@@ -58,10 +46,10 @@ walletUtilities().then(() => {
 
     let a = Object.keys(sortedBidders[productId]);
     a.forEach(element => {
-        console.log(sortedBidders[productId][element].BuyerID);
-        console.log(sortedBidders[productId][element].BuyerBidMoney);
+        // console.log(sortedBidders[productId][element].BuyerID);
+        // console.log(sortedBidders[productId][element].BuyerBidMoney);
         let user = userDeatils.find(user => user.id === `${sortedBidders[productId][element].BuyerID}`);
-        console.log(user.FirstName);
+        // console.log(user.FirstName);
         biddersList[element] = {
             "name": user.FirstName,
             "money": sortedBidders[productId][element].BuyerBidMoney
@@ -70,14 +58,14 @@ walletUtilities().then(() => {
 
 
 
-    console.log(biddersList);
+    // console.log(biddersList);
     let tablebody = document.getElementById("tbodyid");
     let counter = 0;
     let biddersListKeys = Object.keys(biddersList);
     biddersListKeys.forEach(key => {
 
-        console.log(biddersList[key]["name"]);
-        console.log(biddersList[key]["money"]);
+        // console.log(biddersList[key]["name"]);
+        // console.log(biddersList[key]["money"]);
         if (counter <= 4) {
             let row = document.createElement("tr");
             let name = document.createElement("td");
