@@ -1,10 +1,13 @@
 import { db, set, ref, get, child, update, remove } from "../JS/firebase.js";
 window.myProductList = async function () {
+    
     let myProductsTable = document.getElementById("myProductTable");
+    console.log(myProductsTable);
+
     let userDATA = JSON.parse(localStorage.getItem('USERDATA'));
     // console.log(userDATA.id);
     const databaseRef = ref(db);
-    await get(child(databaseRef, `User/${userDATA.id}/Details/ProductSold/`)).then((snapshot) => {
+   await get(child(databaseRef, `User/${userDATA.id}/Details/ProductSold/`)).then((snapshot) => {
         if (typeof (snapshot) !== 'undefined') {
             myProductsTable.innerHTML = `
             <tr class="tableData">
@@ -38,12 +41,15 @@ window.myProductList = async function () {
     });
 }
 
+
 window.removeProduct = function (userId, productId) {
     remove(ref(db, `User/${userId}/Details/ProductSold/${productId}`), {
     }).then(() => {
+
         remove(ref(db, `Bidding-Products/${productId}`), {
         }).then(() => {
         });
+
         // alert('Congrats your product is deleted  successfully...')
     }).catch((error) => {
         alert("Something went wrong!!!!!!!!!");

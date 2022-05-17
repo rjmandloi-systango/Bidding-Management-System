@@ -10,7 +10,6 @@ let sortedBidders = JSON.parse(sessionStorage.getItem("SortedBidders"));
 let productInitialBid = parseInt(ProductData.InitialBid);
 let productId = parseInt(ProductData.productId);
 // console.log(sortedBidders);
-
 let sellerId = parseInt(ProductData.sellerId);
 let buyerId = parseInt(UserData.id);
 let bidData = document.getElementById("bidData");
@@ -35,6 +34,7 @@ async function walletUtilities() {
             }
         }
     });
+
     sessionStorage.setItem("WalletMoney", walletmoney);
 }
 
@@ -43,7 +43,6 @@ walletUtilities().then(() => {
 
     let a = Object.keys(sortedBidders[productId]);
     a.forEach(element => {
-
         let user = userDeatils.find(user => user.id === `${sortedBidders[productId][element].BuyerID}`);
         biddersList[element] = {
             "name": user.FirstName,
@@ -53,13 +52,10 @@ walletUtilities().then(() => {
 
 
 
-
     let tablebody = document.getElementById("tbodyid");
     let counter = 0;
     let biddersListKeys = Object.keys(biddersList);
     biddersListKeys.forEach(key => {
-        // console.log(biddersList[key]["name"]);
-        // console.log(biddersList[key]["money"]);
         if (counter <= 4) {
             let row = document.createElement("tr");
             let name = document.createElement("td");

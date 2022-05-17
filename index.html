@@ -11,17 +11,11 @@
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://smtpjs.com/v3/smtp.js">
   </script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
   <title>Bidding Management System</title>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script type="text/javascript">
-        (function() {
-            // https://dashboard.emailjs.com/admin/account
-            emailjs.init('wLJqz6PxPMxgUWS4I');
-        })();
-    </script>
   <link rel="stylesheet" href="./CSS/index.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -67,8 +61,8 @@
 
             <li class="nav-item dropdown">
               <div class="dropdown">
-                <button class="btn  dropdown-toggle me-3" type="button" id="dropdownMenuButton3"
-                  data-bs-toggle="dropdown" aria-expanded="false" onclick="myProductList()">
+                <button class="btn  dropdown-toggle me-3" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown"
+                  aria-expanded="false" onclick="myProductList()">
                   My products
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3" id="listOfMyProducts">
@@ -345,41 +339,7 @@
       </div>
     </div>
   </div>
-  <!-- </div> -->
-  <!-- email  form for winnner and seller  -->
-  <form id="Winner-Form" style="display:none;">
-    <!-- <input type="hidden" name="contact_number" > -->
-    <label>Name</label>
-    <input type="text" name="user_name" id="WinnerName">
-    <label>Email</label>
-    <input type="email" name="user_email" id="winnerEmail">
-    <label>Message</label>
-    <textarea name="message" id="productInformationWinner"></textarea>
-    <input type="submit" value="Send" id="sendMailToWinner">
-  </form>
-
-  <form id="Seller-Form" style="display:none;">
-    <!-- <input type="hidden" name="contact_number" > -->
-    <label>Name</label>
-    <input type="text" name="user_name" id="SellerName">
-    <label>Email</label>
-    <input type="email" name="user_email" id="sellerEmail">
-    <label>Message</label>
-    <textarea name="message" id="productInformationSeller"></textarea>
-    <input type="submit" value="Send" id="sendMailToSeller">
-  </form>    
-
-<!-- //Registration otp -->
-<form id="Register-User" style="display:none;">
-  <!-- <input type="hidden" name="contact_number" > -->
-  <label>Name</label>
-  <input type="text" name="user_name" value="User">
-  <label>Email</label>
-  <input type="email" name="user_email" id="userRegisterMail">
-  <label>Message</label>
-  <textarea name="message" id="otpMessage"></textarea>
-  <input type="submit" value="Send" id="registerOTPbtn">
-</form>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
@@ -387,15 +347,15 @@
 
   <script>
 
-    let userDATA = JSON.parse(localStorage.getItem("USERDATA"));
-    if (userDATA == null || userDATA == undefined) {
-      //  alert('null');
-      let userDATA = {
-        id: 0
-      };
+  let userDATA = JSON.parse(localStorage.getItem("USERDATA"));
+  if (userDATA == null || userDATA == undefined) {
+    //  alert('null');
+    let userDATA = {
+      id: 0
+    };
 
-      localStorage.setItem('USERDATA', JSON.stringify(userDATA));
-    }
+    localStorage.setItem('USERDATA', JSON.stringify(userDATA));
+  }
     let sellbtn = document.getElementById("sellBtn");
     let dropdownMenuButton3 = document.getElementById("dropdownMenuButton3");
     let pocketmoney = document.getElementById("pocketmoney");
@@ -405,7 +365,7 @@
     let soldAndBuyHistory = document.getElementById("soldAndBuyHistory");
     let AdminBtn = document.getElementById("AdminBtn");
     let winnersBtn = document.getElementById("winnersBtn");
-    winnersBtn.style.display = "none";
+    winnersBtn.style.display="none";
     sellbtn.style.display = "none";
     dropdownMenuButton3.style.display = "none";
     soldAndBuyHistory.style.display = "none";
@@ -421,7 +381,7 @@
     // console.log(checkLogin.id);
     ////////////////////////
     if (status == "true" || checkLogin.id == 0) {
-      // if (status == "true") {
+    // if (status == "true") {
 
       loginCheck.style.display = "block";
       registerCheck.style.display = "block";
@@ -429,7 +389,7 @@
       document.getElementById("loggedInUser").style.display = "none";
       // location.replace("./index.html");
     } else {
-      winnersBtn.style.display = "block";
+      winnersBtn.style.display="block";
       sellbtn.style.display = "block";
       dropdownMenuButton3.style.display = "block";
       logoutbtn.style.display = "block";

@@ -30,3 +30,4 @@ function allDataFetch() {
   });
 }
 export {userDeatils};
+console.log(userDeatils);

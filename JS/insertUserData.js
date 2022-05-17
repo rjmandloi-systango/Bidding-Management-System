@@ -1,3 +1,4 @@
+
 import { db, set, ref, get, child, update, remove } from "./firebase.js";
 import { validetion } from "./validetionCheck.js";
 import { userDeatils } from "./fetchUserData.js";
@@ -43,7 +44,7 @@ function userData() {
     agree: document.getElementById("agree"),
   }
   // console.log(fname);
-  // console.log(passData);
+// console.log(passData);
   if (validetion(userDataObj, userDatavalidetionObj)) {
     let flag = 0;
     userDeatils.forEach(element => {
@@ -58,57 +59,69 @@ function userData() {
       let userDataInssert = document.getElementById("userDataInssert");
       userDataInssert.addEventListener('click', sendEmail);
       let otp = Math.floor(Math.random() * (999999 - 100000) + 100000);
-
-      async function sendEmail() {
+     
+   async  function sendEmail() {
         let userEmail = document.getElementById("userEmail").value;
-        console.log(userEmail);
-        document.getElementById("userRegisterMail").value = userEmail;
-        document.getElementById("otpMessage").value = otp;
 
-        document.getElementById('Register-User').addEventListener('submit', function (event) {
-          event.preventDefault();
-          // these IDs from the previous steps
-          emailjs.sendForm('service_azr4btl', 'template_6xrullv', this)
-            .then(async function () {
-              await swal({
-                      title: "Mail Sent Successfully!",
-                      text: "You clicked the button!",
-                      icon: "info",
-                      button: "Done",
-                    });
+        // alert(userEmail)
+        Email.send({
+          Host: "smtp.gmail.com",
+          Username: "BidItValueForYourValuables@gmail.com",
+          Password: "systango@@",
+          To: userEmail,
+          From: "BidItValueForYourValuables@gmail.com",
+          Subject: "One Time Password",
+          Body: "OTP: " + otp,
+        })
+          .then(async function (message) {
+              // console.log(otp);
+            // alert("mail sent successfully")
+            console.log(otp);
 
-                    let inputFromPrompt = prompt('Enter OTP');
-                        if (inputFromPrompt == otp) {
-                          insertUser(userDataObj);
             
-                          // alert('verification done!')
-                          await swal({
-                            title: "Successfully verified ",
-                            text: "You clicked the button!",
-                            icon: "success",
-                            button: "Done",
-                          });
             
-                        } 
-                        else {
-                          // alert('verification fail')
-                          await swal({
-                            title: "Opps verification failed!",
-                            text: "You clicked the button!",
-                            icon: "error",
-                            button: "Done",
-                          });
-            
-                        }
+            await swal({
+              title: "Mail Sent Successfully!",
+              text: "You clicked the button!",
+              icon: "info",
+              button: "Done",
             });
-        });
-        document.getElementById("registerOTPbtn").click();
+            let inputFromPrompt = prompt('Enter OTP');
+            if (inputFromPrompt == otp) {
+              insertUser(userDataObj);
+        
+              // alert('verification done!')
+              await swal({
+                title: "Successfully verified ",
+                text: "You clicked the button!",
+                icon: "success",
+                button: "Done",
+              });
+              
+            } 
+            else {
+              // alert('verification fail')
+              await swal({
+                title: "Opps verification failed!",
+                text: "You clicked the button!",
+                icon: "error",
+                button: "Done",
+              });
+          
+            }
+          
+          
+          })
+          .catch(function (message) {
+            alert("error")
+          });
       }
-
+      
     }
 
   }
 }
+
 
 async function insertUser(userDataObj) {
   set(ref(db, "User/" + (ID + 1) + "/"), {
@@ -125,9 +138,9 @@ async function insertUser(userDataObj) {
       LandMark: userDataObj.userLandmark,
       WalletMoney: 0,
       UserPass: userDataObj.userPassword,
-      UserID: ID + 1
+      UserID: ID + 1                       
     }
-  }).then(async () => {
+  }).then(async() => {
     // alert('You are Registered...')
     await swal({
       title: "You are Registered!",

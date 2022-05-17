@@ -1,7 +1,9 @@
 import { db, set, ref, get, child, update, remove } from "./firebase.js";
 import { userDeatils } from "./fetchUserData.js";
 import { capitalize } from "./capitalize.js"
+
 // console.log(userDeatils);
+
 let highestBidder = {}; // object to store only highest bidders 
 let productIdIncrementor = 1;
 let bidButtonIdIncrementor = 1;
@@ -58,7 +60,7 @@ async function allProductDataFetch() {
               let url = element.id[key]["ImageURl"];
               let uniqueProductId = "productId" + productIdIncrementor;
               let uniqueBidButtonId = "bidButton" + bidButtonIdIncrementor;
-
+              // console.log(userId);
               //check for login status                 
               let isLogin;
               if (isLogout === "true" || checkLogin.id == 0) {
@@ -69,7 +71,7 @@ async function allProductDataFetch() {
 
               //card content
               let productContent = `
-            <div class="card productCard  mt-5 rounded-3 mx-auto " data-product-status id=${productId} style="width: 18rem; ">
+            <div class="card productCard  mt-5 rounded-3 mx-auto " data-is-Already-Stored="False" data-max-Bidder-Id  id=${productId} style="width: 18rem; ">
               <div class="card-body  rounded-3" >
                   <div class="productName text-center p-1 rounded-3">
                     <h5 class="card-title">${capitalize(productName)}</h5>
@@ -80,12 +82,12 @@ async function allProductDataFetch() {
 
                   <div class="col-sm">
                     <span class="clock fs-4" fw-bold >&#128336</span>
-                    <span class=" fs-5 fw-bold" data-product-Status  data-product-id=${productId}  id=${uniqueProductId}></span>
+                    <span class=" fs-5 fw-bold"  data-product-Owner-Id=${userId}  data-product-id=${productId}  id=${uniqueProductId}></span>
                   </div>
                  
-                 <div class="d-flex justify-content-between"  >
+                 <div class="d-flex justify-content-between" >
                   <div class="col-sm fw-bold">
-                    Max bid:  &#8377 <span id=mb_${productId} class="textColorInBidPage"> ${productStartingBid} </span>
+                    Max bid:  &#8377 <span id=mb_${productId}   class="textColorInBidPage"> ${productStartingBid} </span>
                   </div class="col-sm fw-bold">
                   <div>
                     <i class="fa fa-user " style="color:chocolate;"></i> <span class="col-6 fw-bold"  id="maxBidderName_${productId}">--::--</span>
@@ -180,12 +182,16 @@ window.fetchProductData = function (
   sellerId
 ) {
 
+
+
   let maximumBidPrice = document.getElementById(`mb_${productId}`).innerHTML;
   // console.log(highestBidder[productId]);
   let highestBidderId = 0;
   if (highestBidder[productId] != undefined) {
     highestBidderId = highestBidder[productId].BuyerID;
   }
+
+
   productObj = {
     pname: pname,
     sname: sname,
@@ -198,9 +204,12 @@ window.fetchProductData = function (
     highestBidderId: highestBidderId,
   };
   sessionStorage.setItem("ProductData", JSON.stringify(productObj));
+
   // export defa {prducts};
   window.open(`HTML/BidPage.html`, '_blank');
+
 };
+
 
 // reverse timer function for products
 async function timer(uniqueProductId, uniqueBidButtonId, bidEndingDate, bidEndingTime) {
@@ -212,6 +221,7 @@ async function timer(uniqueProductId, uniqueBidButtonId, bidEndingDate, bidEndin
   let date = new Date(dateArray[0], dateArray[1] - 1, dateArray[2]); //year-month-day
   let shortMonth = date.toLocaleString("en-us", { month: "short" });
   let userInputDate;
+
   userInputDate = new Date(
     `${shortMonth} ${dateArray[2]}, ${dateArray[0]} ${timeArray[0]}:${timeArray[1]}:00`).getTime();
 
@@ -236,8 +246,8 @@ async function timer(uniqueProductId, uniqueBidButtonId, bidEndingDate, bidEndin
     document.getElementById(uniqueProductId).innerHTML =
       days + "D " + hours + "H " + minutes + "M " + seconds + "S ";
     let currentProductId = document.getElementById(uniqueProductId).dataset.productId;
-    // console.log("currentProductId"+currentProductId);
     const databaseRef = ref(db);
+
 
     //check if the products is already present in the winning list 
     await get(child(databaseRef, `Winners/${currentProductId}`)).then((snapshot) => {
@@ -249,11 +259,56 @@ async function timer(uniqueProductId, uniqueBidButtonId, bidEndingDate, bidEndin
       }
     })
 
+    let isAlreadySold = false;
+    let currentUserId = document.getElementById(uniqueProductId).dataset.productOwnerId;
+    let currentBuyerId = document.getElementById(currentProductId).dataset.maxBidderId;
+
+    // check for already sold products in db
+    await get(child(databaseRef, `User/${currentUserId}/Details/ProductSold/${currentProductId}/`)).then((snapshot) => {
+      if (typeof snapshot !== "undefined") {
+        if (snapshot.exists()) {
+          // console.log("dbms check kiya" + currentProductId);
+          if (snapshot.val().ProductStatus) {
+            isAlreadySold = true;
+          }
+        }
+      }
+    })
+
     //checking for expired products
     if (distanceBetweenBidEndTimeAndCurrentTime <= 0) {
-      // document.getElementById(uniqueProductId).dataset.productStatus='unsold';
       document.getElementById(uniqueProductId).innerHTML = "EXPIRED";
       document.getElementById(uniqueBidButtonId).style.display = "none";
+      let productStatus;
+      if (document.getElementById(`maxBidderName_${currentProductId}`).innerHTML == "--::--") {
+        productStatus = "Unsold";
+      } else {
+        productStatus = "sold";
+      }
+
+      if (isAlreadySold != true) {
+        // entry form purchased products
+        if (currentBuyerId != "") {
+          await update(ref(db, `User/${currentBuyerId}/Details/PurchasedProducts/` + [currentProductId]), {
+            ProductId: currentProductId,
+            ProductStatus: "Purchased",
+          }).then(() => {
+          })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+
+        // entry for expired products (sold/unsold)  
+        await update(ref(db, `User/${currentUserId}/Details/ProductSold/${currentProductId}`), {
+          ProductStatus: productStatus,
+        }).then(() => {
+        })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+
       //if the product is already present in winners list it won't be repeated again
       if (!isAlreadyInDatabaseWinners && document.getElementById(`maxBidderName_${currentProductId}`).innerHTML != "--::--") {
         let expiredProductId = document.getElementById(uniqueProductId).dataset.productId;
@@ -264,6 +319,7 @@ async function timer(uniqueProductId, uniqueBidButtonId, bidEndingDate, bidEndin
     }
   }, 1000);
 }
+
 
 let productBidList = []; //  
 highestBiddersOfProducts(); //function to sort the winners and to set max bidder to the product  
@@ -290,9 +346,12 @@ async function highestBiddersOfProducts() {
         productArray.push(
           products[key][key2]
         );
+
+
         productBidList.push(
           products[key][key2]
         );
+
       })
 
       //sorting for maximum bidder 
@@ -316,6 +375,7 @@ async function highestBiddersOfProducts() {
 
   fetchHighestBidder(highestBidder);
   sessionStorage.setItem("SortedBidders", JSON.stringify(sortedBidders));
+
 }
 
 //getting highrst bidders and also setting their values to the product cards 
@@ -323,10 +383,13 @@ function fetchHighestBidder(highestBidder) {
   // console.log("highestBidders", highestBidder);
   let productIds = Object.keys(highestBidder);
   productIds.forEach((key) => {
+    // console.log(key);
     document.getElementById(`mb_${highestBidder[key].ProductID}`).innerHTML = `${highestBidder[key].BuyerBidMoney}`;
     let person = userDeatils.find(user => user.id === `${highestBidder[key].BuyerID}`);
     document.getElementById(`maxBidderName_${highestBidder[key].ProductID}`).innerText = capitalize(`${person.FirstName}`);
+    document.getElementById(key).dataset.maxBidderId = highestBidder[key].BuyerID;//new added 
   });
+
 }
 
 //if a product is expired the data is stored inside Winners 
@@ -349,16 +412,16 @@ async function insertWinnerData(expiredProductId) {
 
 // getting the email of winner and also the seller 
 async function fetchEmails(BuyerBidMoney, BuyerID, ProductID, SellerID) {
-  let buyerEmail, sellerEmail, buyerName;
+  let buyerEmail, sellerEmail;
   let productData = {};
   userDeatils.forEach(element => {
     if (element.id == BuyerID) {
       buyerEmail = element.Email;
-      buyerName = element.FirstName;
     }
     if (element.id == SellerID) {
       sellerEmail = element.Email;
     }
+
   });
 
   // getting the details of products for mailing both winner and seller
@@ -381,7 +444,8 @@ async function fetchEmails(BuyerBidMoney, BuyerID, ProductID, SellerID) {
               SellerContactNumber: element[el][elb].SellerContactNumber,
               UserId: element[el][elb].UserId,
             };
-            sendEmail(buyerEmail, buyerName, sellerEmail, productData, BuyerBidMoney);
+            sendEmail(buyerEmail, sellerEmail, productData, BuyerBidMoney);
+
           }
         })
       }
@@ -389,63 +453,153 @@ async function fetchEmails(BuyerBidMoney, BuyerID, ProductID, SellerID) {
     console.log('product data--->', productData);
   });
 }
+
 // sending mail to winner and seller
-async function sendEmail(buyerEmail, buyerName, sellerEmail, productData, BuyerBidMoney) {
+async function sendEmail(buyerEmail, sellerEmail, productData, BuyerBidMoney) {
   if (productData != undefined) {
-    //email send to auction winner after product expired
-    let space = '________________________________';
-    document.getElementById("WinnerName").value = buyerName
-    document.getElementById("winnerEmail").value = buyerEmail;
-    document.getElementById("productInformationWinner").value = `
-      Congratulations for winning the bid on this upcoming 
-      trade expo exhibit contract. I wish you all the best and may everything turn out smoothly as you work on greater profits.
-      Product Image => ${productData.ImageURl}${space}
-      Product Id    => ${productData.ProductID}  ${space}
-      Product Name  => ${productData.ProductName}${space}
-      Product Starting Price =>  ${productData.ProductPrice}${space}
-      Auction Winning Price => ${BuyerBidMoney}${space}
-      Product Discription  =>  ${productData.ProductDiscription}${space}
-      Auction End Date     =>  ${productData.BidDate} ${productData.BitTime}${space}
-      Seller Name       =>     ${productData.SellerName}${space}
-      Seller Contact Number => ${productData.SellerContactNumber}${space}
-      Seller Email     =>      ${sellerEmail}${space}
-    `;
-    document.getElementById('Winner-Form').addEventListener('submit', function (event) {
-      event.preventDefault();
-      emailjs.sendForm('service_azr4btl', 'template_6xrullv', this)
-        .then(async function () {
-                 
-        }, function (error) {
-          console.log('FAILED...', error);
+    //  mail to Winner 
+    Email.send({
+      Host: "smtp.gmail.com",
+      Username: "BidItValueForYourValuables@gmail.com",
+      Password: "systango@@",
+      To: buyerEmail,
+      From: "BidItValueForYourValuables@gmail.com",
+      Subject: "Hurray!! ",
+      Body: `<div><h2  style="color:chocolate; line-height: 2;"><span>&#127881 ; &#127881 ; &#127881 ;</span><br>  Congratulations for winning the bid on this upcoming 
+    trade expo exhibit contract. I wish you all the best and may everything turn out smoothly as you work on greater profits.</h2><br>
+    <img src="${productData.ImageURl}" /><br>
+    <table  class="table table-striped" style="width:100%;   border: 1px solid white;
+    border-collapse: collapse; text-align:left; " >
+    <tr>
+      <th>Product Id</th>
+      <td>${productData.ProductID}</td>
+    </tr>
+
+    <tr>
+    <th>Product Name</th>
+    <td>${productData.ProductName}</td>
+    </tr>
+
+    <tr>
+    <th>Product Starting Price</th>
+    <td>${productData.ProductPrice}</td>
+    </tr>
+
+    <tr>
+    <th>Auction Winning Price</th>
+    <td>${BuyerBidMoney}</td>
+    </tr>
+
+    <tr>
+    <th>Product Discription</th>
+    <td>${productData.ProductDiscription}</td>
+    </tr>
+
+    <tr>
+    <th>Auction End Date</th>
+    <td>${productData.BidDate} ${productData.BitTime}</td>
+    </tr>
+    
+    <tr>
+    <th>Seller Name</th>
+    <td>${productData.SellerName}</td>
+    </tr>
+    
+    <tr>
+    <th>Seller Contact Number</th>
+    <td>${productData.SellerContactNumber}</td>
+    </tr>
+
+    <th>Seller Email</th>
+        <td>${sellerEmail}</td>
+        </tr>
+      </table>
+    </div>`,
+    })
+
+      .then(async function (message) {
+        await swal({
+          title: "Email Send Successufully!",
+          text: "You clicked the button!",
+          icon: "success",
+          button: "Try Again!",
         });
-    });
-    document.getElementById("sendMailToWinner").click();
-    //email send to product seller after product expired
-    document.getElementById("sellerEmail").value = sellerEmail;
-    document.getElementById("productInformationSeller").value = `
-    Congratulations!!!!!  your product is Sold with following information:::
-    Product Image => ${productData.ImageURl}${space}
-    Product Id    => ${productData.ProductID}  ${space}
-    Product Name  => ${productData.ProductName}${space}
-    Product Starting Price =>  ${productData.ProductPrice}${space}
-    Auction Winning Price => ${BuyerBidMoney}${space}
-    Product Discription  =>  ${productData.ProductDiscription}${space}
-    Auction End Date     =>  ${productData.BidDate} ${productData.BitTime}${space}
-    Buyer Name => ${buyerName}
-    Buyer Email => ${buyerEmail}
-     `;
-    document.getElementById('Seller-Form').addEventListener('submit', function (event) {
-      event.preventDefault();
-      emailjs.sendForm('service_azr4btl', 'template_6xrullv', this)
-        .then(async function () {
-          
-        }, function (error) {
-          console.log('FAILED...', error);
+
+        alert("mail sent successfully")
+
+      })
+      .catch(async function (message) {
+        await swal({
+          title: "Error !",
+          text: "You clicked the button!",
+          icon: "error",
+          button: "Try Again!",
         });
-    });
-    document.getElementById("sendMailToSeller").click();
+
+        alert("error")
+      });
+
+
+    //  mail to seller 
+    Email.send({
+      Host: "smtp.gmail.com",
+      Username: "BidItValueForYourValuables@gmail.com",
+      Password: "systango@@",
+      To: sellerEmail,
+      From: "BidItValueForYourValuables@gmail.com",
+      Subject: "Hurray!! ",
+      Body: `<div><h2  style="color:chocolate; line-height: 2;"><span>&#127881 ; &#127881 ; &#127881 ;</span><br>  Congratulations!!!!!  your product is Sold with following information:::  </h2><br>
+        <img src="${productData.ImageURl}" /><br>
+        <table  class="table table-striped" style="width:100%;   border: 1px solid white;
+        border-collapse: collapse; text-align:left; " >
+        <tr>
+          <th>Product Id</th>
+          <td>${productData.ProductID}</td>
+        </tr>
+    
+        <tr>
+        <th>Product Name</th>
+        <td>${productData.ProductName}</td>
+        </tr>
+    
+        <tr>
+        <th>Product Starting Price</th>
+        <td>${productData.ProductPrice}</td>
+        </tr>
+    
+        <tr>
+        <th>Auction Winning Price</th>
+        <td>${BuyerBidMoney}</td>
+        </tr>
+    
+        <tr>
+        <th>Product Discription</th>
+        <td>${productData.ProductDiscription}</td>
+        </tr>
+    
+        <tr>
+        <th>Auction End Date</th>
+        <td>${productData.BidDate} ${productData.BitTime}</td>
+        </tr>
+        
+        <th>Buyer Email</th>
+        <td>${buyerEmail}</td>
+        </tr>
+        
+          </table>
+        </div>`,
+    })
+      .then(function (message) {
+        // alert("mail sent successfully222222");
+      })
+      .catch(function (message) {
+        // alert("error");
+      });
+  } else {
+    // console.log("else");
   }
 }
 // console.log(productBidList);
+
 export { productDeatils, capitalize };
 // console.log("Products Details", productDeatils);
