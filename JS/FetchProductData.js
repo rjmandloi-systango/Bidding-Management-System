@@ -272,7 +272,7 @@ async function timer(uniqueProductId, uniqueBidButtonId, bidEndingDate, bidEndin
         if (typeof snapshot !== "undefined") {
           if (snapshot.exists()) {
             if (snapshot.val().ProductStatus) {  // if product status exists and is set to sold 
-              console.log("is already sold ");
+              // console.log("is already sold ");
               isAlreadySold = true;
             }
           }
