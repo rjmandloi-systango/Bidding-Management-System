@@ -263,20 +263,22 @@ async function timer(uniqueProductId, uniqueBidButtonId, bidEndingDate, bidEndin
     let currentUserId = document.getElementById(uniqueProductId).dataset.productOwnerId;
     let currentBuyerId = document.getElementById(currentProductId).dataset.maxBidderId;
 
-    // check for already sold products in db
-    await get(child(databaseRef, `User/${currentUserId}/Details/ProductSold/${currentProductId}/`)).then((snapshot) => {
-      if (typeof snapshot !== "undefined") {
-        if (snapshot.exists()) {
-          // console.log("dbms check kiya" + currentProductId);
-          if (snapshot.val().ProductStatus) {
-            isAlreadySold = true;
-          }
-        }
-      }
-    })
 
     //checking for expired products
     if (distanceBetweenBidEndTimeAndCurrentTime <= 0) {
+      
+       //check for already sold product  ni db
+      await get(child(databaseRef, `User/${currentUserId}/Details/ProductSold/${currentProductId}/`)).then((snapshot) => {
+        if (typeof snapshot !== "undefined") {
+          if (snapshot.exists()) {
+            if (snapshot.val().ProductStatus) {  // if product status exists and is set to sold 
+              console.log("is already sold ");
+              isAlreadySold = true;
+            }
+          }
+        }
+      })
+
       document.getElementById(uniqueProductId).innerHTML = "EXPIRED";
       document.getElementById(uniqueBidButtonId).style.display = "none";
       let productStatus;
@@ -287,7 +289,7 @@ async function timer(uniqueProductId, uniqueBidButtonId, bidEndingDate, bidEndin
       }
 
       if (isAlreadySold != true) {
-        // entry form purchased products
+        // entry form purchased products i buyer DB
         if (currentBuyerId != "") {
           await update(ref(db, `User/${currentBuyerId}/Details/PurchasedProducts/` + [currentProductId]), {
             ProductId: currentProductId,
@@ -299,7 +301,7 @@ async function timer(uniqueProductId, uniqueBidButtonId, bidEndingDate, bidEndin
             });
         }
 
-        // entry for expired products (sold/unsold)  
+        // entry for expired products (sold/unsold) IN SELLER DB  
         await update(ref(db, `User/${currentUserId}/Details/ProductSold/${currentProductId}`), {
           ProductStatus: productStatus,
         }).then(() => {
@@ -310,7 +312,7 @@ async function timer(uniqueProductId, uniqueBidButtonId, bidEndingDate, bidEndin
       }
 
       //if the product is already present in winners list it won't be repeated again
-      if (!isAlreadyInDatabaseWinners && document.getElementById(`maxBidderName_${currentProductId}`).innerHTML != "--::--") {
+      if (!isAlreadyInDatabaseWinners && isAlreadySold != true && document.getElementById(`maxBidderName_${currentProductId}`).innerHTML != "--::--") {
         let expiredProductId = document.getElementById(uniqueProductId).dataset.productId;
         // console.log("expired product id " + expiredProductId);
         insertWinnerData(expiredProductId);
@@ -424,6 +426,7 @@ async function fetchEmails(BuyerBidMoney, BuyerID, ProductID, SellerID) {
     }
 
   });
+   
 
   // getting the details of products for mailing both winner and seller
   productDeatils.forEach(element => {
@@ -445,7 +448,8 @@ async function fetchEmails(BuyerBidMoney, BuyerID, ProductID, SellerID) {
               SellerContactNumber: element[el][elb].SellerContactNumber,
               UserId: element[el][elb].UserId,
             };
-            sendEmail(buyerEmail, buyerName, sellerEmail, productData, BuyerBidMoney);
+            console.log("send mail chala");
+            // sendEmail(buyerEmail, buyerName, sellerEmail, productData, BuyerBidMoney);
 
           }
         })
@@ -455,7 +459,6 @@ async function fetchEmails(BuyerBidMoney, BuyerID, ProductID, SellerID) {
   });
 }
 
-// sending mail to winner and seller
 // sending mail to winner and seller
 async function sendEmail(buyerEmail, buyerName, sellerEmail, productData, BuyerBidMoney) {
   if (productData != undefined) {
@@ -486,6 +489,7 @@ async function sendEmail(buyerEmail, buyerName, sellerEmail, productData, BuyerB
         });
     });
     document.getElementById("sendMailToWinner").click();
+
     //email send to product seller after product expired
     document.getElementById("sellerEmail").value = sellerEmail;
     document.getElementById("productInformationSeller").value = `
