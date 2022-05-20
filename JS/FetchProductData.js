@@ -2,8 +2,6 @@ import { db, set, ref, get, child, update, remove } from "./firebase.js";
 import { userDeatils } from "./fetchUserData.js";
 import { capitalize } from "./capitalize.js"
 
-// console.log(userDeatils);
-
 let highestBidder = {}; // object to store only highest bidders 
 let productIdIncrementor = 1;
 let bidButtonIdIncrementor = 1;
@@ -32,7 +30,6 @@ async function allProductDataFetch() {
   let isLogout = localStorage.getItem("STATUS"); //FALSE=LOGIN   TRUE=LOGOUT
   let checkLogin = JSON.parse(localStorage.getItem("USERDATA"));  // only when user uses app for first time 
   const databaseRef = ref(db);
-
   get(child(databaseRef, "User/")).then((snapshot) => {
     if (typeof snapshot !== "undefined") {
       if (snapshot.exists()) {
@@ -42,7 +39,6 @@ async function allProductDataFetch() {
           });
         });
       }
-
       productDeatils.forEach((element) => {
         if (element?.id) {
           Object.keys(element.id).forEach((key) => {
@@ -58,9 +54,16 @@ async function allProductDataFetch() {
               let productStartingBid = element.id[key]["ProductPrice"];
               let userId = element.id[key]["UserId"];
               let url = element.id[key]["ImageURl"];
+              let ProductStatus = element.id[key]["ProductStatus"]
               let uniqueProductId = "productId" + productIdIncrementor;
               let uniqueBidButtonId = "bidButton" + bidButtonIdIncrementor;
-              // console.log(userId);
+              let productState;
+              if (ProductStatus) {
+                productState = "expired";
+              }
+              else {
+                productState = "active";
+              }
               //check for login status                 
               let isLogin;
               if (isLogout === "true" || checkLogin.id == 0) {
@@ -71,7 +74,7 @@ async function allProductDataFetch() {
 
               //card content
               let productContent = `
-            <div class="card productCard  mt-5 rounded-3 mx-auto " data-is-Already-Stored="False" data-max-Bidder-Id  id=${productId} style="width: 18rem; ">
+            <div class="card productCard  mt-5 rounded-3 mx-auto " data-product-State=${productState}  data-max-Bidder-Id  id=${productId} style="width: 18rem; ">
               <div class="card-body  rounded-3" >
                   <div class="productName text-center p-1 rounded-3">
                     <h5 class="card-title">${capitalize(productName)}</h5>
@@ -181,16 +184,12 @@ window.fetchProductData = function (
   url,
   sellerId
 ) {
-
-
-
   let maximumBidPrice = document.getElementById(`mb_${productId}`).innerHTML;
   // console.log(highestBidder[productId]);
   let highestBidderId = 0;
   if (highestBidder[productId] != undefined) {
     highestBidderId = highestBidder[productId].BuyerID;
   }
-
 
   productObj = {
     pname: pname,
@@ -204,96 +203,104 @@ window.fetchProductData = function (
     highestBidderId: highestBidderId,
   };
   sessionStorage.setItem("ProductData", JSON.stringify(productObj));
-
-  // export defa {prducts};
   window.open(`HTML/BidPage.html`, '_blank');
-
 };
-
 
 // reverse timer function for products
 async function timer(uniqueProductId, uniqueBidButtonId, bidEndingDate, bidEndingTime) {
 
-  let bidDate = bidEndingDate;
-  let bidTime = bidEndingTime;
-  let dateArray = bidDate.split("-");//hh-mm(24 hour time format)
-  let timeArray = bidTime.split(":"); //yyyy-mm-dd
-  let date = new Date(dateArray[0], dateArray[1] - 1, dateArray[2]); //year-month-day
-  let shortMonth = date.toLocaleString("en-us", { month: "short" });
-  let userInputDate;
+  let currentProductId = document.getElementById(uniqueProductId).dataset.productId;
+  let productState = document.getElementById(currentProductId).dataset.productState;
+  if (productState == "expired") {
+    document.getElementById(uniqueProductId).innerHTML = "EXPIRED";
+    document.getElementById(uniqueBidButtonId).style.display = "none";
+  }
+  else {
+    let bidDate = bidEndingDate;
+    let bidTime = bidEndingTime;
+    let dateArray = bidDate.split("-");//hh-mm(24 hour time format)
+    let timeArray = bidTime.split(":"); //yyyy-mm-dd
+    let date = new Date(dateArray[0], dateArray[1] - 1, dateArray[2]); //year-month-day
+    let shortMonth = date.toLocaleString("en-us", { month: "short" });
+    let userInputDate;
 
-  userInputDate = new Date(
-    `${shortMonth} ${dateArray[2]}, ${dateArray[0]} ${timeArray[0]}:${timeArray[1]}:00`).getTime();
+    userInputDate = new Date(
+      `${shortMonth} ${dateArray[2]}, ${dateArray[0]} ${timeArray[0]}:${timeArray[1]}:00`).getTime();
 
-  //timer operates on 1 second of interval
-  let timeFunction = setInterval(async function () {
-    // Get today's date and time
-    let currentTime = new Date().getTime();
+    //timer operates on 1 second of interval
+    let timeFunction = setInterval(async function () {
+      // Get today's date and time
+      let currentTime = new Date().getTime();
 
-    // Find the distanceBetweenBidEndTimeAndCurrentTime between currentTime and the productIdIncrementor down date
-    let distanceBetweenBidEndTimeAndCurrentTime = userInputDate - currentTime;
+      // Find the distanceBetweenBidEndTimeAndCurrentTime between currentTime and the productIdIncrementor down date
+      let distanceBetweenBidEndTimeAndCurrentTime = userInputDate - currentTime;
 
-    // Time calculations for days, hours, minutes and seconds
-    let days = Math.floor(distanceBetweenBidEndTimeAndCurrentTime / (1000 * 60 * 60 * 24));
-    let hours = Math.floor(
-      (distanceBetweenBidEndTimeAndCurrentTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
-    let minutes = Math.floor((distanceBetweenBidEndTimeAndCurrentTime % (1000 * 60 * 60)) / (1000 * 60));
-    let seconds = Math.floor((distanceBetweenBidEndTimeAndCurrentTime % (1000 * 60)) / 1000);
-    let isAlreadyInDatabaseWinners = false;
-    // Output the result in an element with id="demo"
+      // Time calculations for days, hours, minutes and seconds
+      let days = Math.floor(distanceBetweenBidEndTimeAndCurrentTime / (1000 * 60 * 60 * 24));
+      let hours = Math.floor(
+        (distanceBetweenBidEndTimeAndCurrentTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      let minutes = Math.floor((distanceBetweenBidEndTimeAndCurrentTime % (1000 * 60 * 60)) / (1000 * 60));
+      let seconds = Math.floor((distanceBetweenBidEndTimeAndCurrentTime % (1000 * 60)) / 1000);
+      let isAlreadyInDatabaseWinners = false;
+      // Output the result in an element with id="demo"
 
-    document.getElementById(uniqueProductId).innerHTML =
-      days + "D " + hours + "H " + minutes + "M " + seconds + "S ";
-    let currentProductId = document.getElementById(uniqueProductId).dataset.productId;
-    const databaseRef = ref(db);
-
-
-    //check if the products is already present in the winning list 
-    await get(child(databaseRef, `Winners/${currentProductId}`)).then((snapshot) => {
-      if (typeof snapshot !== "undefined") {
-        if (snapshot.exists()) {
-          // console.log("dbms check kiya" + currentProductId);
-          isAlreadyInDatabaseWinners = true;
-        }
-      }
-    })
-
-    let isAlreadySold = false;
-    let currentUserId = document.getElementById(uniqueProductId).dataset.productOwnerId;
-    let currentBuyerId = document.getElementById(currentProductId).dataset.maxBidderId;
+      document.getElementById(uniqueProductId).innerHTML =
+        days + "D " + hours + "H " + minutes + "M " + seconds + "S ";
+      const databaseRef = ref(db);
 
 
-    //checking for expired products
-    if (distanceBetweenBidEndTimeAndCurrentTime <= 0) {
-      
-       //check for already sold product  ni db
-      await get(child(databaseRef, `User/${currentUserId}/Details/ProductSold/${currentProductId}/`)).then((snapshot) => {
+      //check if the products is already present in the winning list 
+      await get(child(databaseRef, `Winners/${currentProductId}`)).then((snapshot) => {
         if (typeof snapshot !== "undefined") {
           if (snapshot.exists()) {
-            if (snapshot.val().ProductStatus) {  // if product status exists and is set to sold 
-              // console.log("is already sold ");
-              isAlreadySold = true;
-            }
+            // console.log("dbms check kiya" + currentProductId);
+            isAlreadyInDatabaseWinners = true;
           }
         }
       })
+      let isAlreadySold = false;
+      let currentUserId = document.getElementById(uniqueProductId).dataset.productOwnerId;
+      let currentBuyerId = document.getElementById(currentProductId).dataset.maxBidderId;
+      //checking for expired products
+      if (distanceBetweenBidEndTimeAndCurrentTime <= 0) {
+        document.getElementById(uniqueProductId).innerHTML = "EXPIRED";
+        document.getElementById(uniqueBidButtonId).style.display = "none";
+        //check for already sold product  ni db
+        await get(child(databaseRef, `User/${currentUserId}/Details/ProductSold/${currentProductId}/`)).then((snapshot) => {
+          if (typeof snapshot !== "undefined") {
+            if (snapshot.exists()) {
+              if (snapshot.val().ProductStatus) {  // if product status exists and is set to sold 
+                // console.log("is already sold ");
+                isAlreadySold = true;
+              }
+            }
+          }
+        })
 
-      document.getElementById(uniqueProductId).innerHTML = "EXPIRED";
-      document.getElementById(uniqueBidButtonId).style.display = "none";
-      let productStatus;
-      if (document.getElementById(`maxBidderName_${currentProductId}`).innerHTML == "--::--") {
-        productStatus = "Unsold";
-      } else {
-        productStatus = "sold";
-      }
+        let productStatus;
+        if (document.getElementById(`maxBidderName_${currentProductId}`).innerHTML == "--::--") {
+          productStatus = "Unsold";
+        } else {
+          productStatus = "sold";
+        }
 
-      if (isAlreadySold != true) {
-        // entry form purchased products i buyer DB
-        if (currentBuyerId != "") {
-          await update(ref(db, `User/${currentBuyerId}/Details/PurchasedProducts/` + [currentProductId]), {
-            ProductId: currentProductId,
-            ProductStatus: "Purchased",
+        if (isAlreadySold != true) {
+          // entry form purchased products i buyer DB
+          if (currentBuyerId != "") {
+            await update(ref(db, `User/${currentBuyerId}/Details/PurchasedProducts/` + [currentProductId]), {
+              ProductId: currentProductId,
+              ProductStatus: "Purchased",
+            }).then(() => {
+            })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
+
+          // entry for expired products (sold/unsold) IN SELLER DB  
+          await update(ref(db, `User/${currentUserId}/Details/ProductSold/${currentProductId}`), {
+            ProductStatus: productStatus,
           }).then(() => {
           })
             .catch((error) => {
@@ -301,27 +308,17 @@ async function timer(uniqueProductId, uniqueBidButtonId, bidEndingDate, bidEndin
             });
         }
 
-        // entry for expired products (sold/unsold) IN SELLER DB  
-        await update(ref(db, `User/${currentUserId}/Details/ProductSold/${currentProductId}`), {
-          ProductStatus: productStatus,
-        }).then(() => {
-        })
-          .catch((error) => {
-            console.log(error);
-          });
+        //if the product is already present in winners list it won't be repeated again
+        if (!isAlreadyInDatabaseWinners && isAlreadySold != true && document.getElementById(`maxBidderName_${currentProductId}`).innerHTML != "--::--") {
+          let expiredProductId = document.getElementById(uniqueProductId).dataset.productId;
+          // console.log("expired product id " + expiredProductId);
+          insertWinnerData(expiredProductId);
+        }
+        clearInterval(timeFunction);
       }
-
-      //if the product is already present in winners list it won't be repeated again
-      if (!isAlreadyInDatabaseWinners && isAlreadySold != true && document.getElementById(`maxBidderName_${currentProductId}`).innerHTML != "--::--") {
-        let expiredProductId = document.getElementById(uniqueProductId).dataset.productId;
-        // console.log("expired product id " + expiredProductId);
-        insertWinnerData(expiredProductId);
-      }
-      clearInterval(timeFunction);
-    }
-  }, 1000);
+    }, 1000);
+  }
 }
-
 
 let productBidList = []; //  
 highestBiddersOfProducts(); //function to sort the winners and to set max bidder to the product  
@@ -348,12 +345,9 @@ async function highestBiddersOfProducts() {
         productArray.push(
           products[key][key2]
         );
-
-
         productBidList.push(
           products[key][key2]
         );
-
       })
 
       //sorting for maximum bidder 
@@ -377,7 +371,6 @@ async function highestBiddersOfProducts() {
 
   fetchHighestBidder(highestBidder);
   sessionStorage.setItem("SortedBidders", JSON.stringify(sortedBidders));
-
 }
 
 //getting highrst bidders and also setting their values to the product cards 
@@ -391,7 +384,6 @@ function fetchHighestBidder(highestBidder) {
     document.getElementById(`maxBidderName_${highestBidder[key].ProductID}`).innerText = capitalize(`${person.FirstName}`);
     document.getElementById(key).dataset.maxBidderId = highestBidder[key].BuyerID;//new added 
   });
-
 }
 
 //if a product is expired the data is stored inside Winners 
@@ -424,9 +416,7 @@ async function fetchEmails(BuyerBidMoney, BuyerID, ProductID, SellerID) {
     if (element.id == SellerID) {
       sellerEmail = element.Email;
     }
-
   });
-   
 
   // getting the details of products for mailing both winner and seller
   productDeatils.forEach(element => {
@@ -448,9 +438,7 @@ async function fetchEmails(BuyerBidMoney, BuyerID, ProductID, SellerID) {
               SellerContactNumber: element[el][elb].SellerContactNumber,
               UserId: element[el][elb].UserId,
             };
-            console.log("send mail chala");
-            // sendEmail(buyerEmail, buyerName, sellerEmail, productData, BuyerBidMoney);
-
+            sendEmail(buyerEmail, buyerName, sellerEmail, productData, BuyerBidMoney);
           }
         })
       }
@@ -516,6 +504,5 @@ async function sendEmail(buyerEmail, buyerName, sellerEmail, productData, BuyerB
   }
 }
 // console.log(productBidList);
-
 export { productDeatils, capitalize };
 // console.log("Products Details", productDeatils);
