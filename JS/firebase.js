@@ -1,17 +1,14 @@
-  // Import the functions you need from the SDKs you need
+  import firebaseCredentials from '../env.json' assert { type: "json" };
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-
-  
 
   const firebaseConfig = {
-    apiKey: "AIzaSyClZhB3SYWLp3DsxcpZFSQ0S_IuGkAiD3E",
-    authDomain: "bidding-management-system-2.firebaseapp.com",
-    databaseURL: "https://bidding-management-system-2-default-rtdb.firebaseio.com",
-    projectId: "bidding-management-system-2",
-    storageBucket: "bidding-management-system-2.appspot.com",
-    messagingSenderId: "14027773148",
-    appId: "1:14027773148:web:8ca297da45a12807cf5019"
+    apiKey: firebaseCredentials.apiKey,    
+    authDomain:firebaseCredentials.authDomain,
+    databaseURL: firebaseCredentials.databaseURL,
+    projectId: firebaseCredentials.projectId ,
+    storageBucket: firebaseCredentials.storageBucket,
+    messagingSenderId: firebaseCredentials.messagingSenderId,
+    appId: firebaseCredentials.appId
   };
 
   // Initialize Firebase
