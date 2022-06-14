@@ -42,7 +42,7 @@ async function walletUtilities() {
                 document.getElementById('contact-form').addEventListener('submit', function (event) {
                     event.preventDefault();
                     // these IDs from the previous steps
-                    emailjs.sendForm('service_azr4btl', 'template_6xrullv', this)
+                    emailjs.sendForm('service_t4pf0da', 'template_l9m8yup', this)
                         .then(async function () {
                             await swal({
                                 title: "confirmation mail sent...",

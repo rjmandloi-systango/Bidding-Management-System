@@ -29,6 +29,7 @@ await swal({
     button: "Aww yiss!",
   });
       // alert('ok');
+      //if user login 
  localStorage.setItem("STATUS",false);
 let newStatus= localStorage.getItem("STATUS");  
 

@@ -38,13 +38,21 @@ window.myProductList = async function () {
     });
 }
 
-window.removeProduct = function (userId, productId) {
+ window.removeProduct =async function (userId, productId) {
     remove(ref(db, `User/${userId}/Details/ProductSold/${productId}`), {
-    }).then(() => {
+    }).then(async() => {
         remove(ref(db, `Bidding-Products/${productId}`), {
         }).then(() => {
         });
         // alert('Congrats your product is deleted  successfully...')
+        await swal({
+            title: "Congrats your product is deleted  successfully !",
+            text: "hurray!",
+            icon: "success",
+            button: "Aww yiss!",
+        });
+        location.reload();
+
     }).catch((error) => {
         alert("Something went wrong!!!!!!!!!");
     });

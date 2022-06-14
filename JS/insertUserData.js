@@ -8,7 +8,7 @@ let userDataInsert = document.getElementById("userDataInssert");
 userDataInsert.addEventListener('click', userData);
 
 // getting user data from registration form 
-function userData() {
+async function userData() {
   let userDataObj = {
     userFirstName: document.getElementById("firstName").value,
     userLastName: document.getElementById("lastName").value,
@@ -53,6 +53,13 @@ function userData() {
     });
     if (flag == 1) {
       // alert('alredy exist...')
+      await swal({
+        title: "User Already Exist !",
+        text: "You clicked the button!",
+        icon: "info",
+        button: "Done",
+      });
+      location.reload();
     } else {
 
       let userDataInssert = document.getElementById("userDataInssert");
@@ -68,7 +75,7 @@ function userData() {
         document.getElementById('Register-User').addEventListener('submit', function (event) {
           event.preventDefault();
           // these IDs from the previous steps
-          emailjs.sendForm('service_azr4btl', 'template_6xrullv', this)
+          emailjs.sendForm('service_t4pf0da', 'template_l9m8yup', this)
             .then(async function () {
               await swal({
                       title: "Mail Sent Successfully!",
